@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Unit Converter | AIO Tools Hub</title>
+    <meta name="description" content="Free online advanced unit converter for engineering, data storage, scientific constants, and custom unit conversions.">
+    <meta name="keywords" content="unit converter, engineering units, data storage converter, scientific constants, measurement conversion">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #9b59b6;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f7f9fc;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Converter Section */
+        .converter-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            font-size: 2.2rem;
+        }
+        
+        .converter-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .category-tab {
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .category-tab:hover:not(.active) {
+            background: #e8eef7;
+        }
+        
+        .converter-content {
+            display: none;
+        }
+        
+        .converter-content.active {
+            display: block;
+        }
+        
+        .converter-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 1.5rem;
+            align-items: end;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .input-group input, .input-group select {
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .swap-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: center;
+        }
+        
+        .swap-button:hover {
+            background: #8e44ad;
+        }
+        
+        .result-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .result-display h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .conversion-formula {
+            margin-top: 1rem;
+            font-style: italic;
+            color: var(--gray);
+        }
+        
+        /* Scientific Constants */
+        .constants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .constant-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .constant-name {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .constant-value {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .constant-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Features Section */
+        .features-section {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .converter-form {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .swap-button {
+                order: 3;
+                margin-top: 1rem;
+            }
+            
+            .constants-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
+                    </a>
+                    <div class="logo-text">AIO <span>Tools Hub</span></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="https://otieu.com/4/10006540">More Tools</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="converter-section">
+        <div class="container">
+            <h1 class="section-title">Advanced Unit Converter</h1>
+            
+            <div class="converter-container">
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="engineering">Engineering Units</button>
+                    <button class="category-tab" data-category="data">Data Storage</button>
+                    <button class="category-tab" data-category="scientific">Scientific Constants</button>
+                    <button class="category-tab" data-category="custom">Custom Conversion</button>
+                </div>
+                
+                <!-- Engineering Units Converter -->
+                <div class="converter-content active" id="engineering-content">
+                    <div class="converter-form">
+                        <div class="input-group">
+                            <label for="engineering-value">Value</label>
+                            <input type="number" id="engineering-value" value="1" step="any">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="engineering-from">From</label>
+                            <select id="engineering-from">
+                                <option value="pa">Pascal (Pa)</option>
+                                <option value="bar">Bar</option>
+                                <option value="psi">PSI</option>
+                                <option value="atm">Atmosphere (atm)</option>
+                                <option value="torr">Torr</option>
+                                <option value="mpa">Megapascal (MPa)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="swap-button" id="engineering-swap">⇄</button>
+                        
+                        <div class="input-group">
+                            <label for="engineering-to">To</label>
+                            <select id="engineering-to">
+                                <option value="bar">Bar</option>
+                                <option value="pa">Pascal (Pa)</option>
+                                <option value="psi">PSI</option>
+                                <option value="atm">Atmosphere (atm)</option>
+                                <option value="torr">Torr</option>
+                                <option value="mpa">Megapascal (MPa)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="result-display" id="engineering-result">
+                        <h3>Conversion Result</h3>
+                        <div class="result-value">1 Bar = 100,000 Pascal</div>
+                        <div class="conversion-formula">Formula: 1 bar = 10^5 Pa</div>
+                    </div>
+                </div>
+                
+                <!-- Data Storage Converter -->
+                <div class="converter-content" id="data-content">
+                    <div class="converter-form">
+                        <div class="input-group">
+                            <label for="data-value">Value</label>
+                            <input type="number" id="data-value" value="1" step="any">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="data-from">From</label>
+                            <select id="data-from">
+                                <option value="bit">Bit</option>
+                                <option value="byte">Byte</option>
+                                <option value="kb">Kilobyte (KB)</option>
+                                <option value="mb">Megabyte (MB)</option>
+                                <option value="gb">Gigabyte (GB)</option>
+                                <option value="tb">Terabyte (TB)</option>
+                                <option value="pb">Petabyte (PB)</option>
+                            </select>
+                        </div>
+                        
+                        <button class="swap-button" id="data-swap">⇄</button>
+                        
+                        <div class="input-group">
+                            <label for="data-to">To</label>
+                            <select id="data-to">
+                                <option value="mb">Megabyte (MB)</option>
+                                <option value="bit">Bit</option>
+                                <option value="byte">Byte</option>
+                                <option value="kb">Kilobyte (KB)</option>
+                                <option value="gb">Gigabyte (GB)</option>
+                                <option value="tb">Terabyte (TB)</option>
+                                <option value="pb">Petabyte (PB)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="result-display" id="data-result">
+                        <h3>Conversion Result</h3>
+                        <div class="result-value">1 Megabyte = 8,388,608 Bits</div>
+                        <div class="conversion-formula">Formula: 1 MB = 8 × 1024 × 1024 bits</div>
+                    </div>
+                </div>
+                
+                <!-- Scientific Constants -->
+                <div class="converter-content" id="scientific-content">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--primary);">Fundamental Physical Constants</h3>
+                    <div class="constants-grid">
+                        <div class="constant-card">
+                            <div class="constant-name">Speed of Light</div>
+                            <div class="constant-value">299,792,458 m/s</div>
+                            <div class="constant-description">The speed at which light travels in a vacuum</div>
+                        </div>
+                        <div class="constant-card">
+                            <div class="constant-name">Gravitational Constant</div>
+                            <div class="constant-value">6.67430 × 10⁻¹¹ m³/kg·s²</div>
+                            <div class="constant-description">The proportionality constant in Newton's law of universal gravitation</div>
+                        </div>
+                        <div class="constant-card">
+                            <div class="constant-name">Planck's Constant</div>
+                            <div class="constant-value">6.62607015 × 10⁻³⁴ J·s</div>
+                            <div class="constant-description">The quantum of electromagnetic action</div>
+                        </div>
+                        <div class="constant-card">
+                            <div class="constant-name">Avogadro's Number</div>
+                            <div class="constant-value">6.02214076 × 10²³ mol⁻¹</div>
+                            <div class="constant-description">The number of particles in one mole of a substance</div>
+                        </div>
+                        <div class="constant-card">
+                            <div class="constant-name">Boltzmann Constant</div>
+                            <div class="constant-value">1.380649 × 10⁻²³ J/K</div>
+                            <div class="constant-description">Relates the average kinetic energy of particles in a gas with temperature</div>
+                        </div>
+                        <div class="constant-card">
+                            <div class="constant-name">Elementary Charge</div>
+                            <div class="constant-value">1.602176634 × 10⁻¹⁹ C</div>
+                            <div class="constant-description">The electric charge carried by a single proton</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Custom Conversion -->
+                <div class="converter-content" id="custom-content">
+                    <div class="converter-form">
+                        <div class="input-group">
+                            <label for="custom-value">Value</label>
+                            <input type="number" id="custom-value" value="1" step="any">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="custom-factor">Conversion Factor</label>
+                            <input type="number" id="custom-factor" value="1.8" step="any" placeholder="e.g., 1.8 for °F to °C">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="custom-operation">Operation</label>
+                            <select id="custom-operation">
+                                <option value="multiply">Multiply</option>
+                                <option value="divide">Divide</option>
+                                <option value="add">Add</option>
+                                <option value="subtract">Subtract</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="result-display" id="custom-result">
+                        <h3>Conversion Result</h3>
+                        <div class="result-value">1 × 1.8 = 1.8</div>
+                        <div class="conversion-formula">Formula: Value × Factor = Result</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Advanced Conversion Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Engineering Units</h3>
+                    <p>Convert between pressure units like Pascal, Bar, PSI, and more for engineering applications.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Data Storage</h3>
+                    <p>Convert between bits, bytes, kilobytes, megabytes and other digital storage units.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔬</div>
+                    <h3>Scientific Constants</h3>
+                    <p>Access fundamental physical constants with precise values and descriptions.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Custom Conversions</h3>
+                    <p>Create your own conversion formulas with custom factors and operations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
+                        <h3>AIO Tools Hub</h3>
+                    </div>
+                    <p>Your one-stop destination for all essential online tools. Free, fast, and reliable.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Tools</h3>
+                    <ul>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="scientific-calculator.html">Scientific Calculator</a></li>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>More Tools</h3>
+                    <ul>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="time-zone-converter.html">Time Zone Converter</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AIO Tools Hub. All rights reserved. | All tools are free to use for personal and commercial purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Conversion factors and formulas
+        const engineeringConversions = {
+            pa: { name: "Pascal", factor: 1 },
+            bar: { name: "Bar", factor: 100000 },
+            psi: { name: "PSI", factor: 6894.76 },
+            atm: { name: "Atmosphere", factor: 101325 },
+            torr: { name: "Torr", factor: 133.322 },
+            mpa: { name: "Megapascal", factor: 1000000 }
+        };
+
+        const dataConversions = {
+            bit: { name: "Bit", factor: 1 },
+            byte: { name: "Byte", factor: 8 },
+            kb: { name: "Kilobyte", factor: 8192 },
+            mb: { name: "Megabyte", factor: 8388608 },
+            gb: { name: "Gigabyte", factor: 8589934592 },
+            tb: { name: "Terabyte", factor: 8796093022208 },
+            pb: { name: "Petabyte", factor: 9007199254740992 }
+        };
+
+        // Tab switching functionality
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.converter-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const category = tab.getAttribute('data-category');
+                document.getElementById(`${category}-content`).classList.add('active');
+                
+                // Trigger conversion calculation for the active category
+                calculateConversion(category);
+            });
+        });
+
+        // Swap button functionality
+        document.getElementById('engineering-swap').addEventListener('click', () => {
+            swapUnits('engineering-from', 'engineering-to');
+            calculateConversion('engineering');
+        });
+
+        document.getElementById('data-swap').addEventListener('click', () => {
+            swapUnits('data-from', 'data-to');
+            calculateConversion('data');
+        });
+
+        function swapUnits(fromId, toId) {
+            const fromSelect = document.getElementById(fromId);
+            const toSelect = document.getElementById(toId);
+            const fromValue = fromSelect.value;
+            fromSelect.value = toSelect.value;
+            toSelect.value = fromValue;
+        }
+
+        // Calculate conversions
+        function calculateConversion(category) {
+            if (category === 'engineering') {
+                calculateEngineeringConversion();
+            } else if (category === 'data') {
+                calculateDataConversion();
+            } else if (category === 'custom') {
+                calculateCustomConversion();
+            }
+        }
+
+        function calculateEngineeringConversion() {
+            const value = parseFloat(document.getElementById('engineering-value').value) || 0;
+            const fromUnit = document.getElementById('engineering-from').value;
+            const toUnit = document.getElementById('engineering-to').value;
+            
+            const fromFactor = engineeringConversions[fromUnit].factor;
+            const toFactor = engineeringConversions[toUnit].factor;
+            
+            // Convert to base unit (Pascal) first, then to target unit
+            const baseValue = value * fromFactor;
+            const result = baseValue / toFactor;
+            
+            const fromName = engineeringConversions[fromUnit].name;
+            const toName = engineeringConversions[toUnit].name;
+            
+            document.getElementById('engineering-result').innerHTML = `
+                <h3>Conversion Result</h3>
+                <div class="result-value">${value.toLocaleString()} ${fromName} = ${result.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${toName}</div>
+                <div class="conversion-formula">Formula: ${value} ${fromUnit} × (${fromFactor} Pa/${fromUnit}) ÷ (${toFactor} Pa/${toUnit}) = ${result} ${toUnit}</div>
+            `;
+        }
+
+        function calculateDataConversion() {
+            const value = parseFloat(document.getElementById('data-value').value) || 0;
+            const fromUnit = document.getElementById('data-from').value;
+            const toUnit = document.getElementById('data-to').value;
+            
+            const fromFactor = dataConversions[fromUnit].factor;
+            const toFactor = dataConversions[toUnit].factor;
+            
+            // Convert to base unit (bits) first, then to target unit
+            const baseValue = value * fromFactor;
+            const result = baseValue / toFactor;
+            
+            const fromName = dataConversions[fromUnit].name;
+            const toName = dataConversions[toUnit].name;
+            
+            document.getElementById('data-result').innerHTML = `
+                <h3>Conversion Result</h3>
+                <div class="result-value">${value.toLocaleString()} ${fromName} = ${result.toLocaleString(undefined, { maximumFractionDigits: 6 })} ${toName}</div>
+                <div class="conversion-formula">Formula: ${value} ${fromUnit} × (${fromFactor} bits/${fromUnit}) ÷ (${toFactor} bits/${toUnit}) = ${result} ${toUnit}</div>
+            `;
+        }
+
+        function calculateCustomConversion() {
+            const value = parseFloat(document.getElementById('custom-value').value) || 0;
+            const factor = parseFloat(document.getElementById('custom-factor').value) || 0;
+            const operation = document.getElementById('custom-operation').value;
+            
+            let result, formula;
+            
+            switch(operation) {
+                case 'multiply':
+                    result = value * factor;
+                    formula = `${value} × ${factor} = ${result}`;
+                    break;
+                case 'divide':
+                    result = value / factor;
+                    formula = `${value} ÷ ${factor} = ${result}`;
+                    break;
+                case 'add':
+                    result = value + factor;
+                    formula = `${value} + ${factor} = ${result}`;
+                    break;
+                case 'subtract':
+                    result = value - factor;
+                    formula = `${value} - ${factor} = ${result}`;
+                    break;
+            }
+            
+            document.getElementById('custom-result').innerHTML = `
+                <h3>Conversion Result</h3>
+                <div class="result-value">${formula.split('=')[0]} = ${result}</div>
+                <div class="conversion-formula">Formula: ${formula}</div>
+            `;
+        }
+
+        // Event listeners for input changes
+        document.getElementById('engineering-value').addEventListener('input', () => calculateConversion('engineering'));
+        document.getElementById('engineering-from').addEventListener('change', () => calculateConversion('engineering'));
+        document.getElementById('engineering-to').addEventListener('change', () => calculateConversion('engineering'));
+        
+        document.getElementById('data-value').addEventListener('input', () => calculateConversion('data'));
+        document.getElementById('data-from').addEventListener('change', () => calculateConversion('data'));
+        document.getElementById('data-to').addEventListener('change', () => calculateConversion('data'));
+        
+        document.getElementById('custom-value').addEventListener('input', () => calculateConversion('custom'));
+        document.getElementById('custom-factor').addEventListener('input', () => calculateConversion('custom'));
+        document.getElementById('custom-operation').addEventListener('change', () => calculateConversion('custom'));
+
+        // Initialize with first conversion
+        calculateConversion('engineering');
+    </script>
+</body>
+</html>
