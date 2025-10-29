@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | AIO Tools Hub</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #9b59b6;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f7f9fc;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 152, 219, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 0L100 100M100 0L0 100" stroke="%233498db" stroke-width="1"/></svg>');
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Content Sections */
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            padding: 3rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Team Grid */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: var(--light);
+            transition: transform 0.3s;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .member-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Info Items */
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-icon {
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .info-content h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 2rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <!-- Logo with link to homepage -->
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
+                    </a>
+                    <div class="logo-text">AIO <span>Tools Hub</span></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>About AIO Tools Hub</h1>
+            <p>Learn about our mission, team, and the story behind our free online tools platform.</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="content-section">
+            <h2 class="section-title">Our Mission</h2>
+            <p>At AIO Tools Hub, we believe that everyone should have access to powerful, easy-to-use tools that simplify everyday tasks. Our mission is to provide a comprehensive collection of free online utilities that help individuals and businesses work more efficiently without the burden of expensive software or complicated installations.</p>
+            
+            <p>Founded in 2023, we've grown from a simple idea into a platform serving thousands of users worldwide. Our commitment to privacy, security, and user experience drives every tool we develop and every feature we implement.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2 class="section-title">Our Values</h2>
+            <div class="values-list">
+                <div class="info-item">
+                    <div class="info-icon">🔒</div>
+                    <div class="info-content">
+                        <h3>Privacy First</h3>
+                        <p>Your data never leaves your browser. We process everything locally to ensure complete privacy and security.</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">💯</div>
+                    <div class="info-content">
+                        <h3>100% Free</h3>
+                        <p>We believe essential tools should be accessible to everyone, which is why all our tools are completely free with no hidden costs.</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🚀</div>
+                    <div class="info-content">
+                        <h3>Continuous Improvement</h3>
+                        <p>We're constantly updating our tools based on user feedback and technological advancements to provide the best possible experience.</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🌍</div>
+                    <div class="info-content">
+                        <h3>Global Accessibility</h3>
+                        <p>Our tools are designed to work seamlessly across devices and internet connections, making them accessible to users worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2 class="section-title">Meet Our Team</h2>
+            <p>Our diverse team of developers, designers, and product specialists work together to create the best possible tools for our users.</p>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">AS</div>
+                    <div class="member-name">Alex Smith</div>
+                    <div class="member-role">Founder & Lead Developer</div>
+                    <p>With over 10 years of experience in web development, Alex leads our technical vision and tool development.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">MJ</div>
+                    <div class="member-name">Maria Johnson</div>
+                    <div class="member-role">UX/UI Designer</div>
+                    <p>Maria ensures our tools are not only functional but also intuitive and enjoyable to use.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">RW</div>
+                    <div class="member-name">Robert Williams</div>
+                    <div class="member-role">Product Manager</div>
+                    <p>Robert coordinates between user needs and technical implementation to prioritize new features.</p>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">SC</div>
+                    <div class="member-name">Sarah Chen</div>
+                    <div class="member-role">Support Specialist</div>
+                    <p>Sarah helps our users get the most out of our tools and collects valuable feedback for improvements.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
+                        <h3>AIO Tools Hub</h3>
+                    </div>
+                    <p>Your one-stop destination for all essential online tools. Free, fast, and reliable.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Tools</h3>
+                    <ul>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>More Tools</h3>
+                    <ul>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="time-zone-converter.html">Time Zone Converter</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AIO Tools Hub. All rights reserved. | All tools are free to use for personal and commercial purposes.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

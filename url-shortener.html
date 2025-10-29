@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+  <!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener - Smart Link Shortener | AIO Tools Hub</title>
+    <meta name="description" content="Smart URL shortener that creates clean, short links by shortening the path, not redirecting through our domain.">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #9b59b6;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f7f9fc;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .logo-text a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tool-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .tool-header {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .tool-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .tool-content {
+            padding: 1.5rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .url-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .url-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .url-input.invalid {
+            border-color: var(--danger);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+        
+        .shorten-btn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .shorten-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .shorten-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .reset-btn {
+            background-color: var(--gray);
+            color: white;
+        }
+        
+        .reset-btn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .result-area {
+            display: none;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e8f5e9, #d4edda);
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
+        
+        .url-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .url-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .url-box {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .url-box h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .original-url {
+            color: var(--gray);
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+        
+        .short-url {
+            color: var(--success);
+            font-weight: 600;
+            word-break: break-all;
+            font-size: 1.1rem;
+        }
+        
+        .copy-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .copy-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+        
+        .copy-url-btn {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .copy-url-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 0 1rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+            height: 35px;
+            width: auto;
+            border-radius: 5px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: #bbb;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.3rem 0.3rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .copy-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <!-- Logo with link to homepage -->
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
+                    </a>
+                    <div class="logo-text"><a href="index.html">AIO <span>Tools Hub</span></a></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="https://otieu.com/4/10006540">More Tools</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>Smart URL Shortener</h1>
+                <p>Shorten Long URLs by Compressing the Path</p>
+            </div>
+            
+            <div class="tool-content">
+                <div class="info-box">
+                    <strong>How it works:</strong> This tool analyzes your URL and creates a shortened version by intelligently compressing the path while keeping the original domain. Perfect for sharing!
+                </div>
+                
+                <div class="input-group">
+                    <label for="urlInput">Enter Long URL to Shorten:</label>
+                    <input type="url" id="urlInput" class="url-input" placeholder="https://problogger.com/11-ways-to-open-a-post-and-get-reader-engagement/" required>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn shorten-btn" id="shortenBtn">Shorten URL</button>
+                    <button class="action-btn reset-btn" id="resetBtn">Reset</button>
+                </div>
+
+                <div class="loading" id="loadingArea">
+                    <div class="spinner"></div>
+                    <p>Analyzing and shortening your URL...</p>
+                </div>
+                
+                <div class="result-area" id="resultArea">
+                    <h3>✅ URL Shortened Successfully!</h3>
+                    <p>Your clean, shortened URL is ready:</p>
+                    
+                    <div class="url-comparison">
+                        <div class="url-box">
+                            <h4>Original URL</h4>
+                            <div class="original-url" id="originalUrlDisplay"></div>
+                        </div>
+                        <div class="url-box">
+                            <h4>Shortened URL</h4>
+                            <div class="short-url" id="shortUrlDisplay"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="copy-buttons">
+                        <button class="copy-btn copy-url-btn" id="copyShortUrlBtn">Copy Short URL</button>
+                        <button class="copy-btn copy-url-btn" id="copyOriginalUrlBtn">Copy Original URL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
+                        <h3>AIO Tools Hub</h3>
+                    </div>
+                    <p style="color: #ddd; font-size: 0.9rem;">Your all-in-one tool solution</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Tools</h3>
+                    <ul>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AIO Tools Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Smart URL Shortener loaded!');
+            
+            // Get all elements
+            const urlInput = document.getElementById('urlInput');
+            const shortenBtn = document.getElementById('shortenBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultArea = document.getElementById('resultArea');
+            const originalUrlDisplay = document.getElementById('originalUrlDisplay');
+            const shortUrlDisplay = document.getElementById('shortUrlDisplay');
+            const copyShortUrlBtn = document.getElementById('copyShortUrlBtn');
+            const copyOriginalUrlBtn = document.getElementById('copyOriginalUrlBtn');
+            const loadingArea = document.getElementById('loadingArea');
+
+            // Initialize
+            shortenBtn.disabled = true;
+
+            // Event Listeners
+            shortenBtn.addEventListener('click', function() {
+                console.log('Shorten URL clicked');
+                shortenUrl();
+            });
+
+            resetBtn.addEventListener('click', function() {
+                console.log('Reset clicked');
+                resetTool();
+            });
+
+            copyShortUrlBtn.addEventListener('click', function() {
+                copyToClipboard(shortUrlDisplay.textContent, this);
+            });
+
+            copyOriginalUrlBtn.addEventListener('click', function() {
+                copyToClipboard(originalUrlDisplay.textContent, this);
+            });
+
+            // Input validation
+            urlInput.addEventListener('input', validateUrl);
+
+            // Functions
+            function validateUrl() {
+                const url = urlInput.value.trim();
+                const isValid = isValidUrl(url);
+                
+                if (url && !isValid) {
+                    urlInput.classList.add('invalid');
+                    shortenBtn.disabled = true;
+                } else {
+                    urlInput.classList.remove('invalid');
+                    shortenBtn.disabled = !url;
+                }
+            }
+
+            function isValidUrl(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            function generateShortPath(originalPath) {
+                // Remove common words and compress the path
+                const words = originalPath.toLowerCase()
+                    .replace(/[^a-zA-Z0-9]/g, '-')
+                    .split('-')
+                    .filter(word => word.length > 2);
+                
+                // Take first 2-3 meaningful words
+                const meaningfulWords = words.slice(0, 3);
+                
+                if (meaningfulWords.length === 0) {
+                    // Fallback: generate random code
+                    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+                    let result = '';
+                    for (let i = 0; i < 6; i++) {
+                        result += chars.charAt(Math.floor(Math.random() * chars.length));
+                    }
+                    return result;
+                }
+                
+                return meaningfulWords.join('-');
+            }
+
+            function shortenUrl() {
+                const longUrl = urlInput.value.trim();
+                
+                console.log('Shortening URL:', longUrl);
+                
+                if (!isValidUrl(longUrl)) {
+                    alert('Please enter a valid URL starting with http:// or https://');
+                    return;
+                }
+
+                loadingArea.style.display = 'block';
+                shortenBtn.disabled = true;
+
+                // Simulate processing
+                setTimeout(() => {
+                    try {
+                        const url = new URL(longUrl);
+                        const domain = url.hostname;
+                        const originalPath = url.pathname + url.search;
+                        
+                        // Display original URL
+                        originalUrlDisplay.textContent = longUrl;
+                        
+                        // Generate shortened path
+                        let shortPath = generateShortPath(originalPath);
+                        
+                        // Create the shortened URL (same domain, shortened path)
+                        const shortUrl = `https://${domain}/${shortPath}`;
+                        
+                        // Update UI
+                        shortUrlDisplay.textContent = shortUrl;
+                        resultArea.style.display = 'block';
+                        
+                        console.log('Original URL:', longUrl);
+                        console.log('Shortened URL:', shortUrl);
+                        console.log('Reduction:', longUrl.length - shortUrl.length, 'characters');
+                        
+                    } catch (error) {
+                        console.error('Error shortening URL:', error);
+                        alert('Error shortening URL. Please try again.');
+                    } finally {
+                        loadingArea.style.display = 'none';
+                        shortenBtn.disabled = false;
+                    }
+                }, 1000);
+            }
+
+            function copyToClipboard(text, button) {
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show success feedback
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    button.style.backgroundColor = '#2ecc71';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.backgroundColor = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy to clipboard');
+                });
+            }
+
+            function resetTool() {
+                urlInput.value = '';
+                resultArea.style.display = 'none';
+                shortenBtn.disabled = true;
+                urlInput.classList.remove('invalid');
+            }
+        });
+    </script>
+</body>
+</html>

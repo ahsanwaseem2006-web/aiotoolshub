@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Format Changer - Convert JPG, PNG, WEBP Online | AIO Tools Hub</title>
+    <meta name="description" content="Free online image format converter. Convert between JPG, PNG, WEBP, GIF formats while maintaining quality. No installation required.">
+    <meta name="keywords" content="image converter, format changer, JPG to PNG, PNG to JPG, WEBP converter, image format converter, online image converter">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #9b59b6;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f7f9fc;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-text a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Tool Container Styles */
+        .tool-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        
+        .tool-header {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .tool-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tool-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .tool-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tool-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background-color: #fafafa;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--secondary);
+            background-color: #f0f7ff;
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--success);
+            background-color: #f0fff4;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
+        
+        .upload-text {
+            margin-bottom: 1rem;
+        }
+        
+        .browse-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .browse-button:hover {
+            background-color: #2980b9;
+        }
+        
+        #file-input {
+            display: none;
+        }
+        
+        /* Preview Area */
+        .preview-area {
+            text-align: center;
+        }
+        
+        .preview-container {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .image-info {
+            margin-top: 1rem;
+            color: var(--gray);
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+        
+        /* Format Options */
+        .format-options {
+            background-color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .format-options h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .format-option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .format-option:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .format-option.selected {
+            border-color: var(--success);
+            background-color: #e8f5e9;
+        }
+        
+        .format-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .format-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .format-desc {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.3rem;
+        }
+        
+        /* Quality Slider */
+        .quality-control {
+            margin: 1.5rem 0;
+        }
+        
+        .quality-control label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .quality-slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .quality-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: var(--secondary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .quality-value {
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 40px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .convert-btn {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .convert-btn:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .convert-btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .reset-btn {
+            background-color: var(--gray);
+            color: white;
+        }
+        
+        .reset-btn:hover {
+            background-color: #7f8c8d;
+            transform: translateY(-2px);
+        }
+        
+        .download-btn {
+            background-color: var(--secondary);
+            color: white;
+            display: none;
+            text-decoration: none;
+            text-align: center;
+        }
+        
+        .download-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        /* Result Area */
+        .result-area {
+            display: none;
+            text-align: center;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #e8f5e9, #d4edda);
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--success);
+        }
+        
+        .result-info {
+            margin-bottom: 1rem;
+        }
+        
+        .result-image {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .file-size-comparison {
+            display: flex;
+            justify-content: space-around;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .size-item {
+            text-align: center;
+        }
+        
+        .size-label {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .size-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .size-saved {
+            color: var(--success);
+            font-weight: 600;
+        }
+        
+        /* Content Section */
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .content-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-section h3 {
+            color: var(--primary);
+            margin: 2rem 0 1rem 0;
+            font-size: 1.5rem;
+        }
+        
+        .content-section p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+        
+        .content-section ul, .content-section ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .content-section li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+        
+        .format-comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .format-comparison th, .format-comparison td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .format-comparison th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+        }
+        
+        .format-comparison tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .format-comparison tr:hover {
+            background-color: #e8f4fc;
+        }
+        
+        .faq-item {
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 2rem;
+        }
+        
+        .faq-question {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .tool-header h1 {
+                font-size: 2rem;
+            }
+            
+            .format-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .file-size-comparison {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <!-- Logo with link to homepage -->
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
+                    </a>
+                    <div class="logo-text"><a href="index.html">AIO <span>Tools Hub</span></a></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
+                        <li><a href="url-shortener.html">Url Shortener</a></li>
+                        <li><a href="https://otieu.com/4/10006540">More Tools</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tool-container">
+            <div class="tool-header">
+                <h1>Image Format Changer</h1>
+                <p>Convert Between JPG, PNG, WEBP, and GIF Formats Instantly</p>
+            </div>
+            
+            <div class="tool-content">
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">🖼️</div>
+                        <div class="upload-text">
+                            <h3>Drag & Drop Your Image Here</h3>
+                            <p>Supports JPG, PNG, WEBP, GIF, BMP</p>
+                        </div>
+                        <div class="browse-button" id="browseButton">Browse Files</div>
+                        <input type="file" id="file-input" accept="image/*">
+                    </div>
+                    
+                    <div class="preview-area">
+                        <div class="preview-container">
+                            <img id="imagePreview" class="image-preview" alt="Image Preview">
+                        </div>
+                        <div class="image-info" id="imageInfo">
+                            <div>No image selected</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="controls-section">
+                    <div class="format-options">
+                        <h3>Convert To Format</h3>
+                        <div class="format-grid">
+                            <div class="format-option" data-format="jpg">
+                                <div class="format-icon">🖼️</div>
+                                <div class="format-name">JPG</div>
+                                <div class="format-desc">Best for photos</div>
+                            </div>
+                            <div class="format-option" data-format="png">
+                                <div class="format-icon">📸</div>
+                                <div class="format-name">PNG</div>
+                                <div class="format-desc">Lossless quality</div>
+                            </div>
+                            <div class="format-option" data-format="webp">
+                                <div class="format-icon">🌐</div>
+                                <div class="format-name">WEBP</div>
+                                <div class="format-desc">Modern format</div>
+                            </div>
+                            <div class="format-option" data-format="gif">
+                                <div class="format-icon">🎬</div>
+                                <div class="format-name">GIF</div>
+                                <div class="format-desc">For animations</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quality-control">
+                        <label for="quality">Quality: <span class="quality-value" id="qualityValue">80%</span></label>
+                        <div class="slider-container">
+                            <input type="range" id="quality" class="quality-slider" min="10" max="100" value="80">
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn convert-btn" id="convertBtn" disabled>Convert Image</button>
+                        <button class="action-btn reset-btn" id="resetBtn">Reset</button>
+                        <a class="action-btn download-btn" id="downloadBtn" download="converted-image.jpg">Download</a>
+                    </div>
+                    
+                    <div class="result-area" id="resultArea">
+                        <div class="result-info">
+                            <h3>✅ Conversion Successful!</h3>
+                            <p id="resultInfo">Your image has been converted to JPG format</p>
+                        </div>
+                        <img id="resultImage" class="result-image" alt="Converted Image">
+                        
+                        <div class="file-size-comparison">
+                            <div class="size-item">
+                                <div class="size-label">Original Size</div>
+                                <div class="size-value" id="originalSize">0 KB</div>
+                            </div>
+                            <div class="size-item">
+                                <div class="size-label">New Size</div>
+                                <div class="size-value" id="newSize">0 KB</div>
+                            </div>
+                            <div class="size-item">
+                                <div class="size-label">Saved</div>
+                                <div class="size-saved" id="sizeSaved">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>About Image Format Conversion</h2>
+            <p>Image format conversion is the process of changing an image from one file format to another. Different formats serve different purposes - some are better for photographs, others for graphics with transparency, and some are optimized for web use.</p>
+            
+            <h3>Common Image Formats</h3>
+            
+            <table class="format-comparison">
+                <thead>
+                    <tr>
+                        <th>Format</th>
+                        <th>Best For</th>
+                        <th>Compression</th>
+                        <th>Transparency</th>
+                        <th>File Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>JPG/JPEG</strong></td>
+                        <td>Photographs, complex images</td>
+                        <td>Lossy</td>
+                        <td>No</td>
+                        <td>Small</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PNG</strong></td>
+                        <td>Graphics, logos, images with text</td>
+                        <td>Lossless</td>
+                        <td>Yes</td>
+                        <td>Medium to Large</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WEBP</strong></td>
+                        <td>Web images, modern applications</td>
+                        <td>Lossy/Lossless</td>
+                        <td>Yes</td>
+                        <td>Very Small</td>
+                    </tr>
+                    <tr>
+                        <td><strong>GIF</strong></td>
+                        <td>Simple animations, graphics</td>
+                        <td>Lossless</td>
+                        <td>Yes</td>
+                        <td>Small to Medium</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BMP</strong></td>
+                        <td>Windows applications</td>
+                        <td>None</td>
+                        <td>No</td>
+                        <td>Very Large</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3>When to Use Each Format</h3>
+            <ul>
+                <li><strong>JPG:</strong> Use for photographs and images with many colors. Not suitable for images with text or sharp edges.</li>
+                <li><strong>PNG:</strong> Use for graphics, logos, screenshots, and images requiring transparency. Maintains perfect quality.</li>
+                <li><strong>WEBP:</strong> Use for modern websites and applications. Offers excellent compression with good quality.</li>
+                <li><strong>GIF:</strong> Use for simple animations and graphics with limited colors. Limited to 256 colors.</li>
+                <li><strong>BMP:</strong> Generally avoid for web use due to large file sizes. Use only when uncompressed quality is required.</li>
+            </ul>
+            
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Will converting images reduce quality?</div>
+                <p>Converting between lossless formats (like PNG to BMP) maintains quality. Converting to lossy formats (like JPG) may reduce quality, but our tool allows you to control the quality setting to balance file size and image quality.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Can I convert multiple images at once?</div>
+                <p>Currently, our tool processes one image at a time. For batch conversion, you can convert images sequentially or use dedicated batch processing software.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">What's the maximum file size I can convert?</div>
+                <p>Our tool can handle images up to 10MB. For larger files, we recommend using desktop software for better performance.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Are my images stored on your servers?</div>
+                <p>No, all image processing happens directly in your browser. Your images are never uploaded to our servers, ensuring complete privacy and security.</p>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Which format is best for website images?</div>
+                <p>WEBP is generally the best choice for websites as it offers excellent compression. For broader compatibility, use JPG for photographs and PNG for graphics with transparency.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
+                        <h3>AIO Tools Hub</h3>
+                    </div>
+                    <p>Your one-stop destination for all essential online tools. Free, fast, and reliable.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Tools</h3>
+                    <ul>
+                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                        <li><a href="image-resizer.html">Image Resizer</a></li>
+                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>More Tools</h3>
+                    <ul>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="time-zone-converter.html">Time Zone Converter</a></li>
+                        <li><a href="index.html">Home</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AIO Tools Hub. All rights reserved. | All tools are free to use for personal and commercial purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const browseButton = document.getElementById('browseButton');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageInfo = document.getElementById('imageInfo');
+        const formatOptions = document.querySelectorAll('.format-option');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const convertBtn = document.getElementById('convertBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resultArea = document.getElementById('resultArea');
+        const resultImage = document.getElementById('resultImage');
+        const resultInfo = document.getElementById('resultInfo');
+        const originalSize = document.getElementById('originalSize');
+        const newSize = document.getElementById('newSize');
+        const sizeSaved = document.getElementById('sizeSaved');
+        
+        // Variables
+        let originalImage = null;
+        let originalFile = null;
+        let selectedFormat = 'jpg';
+        let quality = 80;
+        
+        // Event Listeners
+        browseButton.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleFileSelect);
+        uploadArea.addEventListener('dragover', handleDragOver);
+        uploadArea.addEventListener('dragleave', handleDragLeave);
+        uploadArea.addEventListener('drop', handleDrop);
+        qualitySlider.addEventListener('input', updateQuality);
+        convertBtn.addEventListener('click', convertImage);
+        resetBtn.addEventListener('click', resetTool);
+        
+        // Format selection
+        formatOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                formatOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedFormat = option.getAttribute('data-format');
+            });
+        });
+        
+        // Set default format
+        formatOptions[0].classList.add('selected');
+        
+        // Functions
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        }
+        
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+        
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+        
+        function handleFile(file) {
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file.');
+                return;
+            }
+            
+            originalFile = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalImage = new Image();
+                originalImage.onload = function() {
+                    // Display preview
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    
+                    // Show image info
+                    const fileSize = formatFileSize(file.size);
+                    const dimensions = `${originalImage.width} × ${originalImage.height}px`;
+                    imageInfo.innerHTML = `
+                        <div><strong>Name:</strong> ${file.name}</div>
+                        <div><strong>Size:</strong> ${fileSize}</div>
+                        <div><strong>Dimensions:</strong> ${dimensions}</div>
+                        <div><strong>Type:</strong> ${file.type}</div>
+                    `;
+                    
+                    // Enable convert button
+                    convertBtn.disabled = false;
+                    
+                    // Store original size for comparison
+                    originalSize.textContent = fileSize;
+                };
+                originalImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function updateQuality() {
+            quality = parseInt(qualitySlider.value);
+            qualityValue.textContent = `${quality}%`;
+        }
+        
+        function convertImage() {
+            if (!originalImage) {
+                alert('Please upload an image first.');
+                return;
+            }
+            
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = originalImage.width;
+            canvas.height = originalImage.height;
+            
+            ctx.drawImage(originalImage, 0, 0);
+            
+            // Determine MIME type and quality
+            let mimeType = 'image/jpeg';
+            let fileExtension = 'jpg';
+            
+            switch(selectedFormat) {
+                case 'jpg':
+                    mimeType = 'image/jpeg';
+                    fileExtension = 'jpg';
+                    break;
+                case 'png':
+                    mimeType = 'image/png';
+                    fileExtension = 'png';
+                    break;
+                case 'webp':
+                    mimeType = 'image/webp';
+                    fileExtension = 'webp';
+                    break;
+                case 'gif':
+                    mimeType = 'image/gif';
+                    fileExtension = 'gif';
+                    break;
+            }
+            
+            // Quality setting (not applicable for PNG and GIF)
+            const outputQuality = (selectedFormat === 'png' || selectedFormat === 'gif') ? 1 : quality / 100;
+            
+            const dataURL = canvas.toDataURL(mimeType, outputQuality);
+            
+            // Display result
+            resultImage.src = dataURL;
+            resultInfo.textContent = `Your image has been converted to ${selectedFormat.toUpperCase()} format`;
+            resultArea.style.display = 'block';
+            
+            // Calculate file sizes
+            const originalSizeBytes = originalFile.size;
+            const newSizeBytes = Math.round((dataURL.length - 'data:image/jpeg;base64,'.length) * 0.75);
+            const savedBytes = originalSizeBytes - newSizeBytes;
+            const savedPercentage = Math.round((savedBytes / originalSizeBytes) * 100);
+            
+            newSize.textContent = formatFileSize(newSizeBytes);
+            sizeSaved.textContent = `${savedPercentage}%`;
+            
+            // Set up download
+            downloadBtn.href = dataURL;
+            downloadBtn.download = `converted-image.${fileExtension}`;
+            downloadBtn.style.display = 'block';
+            
+            // Add animation
+            resultArea.classList.add('fade-in');
+            
+            // Scroll to result
+            resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function resetTool() {
+            fileInput.value = '';
+            imagePreview.style.display = 'none';
+            imageInfo.innerHTML = '<div>No image selected</div>';
+            resultArea.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            convertBtn.disabled = true;
+            originalImage = null;
+            originalFile = null;
+            
+            // Reset to default format
+            formatOptions.forEach(opt => opt.classList.remove('selected'));
+            formatOptions[0].classList.add('selected');
+            selectedFormat = 'jpg';
+            
+            // Reset quality
+            qualitySlider.value = 80;
+            qualityValue.textContent = '80%';
+            quality = 80;
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Initialize quality display
+        updateQuality();
+    </script>
+</body>
+</html>

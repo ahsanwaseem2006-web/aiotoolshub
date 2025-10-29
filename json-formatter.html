@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter & Validator | AIO Tools Hub</title>
+    <meta name="description" content="Free online JSON formatter, validator, and converter. Beautify, minify, validate JSON data with syntax highlighting and error detection.">
+    <meta name="keywords" content="JSON formatter, JSON validator, JSON beautifier, JSON minify, JSON parser">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #9b59b6;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --light: #f7f9fc;
+            --dark: #2c3e50;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f7f9fc;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo-text span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* JSON Tools Section */
+        .json-section {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            font-size: 2.2rem;
+        }
+        
+        .json-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tool-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+        
+        .tool-tab {
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tool-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .tool-tab:hover:not(.active) {
+            background: #e8eef7;
+        }
+        
+        .tool-content {
+            display: none;
+        }
+        
+        .tool-content.active {
+            display: block;
+        }
+        
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .editor-panel {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .editor-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .editor-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background: var(--light);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .action-btn.clear {
+            background: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+        
+        .action-btn.clear:hover {
+            background: #c0392b;
+        }
+        
+        .editor {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            flex: 1;
+            min-height: 300px;
+        }
+        
+        #json-input, #json-output {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            padding: 1rem;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: vertical;
+        }
+        
+        #json-output {
+            background-color: #f8f9fa;
+        }
+        
+        .json-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .json-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .json-btn:hover {
+            background: #8e44ad;
+        }
+        
+        .json-btn.format {
+            background: var(--secondary);
+        }
+        
+        .json-btn.format:hover {
+            background: #2980b9;
+        }
+        
+        .json-btn.validate {
+            background: var(--success);
+        }
+        
+        .json-btn.validate:hover {
+            background: #27ae60;
+        }
+        
+        .json-btn.minify {
+            background: var(--warning);
+        }
+        
+        .json-btn.minify:hover {
+            background: #e67e22;
+        }
+        
+        /* Validation Results */
+        .validation-results {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .validation-results.valid {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .validation-results.invalid {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .validation-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+        
+        .error-details {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* JSON to Other Formats */
+        .conversion-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .conversion-option {
+            background: var(--light);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .conversion-option:hover {
+            border-color: var(--secondary);
+        }
+        
+        .conversion-option.active {
+            border-color: var(--secondary);
+            background: #e8f4fd;
+        }
+        
+        .conversion-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Features Section */
+        .features-section {
+            background-color: white;
+            padding: 4rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--primary);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-logo-img {
+            height: 40px;
+            width: auto;
+            border-radius: 6px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bbb;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-container {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 0 0.5rem 0.5rem;
+            }
+            
+            .json-actions {
+                flex-direction: column;
+            }
+            
+            .footer-logo {
+                justify-content: center;
+            }
+        }
+        
+        /* JSON Syntax Highlighting */
+        .json-key { color: #d32f2f; font-weight: bold; }
+        .json-string { color: #388e3c; }
+        .json-number { color: #1976d2; }
+        .json-boolean { color: #f57c00; }
+        .json-null { color: #7b1fa2; }
+        .json-bracket { color: #212121; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-container">
+                    <a href="index.html">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
+                    </a>
+                    <div class="logo-text">AIO <span>Tools Hub</span></div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#tools">Tools</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#testimonials">Testimonials</a></li>
+                        <li><a href="https://otieu.com/4/10006540">More Tools</a></li>
+                       <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="json-section">
+        <div class="container">
+            <h1 class="section-title">JSON Formatter & Validator</h1>
+            
+            <div class="json-container">
+                <div class="tool-tabs">
+                    <button class="tool-tab active" data-tool="formatter">Formatter & Validator</button>
+                    <button class="tool-tab" data-tool="converter">JSON Converter</button>
+                    <button class="tool-tab" data-tool="tools">JSON Tools</button>
+                </div>
+                
+                <!-- Formatter & Validator -->
+                <div class="tool-content active" id="formatter-content">
+                    <div class="editor-container">
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title">Input JSON</div>
+                                <div class="editor-actions">
+                                    <button class="action-btn" id="paste-sample">Sample</button>
+                                    <button class="action-btn clear" id="clear-input">Clear</button>
+                                </div>
+                            </div>
+                            <div class="editor">
+                                <textarea id="json-input" placeholder='Paste your JSON here or use the "Sample" button'>{
+  "name": "AIO Tools Hub",
+  "version": "1.0.0",
+  "description": "All-in-One Free Online Tools",
+  "tools": [
+    {
+      "name": "JSON Formatter",
+      "category": "Developer Tools",
+      "popular": true
+    },
+    {
+      "name": "QR Code Generator",
+      "category": "Utilities",
+      "popular": true
+    }
+  ],
+  "stats": {
+    "users": 15000,
+    "rating": 4.8,
+    "featured": true
+  }
+}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title">Formatted Output</div>
+                                <div class="editor-actions">
+                                    <button class="action-btn" id="copy-output">Copy</button>
+                                    <button class="action-btn clear" id="clear-output">Clear</button>
+                                </div>
+                            </div>
+                            <div class="editor">
+                                <pre id="json-output"></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="json-actions">
+                        <button class="json-btn format" id="format-btn">
+                            <span>✨</span> Format JSON
+                        </button>
+                        <button class="json-btn validate" id="validate-btn">
+                            <span>✓</span> Validate JSON
+                        </button>
+                        <button class="json-btn minify" id="minify-btn">
+                            <span>⤵️</span> Minify JSON
+                        </button>
+                        <button class="json-btn" id="fix-btn">
+                            <span>🔧</span> Fix Common Errors
+                        </button>
+                    </div>
+                    
+                    <div class="validation-results" id="validation-results">
+                        <div id="validation-message"></div>
+                        <div class="error-details" id="error-details"></div>
+                    </div>
+                </div>
+                
+                <!-- JSON Converter -->
+                <div class="tool-content" id="converter-content">
+                    <div class="conversion-options">
+                        <div class="conversion-option active" data-format="xml">
+                            <div class="conversion-icon">📋</div>
+                            <div>JSON to XML</div>
+                        </div>
+                        <div class="conversion-option" data-format="csv">
+                            <div class="conversion-icon">📊</div>
+                            <div>JSON to CSV</div>
+                        </div>
+                        <div class="conversion-option" data-format="yaml">
+                            <div class="conversion-icon">⚙️</div>
+                            <div>JSON to YAML</div>
+                        </div>
+                        <div class="conversion-option" data-format="url">
+                            <div class="conversion-icon">🔗</div>
+                            <div>JSON to URL</div>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-container">
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title">JSON Input</div>
+                            </div>
+                            <div class="editor">
+                                <textarea id="converter-input" placeholder='Enter JSON to convert'>[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "jane@example.com",
+    "active": false
+  }
+]</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title" id="converter-output-title">XML Output</div>
+                                <div class="editor-actions">
+                                    <button class="action-btn" id="copy-converted">Copy</button>
+                                </div>
+                            </div>
+                            <div class="editor">
+                                <pre id="converter-output"></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="json-actions">
+                        <button class="json-btn format" id="convert-btn">
+                            <span>🔄</span> Convert
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- JSON Tools -->
+                <div class="tool-content" id="tools-content">
+                    <div class="editor-container">
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title">JSON Path Tester</div>
+                            </div>
+                            <div class="input-group" style="margin-bottom: 1rem;">
+                                <label for="jsonpath-input">JSONPath Expression</label>
+                                <input type="text" id="jsonpath-input" placeholder="$.tools[*].name" value="$.tools[*].name">
+                            </div>
+                            <div class="editor">
+                                <textarea id="jsonpath-data" placeholder='Enter JSON data'>{
+  "tools": [
+    {"name": "Formatter", "category": "dev"},
+    {"name": "Validator", "category": "dev"},
+    {"name": "Converter", "category": "util"}
+  ]
+}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="editor-panel">
+                            <div class="editor-header">
+                                <div class="editor-title">JSONPath Results</div>
+                            </div>
+                            <div class="editor">
+                                <pre id="jsonpath-results"></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="json-actions">
+                        <button class="json-btn format" id="test-jsonpath">
+                            <span>🔍</span> Test JSONPath
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">JSON Tools Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Smart Formatting</h3>
+                    <p>Beautify and format JSON with proper indentation and syntax highlighting for better readability.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3>Validation</h3>
+                    <p>Validate JSON syntax with detailed error messages and line number indicators.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Multi-Format Conversion</h3>
+                    <p>Convert JSON to XML, CSV, YAML, URL encoding and other popular formats.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Advanced Tools</h3>
+                    <p>JSONPath testing, error fixing, minification, and other developer utilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
+                        <h3>AIO Tools Hub</h3>
+                    </div>
+                    <p>Your one-stop destination for all essential online tools. Free, fast, and reliable.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Tools</h3>
+                    <ul>
+                        <li><a href="scientific-calculator.html">Scientific Calculator</a></li>
+                        <li><a href="unit-converter.html">Unit Converter</a></li>
+                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                        <li><a href="password-generator.html">Password Generator</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>More Tools</h3>
+                    <ul>
+                        <li><a href="url-shortener.html">URL Shortener</a></li>
+                        <li><a href="time-zone-converter.html">Time Zone Converter</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 AIO Tools Hub. All rights reserved. | All tools are free to use for personal and commercial purposes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const toolTabs = document.querySelectorAll('.tool-tab');
+        const toolContents = document.querySelectorAll('.tool-content');
+        const jsonInput = document.getElementById('json-input');
+        const jsonOutput = document.getElementById('json-output');
+        const validationResults = document.getElementById('validation-results');
+        const validationMessage = document.getElementById('validation-message');
+        const errorDetails = document.getElementById('error-details');
+        const converterInput = document.getElementById('converter-input');
+        const converterOutput = document.getElementById('converter-output');
+        const converterOutputTitle = document.getElementById('converter-output-title');
+        const jsonpathInput = document.getElementById('jsonpath-input');
+        const jsonpathData = document.getElementById('jsonpath-data');
+        const jsonpathResults = document.getElementById('jsonpath-results');
+
+        // Sample JSON data
+        const sampleJson = `{
+  "app": "AIO Tools Hub",
+  "version": "2.1.0",
+  "features": {
+    "formatter": true,
+    "validator": true,
+    "converter": true,
+    "tools": true
+  },
+  "statistics": {
+    "dailyUsers": 12500,
+    "totalTools": 15,
+    "rating": 4.9
+  },
+  "supportedFormats": ["JSON", "XML", "CSV", "YAML"]
+}`;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            formatJson();
+            setupEventListeners();
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Tab switching
+            toolTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tool = this.getAttribute('data-tool');
+                    
+                    // Update active tab
+                    toolTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update active content
+                    toolContents.forEach(c => c.classList.remove('active'));
+                    document.getElementById(`${tool}-content`).classList.add('active');
+                });
+            });
+
+            // Formatting actions
+            document.getElementById('format-btn').addEventListener('click', formatJson);
+            document.getElementById('validate-btn').addEventListener('click', validateJson);
+            document.getElementById('minify-btn').addEventListener('click', minifyJson);
+            document.getElementById('fix-btn').addEventListener('click', fixJsonErrors);
+
+            // Sample and clear buttons
+            document.getElementById('paste-sample').addEventListener('click', function() {
+                jsonInput.value = sampleJson;
+                formatJson();
+            });
+            document.getElementById('clear-input').addEventListener('click', function() {
+                jsonInput.value = '';
+                jsonOutput.textContent = '';
+                validationResults.style.display = 'none';
+            });
+            document.getElementById('clear-output').addEventListener('click', function() {
+                jsonOutput.textContent = '';
+            });
+            document.getElementById('copy-output').addEventListener('click', copyOutput);
+
+            // Converter actions
+            document.querySelectorAll('.conversion-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.conversion-option').forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+                    updateConverterOutputTitle();
+                });
+            });
+            document.getElementById('convert-btn').addEventListener('click', convertJson);
+            document.getElementById('copy-converted').addEventListener('click', function() {
+                copyToClipboard(converterOutput.textContent);
+                showTempMessage('Copied to clipboard!');
+            });
+
+            // JSONPath testing
+            document.getElementById('test-jsonpath').addEventListener('click', testJsonPath);
+
+            // Auto-format on input change (with debounce)
+            let formatTimeout;
+            jsonInput.addEventListener('input', function() {
+                clearTimeout(formatTimeout);
+                formatTimeout = setTimeout(formatJson, 1000);
+            });
+        }
+
+        // JSON Formatting Functions
+        function formatJson() {
+            try {
+                const input = jsonInput.value.trim();
+                if (!input) {
+                    jsonOutput.textContent = '';
+                    return;
+                }
+
+                const parsed = JSON.parse(input);
+                const formatted = JSON.stringify(parsed, null, 2);
+                jsonOutput.textContent = formatted;
+                applySyntaxHighlighting(jsonOutput);
+                
+                // Clear any previous validation results
+                validationResults.style.display = 'none';
+            } catch (error) {
+                jsonOutput.textContent = `Error: ${error.message}`;
+                jsonOutput.style.color = 'var(--danger)';
+            }
+        }
+
+        function minifyJson() {
+            try {
+                const input = jsonInput.value.trim();
+                if (!input) return;
+
+                const parsed = JSON.parse(input);
+                const minified = JSON.stringify(parsed);
+                jsonOutput.textContent = minified;
+                
+                // Clear any previous validation results
+                validationResults.style.display = 'none';
+            } catch (error) {
+                jsonOutput.textContent = `Error: ${error.message}`;
+                jsonOutput.style.color = 'var(--danger)';
+            }
+        }
+
+        function validateJson() {
+            try {
+                const input = jsonInput.value.trim();
+                if (!input) {
+                    showValidationResult(false, 'Please enter JSON to validate');
+                    return;
+                }
+
+                JSON.parse(input);
+                showValidationResult(true, '✓ Valid JSON!');
+            } catch (error) {
+                showValidationResult(false, `✗ Invalid JSON: ${error.message}`);
+                errorDetails.textContent = `Error at position ${error.position || 'unknown'}\n${error.stack || ''}`;
+            }
+        }
+
+        function fixJsonErrors() {
+            let input = jsonInput.value.trim();
+            
+            // Common fixes
+            input = input
+                // Replace single quotes with double quotes
+                .replace(/'/g, '"')
+                // Remove trailing commas
+                .replace(/,\s*}/g, '}')
+                .replace(/,\s*]/g, ']')
+                // Fix missing quotes around property names
+                .replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)(\s*:)/g, '$1"$2"$3');
+            
+            jsonInput.value = input;
+            formatJson();
+        }
+
+        function showValidationResult(isValid, message) {
+            validationResults.className = `validation-results ${isValid ? 'valid' : 'invalid'}`;
+            validationMessage.innerHTML = `<span class="validation-icon">${isValid ? '✓' : '✗'}</span> ${message}`;
+            validationResults.style.display = 'block';
+            
+            if (isValid) {
+                errorDetails.textContent = '';
+            }
+        }
+
+        // JSON Conversion Functions
+        function convertJson() {
+            try {
+                const input = converterInput.value.trim();
+                if (!input) return;
+
+                const jsonData = JSON.parse(input);
+                const format = document.querySelector('.conversion-option.active').getAttribute('data-format');
+                let result = '';
+
+                switch (format) {
+                    case 'xml':
+                        result = jsonToXml(jsonData);
+                        break;
+                    case 'csv':
+                        result = jsonToCsv(jsonData);
+                        break;
+                    case 'yaml':
+                        result = jsonToYaml(jsonData);
+                        break;
+                    case 'url':
+                        result = jsonToUrl(jsonData);
+                        break;
+                }
+
+                converterOutput.textContent = result;
+            } catch (error) {
+                converterOutput.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function jsonToXml(obj) {
+            let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<root>\n';
+            
+            function toXml(key, value, indent) {
+                if (Array.isArray(value)) {
+                    return value.map(item => 
+                        toXml(key, item, indent)
+                    ).join('');
+                } else if (typeof value === 'object' && value !== null) {
+                    let childXml = `${indent}<${key}>\n`;
+                    for (const [childKey, childValue] of Object.entries(value)) {
+                        childXml += toXml(childKey, childValue, indent + '  ');
+                    }
+                    childXml += `${indent}</${key}>\n`;
+                    return childXml;
+                } else {
+                    return `${indent}<${key}>${value}</${key}>\n`;
+                }
+            }
+            
+            for (const [key, value] of Object.entries(obj)) {
+                xml += toXml(key, value, '  ');
+            }
+            
+            xml += '</root>';
+            return xml;
+        }
+
+        function jsonToCsv(obj) {
+            if (Array.isArray(obj)) {
+                if (obj.length === 0) return '';
+                
+                const headers = Object.keys(obj[0]);
+                let csv = headers.join(',') + '\n';
+                
+                obj.forEach(item => {
+                    const row = headers.map(header => {
+                        const value = item[header];
+                        return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
+                    });
+                    csv += row.join(',') + '\n';
+                });
+                
+                return csv;
+            } else {
+                return Object.entries(obj).map(([key, value]) => 
+                    `${key},${value}`
+                ).join('\n');
+            }
+        }
+
+        function jsonToYaml(obj, indent = '') {
+            let yaml = '';
+            
+            if (Array.isArray(obj)) {
+                obj.forEach(item => {
+                    if (typeof item === 'object' && item !== null) {
+                        yaml += `${indent}-\n${jsonToYaml(item, indent + '  ')}`;
+                    } else {
+                        yaml += `${indent}- ${item}\n`;
+                    }
+                });
+            } else if (typeof obj === 'object' && obj !== null) {
+                for (const [key, value] of Object.entries(obj)) {
+                    if (typeof value === 'object' && value !== null) {
+                        yaml += `${indent}${key}:\n${jsonToYaml(value, indent + '  ')}`;
+                    } else {
+                        yaml += `${indent}${key}: ${value}\n`;
+                    }
+                }
+            }
+            
+            return yaml;
+        }
+
+        function jsonToUrl(obj) {
+            const params = new URLSearchParams();
+            
+            function flattenObject(prefix, obj) {
+                for (const [key, value] of Object.entries(obj)) {
+                    const fullKey = prefix ? `${prefix}[${key}]` : key;
+                    
+                    if (typeof value === 'object' && value !== null) {
+                        flattenObject(fullKey, value);
+                    } else {
+                        params.append(fullKey, value);
+                    }
+                }
+            }
+            
+            flattenObject('', obj);
+            return params.toString();
+        }
+
+        function updateConverterOutputTitle() {
+            const format = document.querySelector('.conversion-option.active').getAttribute('data-format');
+            const formatNames = {
+                'xml': 'XML',
+                'csv': 'CSV', 
+                'yaml': 'YAML',
+                'url': 'URL Parameters'
+            };
+            converterOutputTitle.textContent = `${formatNames[format]} Output`;
+        }
+
+        // JSONPath Testing
+        function testJsonPath() {
+            try {
+                const data = JSON.parse(jsonpathData.value);
+                const expression = jsonpathInput.value;
+                
+                // Simple JSONPath implementation for demonstration
+                const results = evaluateJsonPath(data, expression);
+                jsonpathResults.textContent = JSON.stringify(results, null, 2);
+            } catch (error) {
+                jsonpathResults.textContent = `Error: ${error.message}`;
+            }
+        }
+
+        function evaluateJsonPath(obj, path) {
+            // Simple JSONPath evaluator for demonstration
+            // In a real implementation, you would use a library like jsonpath-plus
+            if (path === '$') return obj;
+            if (path.startsWith('$.')) {
+                const parts = path.slice(2).split('.');
+                let current = obj;
+                for (const part of parts) {
+                    if (part.endsWith(']')) {
+                        const [key, index] = part.split('[');
+                        current = current[key];
+                        if (Array.isArray(current)) {
+                            const idx = parseInt(index.slice(0, -1));
+                            current = current[idx];
+                        }
+                    } else {
+                        current = current[part];
+                    }
+                }
+                return current;
+            }
+            return null;
+        }
+
+        // Utility Functions
+        function applySyntaxHighlighting(element) {
+            const text = element.textContent;
+            let highlighted = text
