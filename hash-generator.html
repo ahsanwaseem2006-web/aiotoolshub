@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
+    <title>Hash Generator - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -66,7 +66,6 @@
         .nav-logo span {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -97,7 +96,7 @@
 
         .main-content {
             padding: 100px 2rem 40px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -138,8 +137,8 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
         }
 
         .input-group {
@@ -152,18 +151,20 @@
             font-weight: 500;
         }
 
-        input {
+        textarea {
             width: 100%;
-            padding: 16px 20px;
+            min-height: 100px;
+            padding: 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             font-size: 1rem;
             color: var(--text-primary);
             font-family: inherit;
+            resize: vertical;
         }
 
-        input:focus {
+        textarea:focus {
             outline: none;
             border-color: #7c3aed;
         }
@@ -179,90 +180,51 @@
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
-            transition: transform 0.3s;
+            margin-bottom: 1.5rem;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .hash-grid {
+            display: grid;
+            gap: 1rem;
         }
 
-        .result {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        .result-box {
+        .hash-item {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1rem;
         }
 
-        .result-label {
-            color: var(--text-secondary);
+        .hash-label {
+            font-weight: 600;
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
+            color: var(--text-secondary);
         }
 
-        .result-url {
+        .hash-value {
             display: flex;
-            gap: 1rem;
             align-items: center;
+            gap: 0.5rem;
         }
 
-        .result-url input {
+        .hash-value code {
             flex: 1;
             font-family: monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            border-radius: 6px;
         }
 
         .copy-btn {
-            padding: 16px 24px;
+            padding: 8px 12px;
             background: var(--accent-gradient);
             border: none;
-            border-radius: 10px;
+            border-radius: 6px;
             color: white;
             cursor: pointer;
-            font-weight: 600;
-        }
-
-        .note {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+            font-size: 0.8rem;
         }
     </style>
 </head>
@@ -277,30 +239,17 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">🔐</div>
+            <h1>Hash Generator</h1>
+            <p>Generate various hash values for text</p>
         </div>
         <div class="tool-card">
             <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
+                <label>Enter Text</label>
+                <textarea id="input" placeholder="Enter text to hash...">Hello World</textarea>
             </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
-            <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
-                    </div>
-                </div>
-            </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
-            </div>
-            <div class="history" id="history"></div>
+            <button class="btn" onclick="generateHashes()">Generate Hashes</button>
+            <div class="hash-grid" id="hashes"></div>
         </div>
     </main>
     <script>
@@ -310,58 +259,82 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
-
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
+        async function sha(algo, text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hash = await crypto.subtle.digest(algo, data);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+        // Simple MD5 implementation
+        function md5(string) {
+            function rotateLeft(x, n) { return (x << n) | (x >>> (32 - n)); }
+            function addUnsigned(x, y) { return (x + y) >>> 0; }
+            const k = [], s = [];
+            for (let i = 0; i < 64; i++) { k[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 0x100000000); }
+            s.push(7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22);
+            s.push(5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20);
+            s.push(4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23);
+            s.push(6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21);
 
-            try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
+            let msg = string + String.fromCharCode(0x80);
+            while ((msg.length % 64) !== 56) msg += String.fromCharCode(0);
+            const len = string.length * 8;
+            msg += String.fromCharCode(len & 0xff, (len >> 8) & 0xff, (len >> 16) & 0xff, (len >> 24) & 0xff, 0, 0, 0, 0);
+
+            let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+
+            for (let i = 0; i < msg.length; i += 64) {
+                const m = [];
+                for (let j = 0; j < 16; j++) {
+                    m[j] = msg.charCodeAt(i + j * 4) | (msg.charCodeAt(i + j * 4 + 1) << 8) | (msg.charCodeAt(i + j * 4 + 2) << 16) | (msg.charCodeAt(i + j * 4 + 3) << 24);
+                }
+                let a = a0, b = b0, c = c0, d = d0;
+                for (let j = 0; j < 64; j++) {
+                    let f, g;
+                    if (j < 16) { f = (b & c) | ((~b) & d); g = j; }
+                    else if (j < 32) { f = (d & b) | ((~d) & c); g = (5 * j + 1) % 16; }
+                    else if (j < 48) { f = b ^ c ^ d; g = (3 * j + 5) % 16; }
+                    else { f = c ^ (b | (~d)); g = (7 * j) % 16; }
+                    const temp = d; d = c; c = b;
+                    b = addUnsigned(b, rotateLeft(addUnsigned(addUnsigned(a, f), addUnsigned(k[j], m[g])), s[j]));
+                    a = temp;
+                }
+                a0 = addUnsigned(a0, a); b0 = addUnsigned(b0, b); c0 = addUnsigned(c0, c); d0 = addUnsigned(d0, d);
             }
 
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
-            document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
+            const hex = n => (n >>> 0).toString(16).padStart(8, '0').match(/../g).reverse().join('');
+            return hex(a0) + hex(b0) + hex(c0) + hex(d0);
         }
 
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
-            event.target.textContent = 'Copied!';
-            setTimeout(() => event.target.textContent = 'Copy', 1500);
-        }
+        async function generateHashes() {
+            const text = document.getElementById('input').value;
+            const hashes = [
+                { name: 'MD5', value: md5(text) },
+                { name: 'SHA-1', value: await sha('SHA-1', text) },
+                { name: 'SHA-256', value: await sha('SHA-256', text) },
+                { name: 'SHA-384', value: await sha('SHA-384', text) },
+                { name: 'SHA-512', value: await sha('SHA-512', text) }
+            ];
 
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
+            document.getElementById('hashes').innerHTML = hashes.map((h, i) => `
+                <div class="hash-item">
+                    <div class="hash-label">${h.name}</div>
+                    <div class="hash-value">
+                        <code id="hash${i}">${h.value}</code>
+                        <button class="copy-btn" onclick="copyHash(${i})">Copy</button>
                     </div>
-                `).join('')}
-            `;
+                </div>
+            `).join('');
         }
 
-        updateHistory();
+        function copyHash(i) {
+            navigator.clipboard.writeText(document.getElementById('hash' + i).textContent);
+            event.target.textContent = '✓';
+            setTimeout(() => event.target.textContent = 'Copy', 1000);
+        }
+
+        generateHashes();
     </script>
 </body>
 

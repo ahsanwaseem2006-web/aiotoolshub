@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .main-content {
+            padding: 100px 2rem 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+        }
+
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .timer-display {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .time-unit {
+            background: var(--bg-secondary);
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            min-width: 90px;
+        }
+
+        .time-value {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .time-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            flex: 1;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn.primary {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn.danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .presets {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .preset {
+            padding: 10px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text-primary);
+        }
+
+        .preset:hover {
+            border-color: #7c3aed;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
+        <button class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </button>
+    </nav>
+    <main class="main-content">
+        <a href="index.html" class="back-link">← Back to Tools</a>
+        <div class="tool-header">
+            <div class="tool-icon">⏱️</div>
+            <h1>Countdown Timer</h1>
+            <p>Set a timer for any duration</p>
+        </div>
+        <div class="tool-card">
+            <div class="timer-display">
+                <div class="time-unit">
+                    <div class="time-value" id="hours">00</div>
+                    <div class="time-label">Hours</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">Minutes</div>
+                </div>
+                <div class="time-unit">
+                    <div class="time-value" id="seconds">00</div>
+                    <div class="time-label">Seconds</div>
+                </div>
+            </div>
+            <div class="presets">
+                <button class="preset" onclick="setPreset(1)">1 min</button>
+                <button class="preset" onclick="setPreset(5)">5 min</button>
+                <button class="preset" onclick="setPreset(10)">10 min</button>
+                <button class="preset" onclick="setPreset(15)">15 min</button>
+                <button class="preset" onclick="setPreset(30)">30 min</button>
+                <button class="preset" onclick="setPreset(60)">1 hour</button>
+            </div>
+            <div class="input-row">
+                <div class="input-group"><label>Hours</label><input type="number" id="inputH" value="0" min="0"
+                        max="99"></div>
+                <div class="input-group"><label>Minutes</label><input type="number" id="inputM" value="5" min="0"
+                        max="59"></div>
+                <div class="input-group"><label>Seconds</label><input type="number" id="inputS" value="0" min="0"
+                        max="59"></div>
+            </div>
+            <div class="controls">
+                <button class="btn primary" id="startBtn" onclick="toggleTimer()">Start</button>
+                <button class="btn secondary" onclick="resetTimer()">Reset</button>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('themeToggle').onclick = () => {
+            const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
+        };
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+
+        let totalSeconds = 0, running = false, interval = null;
+
+        function setPreset(mins) {
+            document.getElementById('inputH').value = Math.floor(mins / 60);
+            document.getElementById('inputM').value = mins % 60;
+            document.getElementById('inputS').value = 0;
+            resetTimer();
+        }
+
+        function updateDisplay() {
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            document.getElementById('hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+        }
+
+        function toggleTimer() {
+            if (running) {
+                clearInterval(interval);
+                document.getElementById('startBtn').textContent = 'Resume';
+            } else {
+                if (totalSeconds === 0) {
+                    totalSeconds = (parseInt(document.getElementById('inputH').value) || 0) * 3600 +
+                        (parseInt(document.getElementById('inputM').value) || 0) * 60 +
+                        (parseInt(document.getElementById('inputS').value) || 0);
+                }
+                if (totalSeconds <= 0) return;
+                interval = setInterval(() => {
+                    totalSeconds--;
+                    updateDisplay();
+                    if (totalSeconds <= 0) {
+                        clearInterval(interval);
+                        running = false;
+                        document.getElementById('startBtn').textContent = 'Start';
+                        alert('⏱️ Time\'s up!');
+                    }
+                }, 1000);
+                document.getElementById('startBtn').textContent = 'Pause';
+            }
+            running = !running;
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            running = false;
+            totalSeconds = (parseInt(document.getElementById('inputH').value) || 0) * 3600 +
+                (parseInt(document.getElementById('inputM').value) || 0) * 60 +
+                (parseInt(document.getElementById('inputS').value) || 0);
+            updateDisplay();
+            document.getElementById('startBtn').textContent = 'Start';
+        }
+
+        resetTimer();
+    </script>
+</body>
+
+</html>

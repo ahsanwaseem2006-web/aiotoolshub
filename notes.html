@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Notes - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .main-content {
+            padding: 100px 2rem 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+        }
+
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            padding: 1.25rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-btn {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .toolbar-btn:hover {
+            border-color: #7c3aed;
+        }
+
+        .toolbar-btn.primary {
+            background: var(--accent-gradient);
+            border: none;
+            color: white;
+        }
+
+        .status {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .saved {
+            color: #10b981;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
+        <button class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </button>
+    </nav>
+    <main class="main-content">
+        <a href="index.html" class="back-link">← Back to Tools</a>
+        <div class="tool-header">
+            <div class="tool-icon">📒</div>
+            <h1>Quick Notes</h1>
+            <p>Notes that save locally in your browser</p>
+        </div>
+        <div class="tool-card">
+            <div class="toolbar">
+                <button class="toolbar-btn primary" onclick="saveNote()">💾 Save</button>
+                <button class="toolbar-btn" onclick="clearNote()">🗑️ Clear</button>
+                <button class="toolbar-btn" onclick="copyNote()">📋 Copy</button>
+                <button class="toolbar-btn" onclick="downloadNote()">⬇️ Download</button>
+            </div>
+            <textarea id="notes" placeholder="Start typing your notes here..."></textarea>
+            <div class="status">
+                <span id="charCount">0 characters</span>
+                <span id="saveStatus"></span>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('themeToggle').onclick = () => {
+            const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
+        };
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+
+        const notes = document.getElementById('notes');
+        const charCount = document.getElementById('charCount');
+        const saveStatus = document.getElementById('saveStatus');
+
+        // Load saved notes
+        notes.value = localStorage.getItem('quickNotes') || '';
+        charCount.textContent = notes.value.length + ' characters';
+
+        notes.oninput = () => {
+            charCount.textContent = notes.value.length + ' characters';
+            saveStatus.textContent = '';
+        };
+
+        function saveNote() {
+            localStorage.setItem('quickNotes', notes.value);
+            saveStatus.innerHTML = '<span class="saved">✓ Saved!</span>';
+        }
+
+        function clearNote() {
+            if (confirm('Clear all notes?')) {
+                notes.value = '';
+                localStorage.removeItem('quickNotes');
+                charCount.textContent = '0 characters';
+                saveStatus.textContent = '';
+            }
+        }
+
+        function copyNote() {
+            navigator.clipboard.writeText(notes.value);
+            saveStatus.textContent = '📋 Copied!';
+        }
+
+        function downloadNote() {
+            const blob = new Blob([notes.value], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.download = 'notes.txt';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(() => {
+            if (notes.value) {
+                localStorage.setItem('quickNotes', notes.value);
+            }
+        }, 30000);
+    </script>
+</body>
+
+</html>

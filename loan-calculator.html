@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Loan Calculator - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
@@ -66,7 +66,6 @@
         .nav-logo span {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -138,12 +137,12 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 2rem;
         }
 
         .input-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .input-group label {
@@ -154,7 +153,7 @@
 
         input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
@@ -179,11 +178,6 @@
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
-            transition: transform 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
         }
 
         .result {
@@ -195,74 +189,48 @@
             display: block;
         }
 
-        .result-box {
+        .result-main {
+            text-align: center;
+            padding: 2rem;
             background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-url {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .result-url input {
-            flex: 1;
-            font-family: monospace;
-        }
-
-        .copy-btn {
-            padding: 16px 24px;
+        .emi {
+            font-size: 3rem;
+            font-weight: 800;
             background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .note {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
+        .emi-label {
             color: var(--text-secondary);
         }
 
-        .history {
-            margin-top: 2rem;
+        .breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
         }
 
-        .history h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
+        .breakdown-item {
             background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
         }
 
-        .history-item .original {
+        .breakdown-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .breakdown-label {
+            font-size: 0.8rem;
             color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
         }
     </style>
 </head>
@@ -277,30 +245,44 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">💰</div>
+            <h1>Loan Calculator</h1>
+            <p>Calculate EMI and loan payments</p>
         </div>
         <div class="tool-card">
             <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
+                <label>Loan Amount ($)</label>
+                <input type="number" id="principal" value="100000" min="1">
             </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
+            <div class="input-group">
+                <label>Interest Rate (% per year)</label>
+                <input type="number" id="rate" value="7" min="0.1" step="0.1">
+            </div>
+            <div class="input-group">
+                <label>Loan Term (months)</label>
+                <input type="number" id="term" value="60" min="1">
+            </div>
+            <button class="btn" onclick="calculate()">Calculate EMI</button>
             <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
+                <div class="result-main">
+                    <div class="emi" id="emi">$0</div>
+                    <div class="emi-label">Monthly Payment (EMI)</div>
+                </div>
+                <div class="breakdown">
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="total">$0</div>
+                        <div class="breakdown-label">Total Payment</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="interest">$0</div>
+                        <div class="breakdown-label">Total Interest</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-value" id="principalPaid">$0</div>
+                        <div class="breakdown-label">Principal</div>
                     </div>
                 </div>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
-            </div>
-            <div class="history" id="history"></div>
         </div>
     </main>
     <script>
@@ -310,58 +292,24 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+        function calculate() {
+            const P = parseFloat(document.getElementById('principal').value);
+            const r = parseFloat(document.getElementById('rate').value) / 100 / 12;
+            const n = parseInt(document.getElementById('term').value);
 
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
-        }
+            if (!P || !r || !n) { alert('Please fill all fields'); return; }
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+            const emi = P * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+            const total = emi * n;
+            const interest = total - P;
 
-            try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
-            }
-
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
+            const fmt = num => '$' + num.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            document.getElementById('emi').textContent = fmt(emi);
+            document.getElementById('total').textContent = fmt(total);
+            document.getElementById('interest').textContent = fmt(interest);
+            document.getElementById('principalPaid').textContent = fmt(P);
             document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
         }
-
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
-            event.target.textContent = 'Copied!';
-            setTimeout(() => event.target.textContent = 'Copy', 1500);
-        }
-
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
     </script>
 </body>
 

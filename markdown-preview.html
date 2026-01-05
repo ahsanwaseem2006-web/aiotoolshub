@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Previewer - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .main-content {
+            padding: 90px 2rem 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gradient);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin: 0 auto 0.75rem;
+        }
+
+        .tool-header h1 {
+            font-size: 1.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .editor-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            height: calc(100vh - 280px);
+            min-height: 400px;
+        }
+
+        .panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--glass-border);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        textarea {
+            flex: 1;
+            width: 100%;
+            padding: 1.25rem;
+            background: transparent;
+            border: none;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-family: 'Fira Code', monospace;
+            resize: none;
+            line-height: 1.6;
+        }
+
+        textarea:focus {
+            outline: none;
+        }
+
+        .preview {
+            flex: 1;
+            padding: 1.25rem;
+            overflow-y: auto;
+            line-height: 1.7;
+        }
+
+        .preview h1,
+        .preview h2,
+        .preview h3 {
+            margin: 1rem 0 0.5rem;
+        }
+
+        .preview h1 {
+            font-size: 1.75rem;
+        }
+
+        .preview h2 {
+            font-size: 1.5rem;
+        }
+
+        .preview h3 {
+            font-size: 1.25rem;
+        }
+
+        .preview p {
+            margin-bottom: 1rem;
+        }
+
+        .preview code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+
+        .preview pre {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .preview pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .preview ul,
+        .preview ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .preview blockquote {
+            border-left: 4px solid #7c3aed;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: var(--text-secondary);
+        }
+
+        .preview a {
+            color: #7c3aed;
+        }
+
+        .preview hr {
+            border: none;
+            border-top: 1px solid var(--glass-border);
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .editor-container {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .panel {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
+        <button class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </button>
+    </nav>
+    <main class="main-content">
+        <a href="index.html" class="back-link">← Back to Tools</a>
+        <div class="tool-header">
+            <div class="tool-icon">📝</div>
+            <h1>Markdown Previewer</h1>
+            <p>Write markdown and see live preview</p>
+        </div>
+        <div class="editor-container">
+            <div class="panel">
+                <div class="panel-header">✏️ Markdown</div>
+                <textarea id="input" placeholder="Type your markdown here..."></textarea>
+            </div>
+            <div class="panel">
+                <div class="panel-header">👁️ Preview</div>
+                <div class="preview" id="preview"></div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('themeToggle').onclick = () => {
+            const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
+        };
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+
+        function parseMarkdown(md) {
+            let html = md
+                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                .replace(/^\> (.*$)/gm, '<blockquote>$1</blockquote>')
+                .replace(/^\- (.*$)/gm, '<li>$1</li>')
+                .replace(/^\d+\. (.*$)/gm, '<li>$1</li>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                .replace(/^---$/gm, '<hr>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            return '<p>' + html + '</p>';
+        }
+
+        const input = document.getElementById('input');
+        const preview = document.getElementById('preview');
+
+        input.value = `# Welcome to Markdown Previewer
+
+This is a **live preview** of your markdown content.
+
+## Features
+
+- Write markdown on the left
+- See *formatted output* on the right
+- Supports various markdown syntax
+
+### Code Example
+
+\`inline code\` looks like this.
+
+> This is a blockquote
+
+[Visit AIO Tools Hub](https://aiotoolshub.com)
+
+---
+
+*Happy writing!*`;
+
+        input.oninput = () => preview.innerHTML = parseMarkdown(input.value);
+        preview.innerHTML = parseMarkdown(input.value);
+    </script>
+</body>
+
+</html>

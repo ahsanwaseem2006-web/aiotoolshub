@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
+    <title>Color Picker - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -66,7 +66,6 @@
         .nav-logo span {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -138,131 +137,104 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
         }
 
-        .input-group {
+        .color-preview {
+            height: 150px;
+            border-radius: 16px;
             margin-bottom: 1.5rem;
+            transition: background 0.3s;
         }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+        .picker-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
         }
 
-        input {
-            width: 100%;
-            padding: 16px 20px;
+        input[type="color"] {
+            width: 80px;
+            height: 60px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .color-value {
+            flex: 1;
+            padding: 14px 18px;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-family: monospace;
             color: var(--text-primary);
-            font-family: inherit;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #7c3aed;
-        }
-
-        .btn {
-            width: 100%;
-            padding: 16px;
+        .copy-btn {
+            padding: 14px 20px;
             background: var(--accent-gradient);
             border: none;
             border-radius: 12px;
             color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
             cursor: pointer;
-            font-family: inherit;
-            transition: transform 0.3s;
+            font-weight: 600;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .formats {
+            display: grid;
+            gap: 1rem;
         }
 
-        .result {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        .result-box {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-url {
+        .format-row {
             display: flex;
             gap: 1rem;
             align-items: center;
         }
 
-        .result-url input {
+        .format-label {
+            width: 60px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .format-value {
             flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
             font-family: monospace;
         }
 
-        .copy-btn {
-            padding: 16px 24px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .note {
+        .palette {
             margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
         }
 
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
+        .palette h3 {
             margin-bottom: 1rem;
-            color: var(--text-secondary);
+            font-size: 1rem;
         }
 
-        .history-item {
+        .palette-colors {
             display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+        .palette-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 2px solid var(--glass-border);
+        }
+
+        .palette-color:hover {
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -277,91 +249,89 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">🎨</div>
+            <h1>Color Picker</h1>
+            <p>Pick colors and get HEX, RGB, HSL values</p>
         </div>
         <div class="tool-card">
-            <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
+            <div class="color-preview" id="preview" style="background: #7c3aed"></div>
+            <div class="picker-row">
+                <input type="color" id="picker" value="#7c3aed">
+                <input type="text" class="color-value" id="hexInput" value="#7c3aed">
+                <button class="copy-btn" onclick="copyColor()">Copy</button>
             </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
-            <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
-                    </div>
+            <div class="formats">
+                <div class="format-row"><span class="format-label">HEX</span>
+                    <div class="format-value" id="hex">#7c3aed</div>
+                </div>
+                <div class="format-row"><span class="format-label">RGB</span>
+                    <div class="format-value" id="rgb">rgb(124, 58, 237)</div>
+                </div>
+                <div class="format-row"><span class="format-label">HSL</span>
+                    <div class="format-value" id="hsl">hsl(262, 83%, 58%)</div>
                 </div>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
+            <div class="palette">
+                <h3>Popular Colors</h3>
+                <div class="palette-colors" id="palette"></div>
             </div>
-            <div class="history" id="history"></div>
         </div>
     </main>
     <script>
         document.getElementById('themeToggle').onclick = () => {
             const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
+            document.documentElement.dataset.theme = t;
+            localStorage.setItem('theme', t);
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+        const picker = document.getElementById('picker');
+        const hexInput = document.getElementById('hexInput');
+        const preview = document.getElementById('preview');
 
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
+        const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#1a1a2e', '#ffffff'];
+        document.getElementById('palette').innerHTML = colors.map(c => `<div class="palette-color" style="background:${c}" onclick="setColor('${c}')"></div>`).join('');
+
+        function setColor(hex) {
+            picker.value = hex;
+            hexInput.value = hex;
+            preview.style.background = hex;
+            updateFormats(hex);
         }
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
-
-            try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
+        function updateFormats(hex) {
+            document.getElementById('hex').textContent = hex.toUpperCase();
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            document.getElementById('rgb').textContent = `rgb(${r}, ${g}, ${b})`;
+            // HSL calculation
+            const rn = r / 255, gn = g / 255, bn = b / 255;
+            const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
+            let h, s, l = (max + min) / 2;
+            if (max === min) { h = s = 0; }
+            else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case rn: h = ((gn - bn) / d + (gn < bn ? 6 : 0)) / 6; break;
+                    case gn: h = ((bn - rn) / d + 2) / 6; break;
+                    case bn: h = ((rn - gn) / d + 4) / 6; break;
+                }
             }
-
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
-            document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
+            document.getElementById('hsl').textContent = `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
         }
 
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
+        picker.oninput = () => setColor(picker.value);
+        hexInput.oninput = () => { if (/^#[0-9a-f]{6}$/i.test(hexInput.value)) setColor(hexInput.value); };
+
+        function copyColor() {
+            navigator.clipboard.writeText(hexInput.value);
             event.target.textContent = 'Copied!';
             setTimeout(() => event.target.textContent = 'Copy', 1500);
         }
 
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
+        updateFormats('#7c3aed');
     </script>
 </body>
 

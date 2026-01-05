@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
+    <title>JSON to CSV - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -97,7 +97,7 @@
 
         .main-content {
             padding: 100px 2rem 40px;
-            max-width: 600px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -138,131 +138,78 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
         }
 
-        .input-group {
-            margin-bottom: 1.5rem;
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
         }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+        .panel {
+            display: flex;
+            flex-direction: column;
         }
 
-        input {
-            width: 100%;
-            padding: 16px 20px;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .panel-title {
+            font-weight: 600;
+        }
+
+        textarea {
+            flex: 1;
+            min-height: 300px;
+            padding: 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--text-primary);
-            font-family: inherit;
+            font-family: monospace;
+            resize: vertical;
         }
 
-        input:focus {
+        textarea:focus {
             outline: none;
             border-color: #7c3aed;
         }
 
         .btn {
-            width: 100%;
-            padding: 16px;
+            padding: 12px 20px;
             background: var(--accent-gradient);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: white;
-            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
-            transition: transform 0.3s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .result {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        .result-box {
+        .btn-secondary {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 1.5rem;
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
         }
 
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-url {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .result-url input {
-            flex: 1;
-            font-family: monospace;
-        }
-
-        .copy-btn {
-            padding: 16px 24px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .note {
+        .convert-btn {
+            width: 100%;
             margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+            padding: 16px;
+            font-size: 1.1rem;
         }
 
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+        @media (max-width: 768px) {
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -277,30 +224,32 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">📋</div>
+            <h1>JSON to CSV</h1>
+            <p>Convert JSON data to CSV format</p>
         </div>
         <div class="tool-card">
-            <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
-            </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
-            <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
+            <div class="editor-grid">
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">📋 JSON Input</span>
+                        <button class="btn btn-secondary" onclick="loadSample()">Sample</button>
                     </div>
+                    <textarea id="jsonInput" placeholder="Paste your JSON here...">[
+  {"name": "John", "age": 25, "city": "New York"},
+  {"name": "Jane", "age": 30, "city": "Los Angeles"},
+  {"name": "Bob", "age": 35, "city": "Chicago"}
+]</textarea>
+                </div>
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">📄 CSV Output</span>
+                        <button class="btn btn-secondary" onclick="copyOutput()">Copy</button>
+                    </div>
+                    <textarea id="csvOutput" readonly placeholder="CSV will appear here..."></textarea>
                 </div>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
-            </div>
-            <div class="history" id="history"></div>
+            <button class="btn convert-btn" onclick="convert()">Convert to CSV →</button>
         </div>
     </main>
     <script>
@@ -310,58 +259,55 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
-
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
-        }
-
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+        function convert() {
+            const json = document.getElementById('jsonInput').value.trim();
+            if (!json) return;
 
             try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
+                const data = JSON.parse(json);
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error('Input must be an array of objects');
+                }
+
+                // Get all unique keys
+                const headers = [...new Set(data.flatMap(obj => Object.keys(obj)))];
+
+                // Build CSV
+                let csv = headers.join(',') + '\n';
+                data.forEach(obj => {
+                    const row = headers.map(h => {
+                        let val = obj[h] ?? '';
+                        // Escape commas and quotes
+                        if (String(val).includes(',') || String(val).includes('"')) {
+                            val = '"' + String(val).replace(/"/g, '""') + '"';
+                        }
+                        return val;
+                    });
+                    csv += row.join(',') + '\n';
+                });
+
+                document.getElementById('csvOutput').value = csv.trim();
+            } catch (e) {
+                document.getElementById('csvOutput').value = 'Error: ' + e.message;
             }
-
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
-            document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
         }
 
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
+        function loadSample() {
+            document.getElementById('jsonInput').value = `[
+  {"name": "John Doe", "age": 25, "city": "New York", "email": "john@example.com"},
+  {"name": "Jane Smith", "age": 30, "city": "Los Angeles", "email": "jane@example.com"},
+  {"name": "Bob Johnson", "age": 35, "city": "Chicago", "email": "bob@example.com"},
+  {"name": "Alice Brown", "age": 28, "city": "Seattle", "email": "alice@example.com"}
+]`;
+        }
+
+        function copyOutput() {
+            navigator.clipboard.writeText(document.getElementById('csvOutput').value);
             event.target.textContent = 'Copied!';
             setTimeout(() => event.target.textContent = 'Copy', 1500);
         }
 
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
+        convert();
     </script>
 </body>
 

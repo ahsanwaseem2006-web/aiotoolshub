@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Converter & Compressor - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .main-content {
+            padding: 100px 2rem 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tool-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1rem;
+            box-shadow: 0 10px 40px rgba(124, 58, 237, 0.3);
+        }
+
+        .tool-header h1 {
+            font-size: 2.25rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Mode Tabs */
+        .mode-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--glass-bg);
+            padding: 0.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 14px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .mode-tab.active {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .mode-tab:hover:not(.active) {
+            background: var(--bg-secondary);
+        }
+
+        /* Tool Card */
+        .tool-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        /* Mode Panels */
+        .mode-panel {
+            display: none;
+        }
+
+        .mode-panel.active {
+            display: block;
+        }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-zone:hover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-zone .icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-zone h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-zone p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .upload-zone input {
+            display: none;
+        }
+
+        /* File List */
+        .file-list {
+            margin-bottom: 1.5rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-info {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            word-break: break-all;
+        }
+
+        .file-size {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .file-remove {
+            width: 32px;
+            height: 32px;
+            background: rgba(239, 68, 68, 0.1);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: #ef4444;
+        }
+
+        /* Settings Section */
+        .settings-section {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .setting-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .setting-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .setting-label span {
+            font-weight: 500;
+        }
+
+        .setting-value {
+            font-weight: 700;
+            color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+            padding: 4px 12px;
+            border-radius: 8px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--glass-border);
+            border-radius: 4px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        /* Color Mode Options */
+        .color-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            flex: 1;
+            min-width: 100px;
+            padding: 12px 16px;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            border-color: #7c3aed;
+        }
+
+        .color-option.active {
+            border-color: #7c3aed;
+            background: rgba(124, 58, 237, 0.1);
+        }
+
+        .color-option .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .color-option .label {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Convert Button */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Progress */
+        .progress-container {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .progress-container.show {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--glass-border);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-gradient);
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .progress-text {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Result */
+        .result {
+            display: none;
+            margin-top: 1.5rem;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--success);
+        }
+
+        .result-info {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 14px 32px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Office Notice */
+        .notice {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .notice-icon {
+            font-size: 1.25rem;
+        }
+
+        .notice-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .notice-text strong {
+            color: var(--text-primary);
+        }
+
+        /* Format badges */
+        .format-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .format-badge {
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 90px 1rem 30px;
+            }
+
+            .tool-header h1 {
+                font-size: 1.75rem;
+            }
+
+            .mode-tabs {
+                flex-direction: column;
+            }
+
+            .color-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
+        <button class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </button>
+    </nav>
+
+    <main class="main-content">
+        <a href="index.html" class="back-link">← Back to Tools</a>
+
+        <div class="tool-header">
+            <div class="tool-icon">📄</div>
+            <h1>PDF Converter & Compressor</h1>
+            <p>Convert images to PDF, compress PDFs, or convert Office files</p>
+        </div>
+
+        <div class="tool-card">
+            <!-- Mode Tabs -->
+            <div class="mode-tabs">
+                <button class="mode-tab active" data-mode="image">🖼️ Images to PDF</button>
+                <button class="mode-tab" data-mode="compress">📦 Compress PDF</button>
+                <button class="mode-tab" data-mode="office">📎 Office to PDF</button>
+            </div>
+
+            <!-- Image to PDF Mode -->
+            <div class="mode-panel active" id="imagePanel">
+                <div class="upload-zone" id="imageUploadZone">
+                    <div class="icon">🖼️</div>
+                    <h3>Drop images here or click to upload</h3>
+                    <p>Supports JPG, PNG, GIF, WEBP, BMP, SVG</p>
+                    <div class="format-badges">
+                        <span class="format-badge">JPG</span>
+                        <span class="format-badge">PNG</span>
+                        <span class="format-badge">GIF</span>
+                        <span class="format-badge">WEBP</span>
+                        <span class="format-badge">BMP</span>
+                        <span class="format-badge">SVG</span>
+                    </div>
+                    <input type="file" id="imageInput" multiple accept="image/*">
+                </div>
+
+                <div class="file-list" id="imageFileList"></div>
+
+                <div class="settings-section">
+                    <div class="settings-title">⚙️ Compression Settings</div>
+
+                    <div class="setting-group">
+                        <div class="setting-label">
+                            <span>Image Quality</span>
+                            <span class="setting-value" id="qualityValue">7</span>
+                        </div>
+                        <input type="range" id="qualitySlider" min="1" max="10" value="7">
+                        <small style="color: var(--text-secondary); font-size: 0.8rem;">Lower quality = smaller file
+                            size</small>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="setting-label">
+                            <span>Resolution (DPI)</span>
+                            <span class="setting-value" id="dpiValue">150 DPI</span>
+                        </div>
+                        <input type="range" id="dpiSlider" min="25" max="1200" value="150" step="25">
+                        <small style="color: var(--text-secondary); font-size: 0.8rem;">Lower resolution = smaller file
+                            size (25 - 1200 DPI)</small>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Color Mode</span></div>
+                        <div class="color-options">
+                            <div class="color-option active" data-color="color">
+                                <div class="icon">🌈</div>
+                                <div class="label">Colour</div>
+                            </div>
+                            <div class="color-option" data-color="grayscale">
+                                <div class="icon">🔘</div>
+                                <div class="label">Greyscale</div>
+                            </div>
+                            <div class="color-option" data-color="bw">
+                                <div class="icon">⬛</div>
+                                <div class="label">Black & White</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" id="convertImageBtn" disabled>
+                    <span>📄</span> Convert to PDF
+                </button>
+            </div>
+
+            <!-- Compress PDF Mode -->
+            <div class="mode-panel" id="compressPanel">
+                <div class="upload-zone" id="pdfUploadZone">
+                    <div class="icon">📄</div>
+                    <h3>Drop PDF file here or click to upload</h3>
+                    <p>Upload a PDF file to compress</p>
+                    <div class="format-badges">
+                        <span class="format-badge">PDF</span>
+                    </div>
+                    <input type="file" id="pdfInput" accept=".pdf">
+                </div>
+
+                <div class="file-list" id="pdfFileList"></div>
+
+                <div class="settings-section">
+                    <div class="settings-title">⚙️ Compression Settings</div>
+
+                    <div class="setting-group">
+                        <div class="setting-label">
+                            <span>Image Quality</span>
+                            <span class="setting-value" id="pdfQualityValue">5</span>
+                        </div>
+                        <input type="range" id="pdfQualitySlider" min="1" max="10" value="5">
+                        <small style="color: var(--text-secondary); font-size: 0.8rem;">Lower quality = smaller file
+                            size</small>
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="setting-label">
+                            <span>Resolution (DPI)</span>
+                            <span class="setting-value" id="pdfDpiValue">100 DPI</span>
+                        </div>
+                        <input type="range" id="pdfDpiSlider" min="25" max="1200" value="100" step="25">
+                    </div>
+
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Color Mode</span></div>
+                        <div class="color-options" id="pdfColorOptions">
+                            <div class="color-option active" data-color="color">
+                                <div class="icon">🌈</div>
+                                <div class="label">Colour</div>
+                            </div>
+                            <div class="color-option" data-color="grayscale">
+                                <div class="icon">🔘</div>
+                                <div class="label">Greyscale</div>
+                            </div>
+                            <div class="color-option" data-color="bw">
+                                <div class="icon">⬛</div>
+                                <div class="label">Black & White</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" id="compressPdfBtn" disabled>
+                    <span>📦</span> Compress PDF
+                </button>
+
+                <div class="notice" style="margin-top: 1rem;">
+                    <span class="notice-icon">💡</span>
+                    <div class="notice-text">
+                        <strong>Note:</strong> PDF compression in-browser has limitations. For best results with large
+                        PDFs, consider using desktop software or server-based solutions.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Office to PDF Mode -->
+            <div class="mode-panel" id="officePanel">
+                <div class="notice">
+                    <span class="notice-icon">⚠️</span>
+                    <div class="notice-text">
+                        <strong>Important:</strong> Converting Office files (Word, Excel, PowerPoint) to PDF requires
+                        server-side processing. This feature demonstrates the interface. For production use, integrate
+                        with a backend service like LibreOffice, Microsoft Graph API, or CloudConvert.
+                    </div>
+                </div>
+
+                <div class="upload-zone" id="officeUploadZone">
+                    <div class="icon">📎</div>
+                    <h3>Drop Office file here or click to upload</h3>
+                    <p>Supports Word, Excel, and PowerPoint files</p>
+                    <div class="format-badges">
+                        <span class="format-badge">DOC</span>
+                        <span class="format-badge">DOCX</span>
+                        <span class="format-badge">XLS</span>
+                        <span class="format-badge">XLSX</span>
+                        <span class="format-badge">PPT</span>
+                        <span class="format-badge">PPTX</span>
+                    </div>
+                    <input type="file" id="officeInput" accept=".doc,.docx,.xls,.xlsx,.ppt,.pptx">
+                </div>
+
+                <div class="file-list" id="officeFileList"></div>
+
+                <button class="btn" id="convertOfficeBtn" disabled>
+                    <span>📄</span> Convert to PDF
+                </button>
+            </div>
+
+            <!-- Progress -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">Processing...</div>
+            </div>
+
+            <!-- Result -->
+            <div class="result" id="result">
+                <div class="result-card">
+                    <div class="result-icon">✅</div>
+                    <div class="result-title">Conversion Complete!</div>
+                    <div class="result-info" id="resultInfo">Your PDF is ready for download</div>
+                    <a class="download-btn" id="downloadBtn" download="converted.pdf">
+                        ⬇️ Download PDF
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Theme Toggle
+        document.getElementById('themeToggle').onclick = () => {
+            const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = t;
+            localStorage.setItem('theme', t);
+        };
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+
+        // Mode Tabs
+        const modeTabs = document.querySelectorAll('.mode-tab');
+        const modePanels = document.querySelectorAll('.mode-panel');
+
+        modeTabs.forEach(tab => {
+            tab.onclick = () => {
+                modeTabs.forEach(t => t.classList.remove('active'));
+                modePanels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.mode + 'Panel').classList.add('active');
+                hideResult();
+            };
+        });
+
+        // Settings Sliders
+        const qualitySlider = document.getElementById('qualitySlider');
+        const qualityValue = document.getElementById('qualityValue');
+        const dpiSlider = document.getElementById('dpiSlider');
+        const dpiValue = document.getElementById('dpiValue');
+
+        qualitySlider.oninput = () => qualityValue.textContent = qualitySlider.value;
+        dpiSlider.oninput = () => dpiValue.textContent = dpiSlider.value + ' DPI';
+
+        const pdfQualitySlider = document.getElementById('pdfQualitySlider');
+        const pdfQualityValue = document.getElementById('pdfQualityValue');
+        const pdfDpiSlider = document.getElementById('pdfDpiSlider');
+        const pdfDpiValue = document.getElementById('pdfDpiValue');
+
+        pdfQualitySlider.oninput = () => pdfQualityValue.textContent = pdfQualitySlider.value;
+        pdfDpiSlider.oninput = () => pdfDpiValue.textContent = pdfDpiSlider.value + ' DPI';
+
+        // Color Options
+        document.querySelectorAll('.color-options').forEach(container => {
+            container.querySelectorAll('.color-option').forEach(option => {
+                option.onclick = () => {
+                    container.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                    option.classList.add('active');
+                };
+            });
+        });
+
+        // File handling
+        let imageFiles = [];
+        let pdfFile = null;
+        let officeFile = null;
+        let selectedColorMode = 'color';
+
+        function getActiveColorMode(panelId) {
+            const panel = document.getElementById(panelId);
+            const active = panel.querySelector('.color-option.active');
+            return active ? active.dataset.color : 'color';
+        }
+
+        // Image Upload
+        const imageUploadZone = document.getElementById('imageUploadZone');
+        const imageInput = document.getElementById('imageInput');
+        const imageFileList = document.getElementById('imageFileList');
+        const convertImageBtn = document.getElementById('convertImageBtn');
+
+        imageUploadZone.onclick = () => imageInput.click();
+        imageUploadZone.ondragover = e => { e.preventDefault(); imageUploadZone.classList.add('dragover'); };
+        imageUploadZone.ondragleave = () => imageUploadZone.classList.remove('dragover');
+        imageUploadZone.ondrop = e => {
+            e.preventDefault();
+            imageUploadZone.classList.remove('dragover');
+            handleImageFiles(e.dataTransfer.files);
+        };
+        imageInput.onchange = e => handleImageFiles(e.target.files);
+
+        function handleImageFiles(files) {
+            for (const file of files) {
+                if (file.type.startsWith('image/')) {
+                    imageFiles.push(file);
+                }
+            }
+            updateImageFileList();
+        }
+
+        function updateImageFileList() {
+            imageFileList.innerHTML = imageFiles.map((file, i) => `
+                <div class="file-item">
+                    <span class="file-icon">🖼️</span>
+                    <div class="file-info">
+                        <div class="file-name">${file.name}</div>
+                        <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button class="file-remove" onclick="removeImageFile(${i})">✕</button>
+                </div>
+            `).join('');
+            convertImageBtn.disabled = imageFiles.length === 0;
+        }
+
+        function removeImageFile(index) {
+            imageFiles.splice(index, 1);
+            updateImageFileList();
+        }
+
+        // PDF Upload
+        const pdfUploadZone = document.getElementById('pdfUploadZone');
+        const pdfInput = document.getElementById('pdfInput');
+        const pdfFileList = document.getElementById('pdfFileList');
+        const compressPdfBtn = document.getElementById('compressPdfBtn');
+
+        pdfUploadZone.onclick = () => pdfInput.click();
+        pdfUploadZone.ondragover = e => { e.preventDefault(); pdfUploadZone.classList.add('dragover'); };
+        pdfUploadZone.ondragleave = () => pdfUploadZone.classList.remove('dragover');
+        pdfUploadZone.ondrop = e => {
+            e.preventDefault();
+            pdfUploadZone.classList.remove('dragover');
+            if (e.dataTransfer.files[0]?.type === 'application/pdf') {
+                pdfFile = e.dataTransfer.files[0];
+                updatePdfFileList();
+            }
+        };
+        pdfInput.onchange = e => {
+            pdfFile = e.target.files[0];
+            updatePdfFileList();
+        };
+
+        function updatePdfFileList() {
+            if (pdfFile) {
+                pdfFileList.innerHTML = `
+                    <div class="file-item">
+                        <span class="file-icon">📄</span>
+                        <div class="file-info">
+                            <div class="file-name">${pdfFile.name}</div>
+                            <div class="file-size">${(pdfFile.size / 1024).toFixed(1)} KB</div>
+                        </div>
+                        <button class="file-remove" onclick="removePdfFile()">✕</button>
+                    </div>
+                `;
+                compressPdfBtn.disabled = false;
+            } else {
+                pdfFileList.innerHTML = '';
+                compressPdfBtn.disabled = true;
+            }
+        }
+
+        function removePdfFile() {
+            pdfFile = null;
+            pdfInput.value = '';
+            updatePdfFileList();
+        }
+
+        // Office Upload
+        const officeUploadZone = document.getElementById('officeUploadZone');
+        const officeInput = document.getElementById('officeInput');
+        const officeFileList = document.getElementById('officeFileList');
+        const convertOfficeBtn = document.getElementById('convertOfficeBtn');
+
+        officeUploadZone.onclick = () => officeInput.click();
+        officeUploadZone.ondragover = e => { e.preventDefault(); officeUploadZone.classList.add('dragover'); };
+        officeUploadZone.ondragleave = () => officeUploadZone.classList.remove('dragover');
+        officeUploadZone.ondrop = e => {
+            e.preventDefault();
+            officeUploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && /\.(doc|docx|xls|xlsx|ppt|pptx)$/i.test(file.name)) {
+                officeFile = file;
+                updateOfficeFileList();
+            }
+        };
+        officeInput.onchange = e => {
+            officeFile = e.target.files[0];
+            updateOfficeFileList();
+        };
+
+        function updateOfficeFileList() {
+            if (officeFile) {
+                const icon = officeFile.name.match(/\.(doc|docx)$/i) ? '📝' :
+                    officeFile.name.match(/\.(xls|xlsx)$/i) ? '📊' : '📽️';
+                officeFileList.innerHTML = `
+                    <div class="file-item">
+                        <span class="file-icon">${icon}</span>
+                        <div class="file-info">
+                            <div class="file-name">${officeFile.name}</div>
+                            <div class="file-size">${(officeFile.size / 1024).toFixed(1)} KB</div>
+                        </div>
+                        <button class="file-remove" onclick="removeOfficeFile()">✕</button>
+                    </div>
+                `;
+                convertOfficeBtn.disabled = false;
+            } else {
+                officeFileList.innerHTML = '';
+                convertOfficeBtn.disabled = true;
+            }
+        }
+
+        function removeOfficeFile() {
+            officeFile = null;
+            officeInput.value = '';
+            updateOfficeFileList();
+        }
+
+        // Show/Hide Progress and Result
+        function showProgress() {
+            document.getElementById('progressContainer').classList.add('show');
+            document.getElementById('result').classList.remove('show');
+        }
+
+        function updateProgress(percent, text) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = text;
+        }
+
+        function hideProgress() {
+            document.getElementById('progressContainer').classList.remove('show');
+        }
+
+        function showResult(url, filename, info) {
+            hideProgress();
+            const downloadBtn = document.getElementById('downloadBtn');
+            downloadBtn.href = url;
+            downloadBtn.download = filename;
+            document.getElementById('resultInfo').textContent = info;
+            document.getElementById('result').classList.add('show');
+        }
+
+        function hideResult() {
+            document.getElementById('result').classList.remove('show');
+        }
+
+        // Apply color filter to canvas
+        function applyColorMode(ctx, width, height, mode) {
+            if (mode === 'color') return;
+
+            const imageData = ctx.getImageData(0, 0, width, height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                if (mode === 'grayscale') {
+                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    data[i] = data[i + 1] = data[i + 2] = avg;
+                } else if (mode === 'bw') {
+                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    const bw = avg > 128 ? 255 : 0;
+                    data[i] = data[i + 1] = data[i + 2] = bw;
+                }
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        // Convert Images to PDF
+        convertImageBtn.onclick = async () => {
+            if (imageFiles.length === 0) return;
+
+            showProgress();
+            updateProgress(10, 'Preparing images...');
+
+            const quality = parseInt(qualitySlider.value) / 10;
+            const dpi = parseInt(dpiSlider.value);
+            const colorMode = getActiveColorMode('imagePanel');
+
+            try {
+                const { jsPDF } = window.jspdf;
+                let pdf = null;
+
+                for (let i = 0; i < imageFiles.length; i++) {
+                    updateProgress(20 + (i / imageFiles.length) * 60, `Processing image ${i + 1} of ${imageFiles.length}...`);
+
+                    const file = imageFiles[i];
+                    const img = await loadImage(file);
+
+                    // Calculate dimensions based on DPI
+                    const scale = dpi / 96; // 96 is typical screen DPI
+                    const width = img.width * scale;
+                    const height = img.height * scale;
+
+                    // Create canvas
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    // Apply color mode
+                    applyColorMode(ctx, canvas.width, canvas.height, colorMode);
+
+                    const imgData = canvas.toDataURL('image/jpeg', quality);
+
+                    if (i === 0) {
+                        // First page - create PDF with this size
+                        const pdfWidth = width / dpi * 25.4; // Convert to mm
+                        const pdfHeight = height / dpi * 25.4;
+                        pdf = new jsPDF({
+                            orientation: pdfWidth > pdfHeight ? 'l' : 'p',
+                            unit: 'mm',
+                            format: [pdfWidth, pdfHeight]
+                        });
+                        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    } else {
+                        // Add new page
+                        const pdfWidth = width / dpi * 25.4;
+                        const pdfHeight = height / dpi * 25.4;
+                        pdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'l' : 'p');
+                        pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                    }
+                }
+
+                updateProgress(90, 'Generating PDF...');
+
+                const pdfBlob = pdf.output('blob');
+                const url = URL.createObjectURL(pdfBlob);
+
+                updateProgress(100, 'Complete!');
+
+                setTimeout(() => {
+                    showResult(url, 'converted-images.pdf', `${imageFiles.length} image(s) converted • ${(pdfBlob.size / 1024).toFixed(1)} KB`);
+                }, 500);
+
+            } catch (error) {
+                console.error(error);
+                hideProgress();
+                alert('Error converting images: ' + error.message);
+            }
+        };
+
+        function loadImage(file) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = reject;
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        // Compress PDF (simulated - browser limitations)
+        compressPdfBtn.onclick = async () => {
+            if (!pdfFile) return;
+
+            showProgress();
+            updateProgress(30, 'Reading PDF...');
+
+            // Note: True PDF compression requires a library like pdf-lib or server-side processing
+            // This is a simplified demonstration
+            setTimeout(() => {
+                updateProgress(60, 'Applying compression settings...');
+            }, 500);
+
+            setTimeout(() => {
+                updateProgress(90, 'Finalizing...');
+            }, 1000);
+
+            setTimeout(() => {
+                // For demonstration, we just return the original file
+                const url = URL.createObjectURL(pdfFile);
+                showResult(url, 'compressed-' + pdfFile.name,
+                    `Note: Full PDF compression requires server-side processing. File size: ${(pdfFile.size / 1024).toFixed(1)} KB`);
+            }, 1500);
+        };
+
+        // Convert Office to PDF (requires backend)
+        convertOfficeBtn.onclick = () => {
+            if (!officeFile) return;
+
+            showProgress();
+            updateProgress(50, 'Processing...');
+
+            setTimeout(() => {
+                hideProgress();
+                alert('Office to PDF conversion requires a backend service.\n\nTo implement this feature, integrate with:\n• LibreOffice (self-hosted)\n• Microsoft Graph API\n• CloudConvert API\n• Zamzar API');
+            }, 1000);
+        };
+    </script>
+</body>
+
+</html>

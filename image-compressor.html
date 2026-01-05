@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
+    <title>Image Compressor - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +16,7 @@
             --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
             --nav-bg: rgba(255, 255, 255, 0.8);
             --bg-secondary: #fff;
+            --success: #10b981;
         }
 
         [data-theme="dark"] {
@@ -66,7 +67,6 @@
         .nav-logo span {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -97,7 +97,7 @@
 
         .main-content {
             padding: 100px 2rem 40px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
@@ -138,34 +138,58 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
         }
 
-        .input-group {
+        .upload-zone {
+            border: 2px dashed var(--glass-border);
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
             margin-bottom: 1.5rem;
         }
 
-        .input-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-        }
-
-        input {
-            width: 100%;
-            padding: 16px 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            font-size: 1rem;
-            color: var(--text-primary);
-            font-family: inherit;
-        }
-
-        input:focus {
-            outline: none;
+        .upload-zone:hover {
             border-color: #7c3aed;
+        }
+
+        .upload-zone .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .quality-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .quality-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: var(--glass-border);
+            border-radius: 4px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            cursor: pointer;
         }
 
         .btn {
@@ -179,90 +203,59 @@
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
-            transition: transform 0.3s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .result {
             display: none;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
         }
 
         .result.show {
             display: block;
         }
 
-        .result-box {
-            background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 1.5rem;
-        }
-
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-url {
-            display: flex;
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            align-items: center;
-        }
-
-        .result-url input {
-            flex: 1;
-            font-family: monospace;
-        }
-
-        .copy-btn {
-            padding: 16px 24px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .note {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
             margin-bottom: 1rem;
-            color: var(--text-secondary);
         }
 
-        .history-item {
-            display: flex;
-            justify-content: space-between;
+        .compare-box {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .compare-box img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .size {
+            font-weight: 700;
+        }
+
+        .savings {
+            text-align: center;
             padding: 1rem;
             background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
         }
 
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+        .savings-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--success);
         }
     </style>
 </head>
@@ -277,30 +270,37 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">📦</div>
+            <h1>Image Compressor</h1>
+            <p>Compress images without losing quality</p>
         </div>
         <div class="tool-card">
-            <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
+            <div class="upload-zone" id="uploadZone">
+                <div class="icon">📁</div>
+                <h3>Drop image here or click to upload</h3>
+                <p>JPG, PNG, WEBP supported</p>
+                <input type="file" id="fileInput" accept="image/*">
             </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
+            <div class="quality-section">
+                <div class="quality-header"><span>Quality</span><span id="qualityValue">80%</span></div>
+                <input type="range" id="quality" min="10" max="100" value="80">
+            </div>
+            <button class="btn" id="compressBtn" disabled>Compress Image</button>
             <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
+                <div class="savings">
+                    <div class="savings-value" id="savings">0%</div>
+                    <div>Size Reduced</div>
+                </div>
+                <div class="comparison">
+                    <div class="compare-box"><img id="origImg" alt="Original">
+                        <div>Original: <span class="size" id="origSize">0 KB</span></div>
+                    </div>
+                    <div class="compare-box"><img id="compImg" alt="Compressed">
+                        <div>Compressed: <span class="size" id="compSize">0 KB</span></div>
                     </div>
                 </div>
+                <button class="btn" id="downloadBtn">⬇️ Download Compressed</button>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
-            </div>
-            <div class="history" id="history"></div>
         </div>
     </main>
     <script>
@@ -310,58 +310,54 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const quality = document.getElementById('quality');
+        const compressBtn = document.getElementById('compressBtn');
+        let originalFile = null, originalImg = null;
 
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
+        uploadZone.onclick = () => fileInput.click();
+        uploadZone.ondragover = e => e.preventDefault();
+        uploadZone.ondrop = e => { e.preventDefault(); handleFile(e.dataTransfer.files[0]); };
+        fileInput.onchange = e => handleFile(e.target.files[0]);
+        quality.oninput = () => document.getElementById('qualityValue').textContent = quality.value + '%';
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            originalFile = file;
+            const reader = new FileReader();
+            reader.onload = e => {
+                originalImg = new Image();
+                originalImg.onload = () => compressBtn.disabled = false;
+                originalImg.src = e.target.result;
+                document.getElementById('origImg').src = e.target.result;
+                document.getElementById('origSize').textContent = (file.size / 1024).toFixed(1) + ' KB';
+            };
+            reader.readAsDataURL(file);
         }
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+        compressBtn.onclick = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = originalImg.width;
+            canvas.height = originalImg.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(originalImg, 0, 0);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality.value / 100);
 
-            try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
-            }
-
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
+            document.getElementById('compImg').src = dataUrl;
+            const compSize = Math.round((dataUrl.length * 3) / 4);
+            document.getElementById('compSize').textContent = (compSize / 1024).toFixed(1) + ' KB';
+            const saved = Math.round((1 - compSize / originalFile.size) * 100);
+            document.getElementById('savings').textContent = saved + '%';
             document.getElementById('result').classList.add('show');
 
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
-        }
-
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
-            event.target.textContent = 'Copied!';
-            setTimeout(() => event.target.textContent = 'Copy', 1500);
-        }
-
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
+            document.getElementById('downloadBtn').onclick = () => {
+                const link = document.createElement('a');
+                link.download = 'compressed-image.jpg';
+                link.href = dataUrl;
+                link.click();
+            };
+        };
     </script>
 </body>
 

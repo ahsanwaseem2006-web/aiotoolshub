@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Age Calculator - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
@@ -66,7 +66,6 @@
         .nav-logo span {
             background: var(--accent-gradient);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -97,7 +96,7 @@
 
         .main-content {
             padding: 100px 2rem 40px;
-            max-width: 600px;
+            max-width: 550px;
             margin: 0 auto;
         }
 
@@ -138,7 +137,7 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 2rem;
         }
 
@@ -154,7 +153,7 @@
 
         input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
@@ -178,8 +177,8 @@
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
-            font-family: inherit;
             transition: transform 0.3s;
+            font-family: inherit;
         }
 
         .btn:hover {
@@ -195,74 +194,59 @@
             display: block;
         }
 
-        .result-box {
+        .age-display {
+            text-align: center;
+            padding: 2rem;
             background: var(--bg-secondary);
             border-radius: 16px;
-            padding: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .result-url {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .result-url input {
-            flex: 1;
-            font-family: monospace;
-        }
-
-        .copy-btn {
-            padding: 16px 24px;
+        .age-big {
+            font-size: 4rem;
+            font-weight: 800;
             background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .note {
+        .age-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-box {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .detail-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .detail-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .next-birthday {
             margin-top: 1.5rem;
             padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
             background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+            border-radius: 12px;
+            text-align: center;
         }
     </style>
 </head>
@@ -277,30 +261,37 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">🎂</div>
+            <h1>Age Calculator</h1>
+            <p>Calculate your exact age</p>
         </div>
         <div class="tool-card">
             <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
+                <label for="birthdate">Your Birth Date</label>
+                <input type="date" id="birthdate">
             </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
+            <button class="btn" onclick="calculate()">Calculate Age</button>
             <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
+                <div class="age-display">
+                    <div class="age-big" id="years">0</div>
+                    <div class="age-label">Years Old</div>
+                </div>
+                <div class="details-grid">
+                    <div class="detail-box">
+                        <div class="detail-value" id="months">0</div>
+                        <div class="detail-label">Months</div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="detail-value" id="days">0</div>
+                        <div class="detail-label">Days</div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="detail-value" id="hours">0</div>
+                        <div class="detail-label">Hours</div>
                     </div>
                 </div>
+                <div class="next-birthday" id="nextBday"></div>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
-            </div>
-            <div class="history" id="history"></div>
         </div>
     </main>
     <script>
@@ -310,58 +301,34 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+        function calculate() {
+            const birth = new Date(document.getElementById('birthdate').value);
+            if (isNaN(birth)) { alert('Please enter a valid date'); return; }
+            const now = new Date();
 
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
-        }
+            let years = now.getFullYear() - birth.getFullYear();
+            let months = now.getMonth() - birth.getMonth();
+            let days = now.getDate() - birth.getDate();
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+            if (days < 0) { months--; days += new Date(now.getFullYear(), now.getMonth(), 0).getDate(); }
+            if (months < 0) { years--; months += 12; }
 
-            try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
-            }
+            const totalDays = Math.floor((now - birth) / (1000 * 60 * 60 * 24));
+            const totalHours = Math.floor((now - birth) / (1000 * 60 * 60));
 
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = years * 12 + months;
+            document.getElementById('days').textContent = totalDays.toLocaleString();
+            document.getElementById('hours').textContent = totalHours.toLocaleString();
 
-            document.getElementById('shortUrl').value = shortUrl;
+            // Next birthday
+            let nextBday = new Date(now.getFullYear(), birth.getMonth(), birth.getDate());
+            if (nextBday < now) nextBday.setFullYear(nextBday.getFullYear() + 1);
+            const daysUntil = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+            document.getElementById('nextBday').innerHTML = `🎉 <strong>${daysUntil}</strong> days until your next birthday!`;
+
             document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
         }
-
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
-            event.target.textContent = 'Copied!';
-            setTimeout(() => event.target.textContent = 'Copy', 1500);
-        }
-
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
     </script>
 </body>
 

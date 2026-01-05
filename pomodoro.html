@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer - AIO Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+            --accent-1: #7c3aed;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+            --accent-1: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .main-content {
+            padding: 100px 2rem 40px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--accent-gradient);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1rem;
+        }
+
+        .tool-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-header p {
+            color: var(--text-secondary);
+        }
+
+        .timer-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .mode-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 500;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .mode-tab.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: white;
+        }
+
+        .timer-display {
+            font-size: 6rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 2rem 0;
+        }
+
+        .timer-label {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .ctrl-btn {
+            padding: 16px 32px;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .ctrl-btn.primary {
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .ctrl-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+        }
+
+        .ctrl-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .sessions {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .sessions-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .sessions-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-1);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
+        <button class="theme-toggle" id="themeToggle">
+            <div class="toggle-thumb"></div>
+        </button>
+    </nav>
+    <main class="main-content">
+        <a href="index.html" class="back-link">← Back to Tools</a>
+        <div class="tool-header">
+            <div class="tool-icon">🍅</div>
+            <h1>Pomodoro Timer</h1>
+            <p>Focus timer with breaks</p>
+        </div>
+        <div class="timer-card">
+            <div class="mode-tabs">
+                <button class="mode-tab active" onclick="setMode('work')">Work</button>
+                <button class="mode-tab" onclick="setMode('short')">Short Break</button>
+                <button class="mode-tab" onclick="setMode('long')">Long Break</button>
+            </div>
+            <div class="timer-display" id="display">25:00</div>
+            <div class="timer-label" id="label">Focus Time</div>
+            <div class="controls">
+                <button class="ctrl-btn primary" id="startBtn" onclick="toggleTimer()">Start</button>
+                <button class="ctrl-btn secondary" onclick="resetTimer()">Reset</button>
+            </div>
+            <div class="sessions">
+                <div class="sessions-label">Completed Sessions</div>
+                <div class="sessions-count" id="sessions">0</div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.getElementById('themeToggle').onclick = () => {
+            const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.dataset.theme = t;
+            localStorage.setItem('theme', t);
+        };
+        document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
+
+        const times = { work: 25 * 60, short: 5 * 60, long: 15 * 60 };
+        const labels = { work: 'Focus Time', short: 'Short Break', long: 'Long Break' };
+        let mode = 'work', timeLeft = times.work, running = false, interval = null, sessions = 0;
+
+        function setMode(m) {
+            mode = m;
+            timeLeft = times[m];
+            running = false;
+            clearInterval(interval);
+            document.getElementById('startBtn').textContent = 'Start';
+            document.getElementById('label').textContent = labels[m];
+            updateDisplay();
+            document.querySelectorAll('.mode-tab').forEach((t, i) => t.classList.toggle('active', ['work', 'short', 'long'][i] === m));
+        }
+
+        function updateDisplay() {
+            const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+            const secs = (timeLeft % 60).toString().padStart(2, '0');
+            document.getElementById('display').textContent = `${mins}:${secs}`;
+        }
+
+        function toggleTimer() {
+            if (running) {
+                clearInterval(interval);
+                document.getElementById('startBtn').textContent = 'Start';
+            } else {
+                interval = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(interval);
+                        running = false;
+                        if (mode === 'work') { sessions++; document.getElementById('sessions').textContent = sessions; }
+                        new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdH2Onp6dnZ6enp6enp4=').play().catch(() => { });
+                        alert(mode === 'work' ? 'Time for a break!' : 'Back to work!');
+                    }
+                }, 1000);
+                document.getElementById('startBtn').textContent = 'Pause';
+            }
+            running = !running;
+        }
+
+        function resetTimer() {
+            clearInterval(interval);
+            running = false;
+            timeLeft = times[mode];
+            document.getElementById('startBtn').textContent = 'Start';
+            updateDisplay();
+        }
+    </script>
+</body>
+
+</html>

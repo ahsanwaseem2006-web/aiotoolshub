@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener - AIO Tools Hub</title>
+    <title>Regex Tester - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -16,6 +16,8 @@
             --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
             --nav-bg: rgba(255, 255, 255, 0.8);
             --bg-secondary: #fff;
+            --success: #10b981;
+            --danger: #ef4444;
         }
 
         [data-theme="dark"] {
@@ -97,7 +99,7 @@
 
         .main-content {
             padding: 100px 2rem 40px;
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -138,8 +140,8 @@
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 1.5rem;
         }
 
         .input-group {
@@ -152,117 +154,117 @@
             font-weight: 500;
         }
 
+        .regex-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .regex-row span {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+        }
+
         input {
+            flex: 1;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-family: monospace;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #7c3aed;
+        }
+
+        .flags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .flag {
+            padding: 14px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: monospace;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .flag.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: white;
+        }
+
+        textarea {
             width: 100%;
-            padding: 16px 20px;
+            min-height: 150px;
+            padding: 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--glass-border);
             border-radius: 12px;
             font-size: 1rem;
             color: var(--text-primary);
             font-family: inherit;
+            resize: vertical;
+            line-height: 1.7;
         }
 
-        input:focus {
-            outline: none;
-            border-color: #7c3aed;
+        .status {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
         }
 
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
-            transition: transform 0.3s;
+        .status.valid {
+            color: var(--success);
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .status.invalid {
+            color: var(--danger);
         }
 
         .result {
-            display: none;
-            margin-top: 2rem;
-        }
-
-        .result.show {
-            display: block;
-        }
-
-        .result-box {
             background: var(--bg-secondary);
-            border-radius: 16px;
+            border-radius: 14px;
             padding: 1.5rem;
         }
 
-        .result-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+        .result h3 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
         }
 
-        .result-url {
+        .matches {
             display: flex;
-            gap: 1rem;
-            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        .result-url input {
-            flex: 1;
+        .match {
+            padding: 8px 14px;
+            background: rgba(124, 58, 237, 0.2);
+            border-radius: 8px;
             font-family: monospace;
         }
 
-        .copy-btn {
-            padding: 16px 24px;
-            background: var(--accent-gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
+        .highlighted {
+            line-height: 1.8;
         }
 
-        .note {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background: rgba(124, 58, 237, 0.1);
-            border-radius: 12px;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .history {
-            margin-top: 2rem;
-        }
-
-        .history h3 {
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            color: var(--text-secondary);
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .history-item .original {
-            color: var(--text-secondary);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 200px;
+        .highlighted mark {
+            background: rgba(124, 58, 237, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: inherit;
         }
     </style>
 </head>
@@ -277,30 +279,36 @@
     <main class="main-content">
         <a href="index.html" class="back-link">← Back to Tools</a>
         <div class="tool-header">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Shortener</h1>
-            <p>Create short, memorable links</p>
+            <div class="tool-icon">🔍</div>
+            <h1>Regex Tester</h1>
+            <p>Test regular expressions in real-time</p>
         </div>
         <div class="tool-card">
             <div class="input-group">
-                <label>Enter Long URL</label>
-                <input type="url" id="longUrl" placeholder="https://example.com/very/long/url/here">
-            </div>
-            <button class="btn" onclick="shortenUrl()">Shorten URL</button>
-            <div class="result" id="result">
-                <div class="result-box">
-                    <div class="result-label">Your shortened URL</div>
-                    <div class="result-url">
-                        <input type="text" id="shortUrl" readonly>
-                        <button class="copy-btn" onclick="copyUrl()">Copy</button>
+                <label>Regular Expression</label>
+                <div class="regex-row">
+                    <span>/</span>
+                    <input type="text" id="regex" value="\w+" placeholder="Enter regex pattern">
+                    <span>/</span>
+                    <div class="flags">
+                        <button class="flag active" data-flag="g">g</button>
+                        <button class="flag" data-flag="i">i</button>
+                        <button class="flag" data-flag="m">m</button>
                     </div>
                 </div>
+                <div class="status" id="status"></div>
             </div>
-            <div class="note">
-                💡 <strong>Note:</strong> This creates a simulated short URL for demonstration. For production use,
-                integrate with services like Bitly, TinyURL, or your own backend.
+            <div class="input-group">
+                <label>Test String</label>
+                <textarea
+                    id="testString">Hello World! This is a test string with numbers 123 and special chars @#$.</textarea>
             </div>
-            <div class="history" id="history"></div>
+            <div class="result">
+                <h3>📋 Matches (<span id="matchCount">0</span>)</h3>
+                <div class="matches" id="matches"></div>
+                <h3 style="margin-top: 1.5rem;">🎨 Highlighted</h3>
+                <div class="highlighted" id="highlighted"></div>
+            </div>
         </div>
     </main>
     <script>
@@ -310,58 +318,54 @@
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
-        let history = JSON.parse(localStorage.getItem('urlHistory') || '[]');
+        const flags = { g: true, i: false, m: false };
+        document.querySelectorAll('.flag').forEach(btn => {
+            btn.onclick = () => {
+                btn.classList.toggle('active');
+                flags[btn.dataset.flag] = btn.classList.contains('active');
+                testRegex();
+            };
+        });
 
-        function generateShortCode() {
-            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let code = '';
-            for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
-            return code;
-        }
+        const regexInput = document.getElementById('regex');
+        const testString = document.getElementById('testString');
+        const status = document.getElementById('status');
+        const matchesDiv = document.getElementById('matches');
+        const matchCount = document.getElementById('matchCount');
+        const highlighted = document.getElementById('highlighted');
 
-        function shortenUrl() {
-            const longUrl = document.getElementById('longUrl').value.trim();
-            if (!longUrl) { alert('Please enter a URL'); return; }
+        function testRegex() {
+            const pattern = regexInput.value;
+            const text = testString.value;
+            const flagStr = Object.entries(flags).filter(([, v]) => v).map(([k]) => k).join('');
 
             try {
-                new URL(longUrl);
-            } catch {
-                alert('Please enter a valid URL'); return;
+                const regex = new RegExp(pattern, flagStr);
+                status.textContent = '✓ Valid regex';
+                status.className = 'status valid';
+
+                const matches = [...text.matchAll(new RegExp(pattern, flagStr.includes('g') ? flagStr : flagStr + 'g'))];
+                matchCount.textContent = matches.length;
+                matchesDiv.innerHTML = matches.map(m => `<span class="match">${m[0]}</span>`).join('');
+
+                // Highlight
+                let result = text;
+                if (pattern) {
+                    result = text.replace(new RegExp(pattern, flagStr.includes('g') ? flagStr : flagStr + 'g'), '<mark>$&</mark>');
+                }
+                highlighted.innerHTML = result;
+            } catch (e) {
+                status.textContent = '✗ ' + e.message;
+                status.className = 'status invalid';
+                matchesDiv.innerHTML = '';
+                matchCount.textContent = '0';
+                highlighted.textContent = text;
             }
-
-            const shortCode = generateShortCode();
-            const shortUrl = `aio.link/${shortCode}`;
-
-            document.getElementById('shortUrl').value = shortUrl;
-            document.getElementById('result').classList.add('show');
-
-            // Add to history
-            history.unshift({ long: longUrl, short: shortUrl });
-            if (history.length > 5) history.pop();
-            localStorage.setItem('urlHistory', JSON.stringify(history));
-            updateHistory();
         }
 
-        function copyUrl() {
-            navigator.clipboard.writeText(document.getElementById('shortUrl').value);
-            event.target.textContent = 'Copied!';
-            setTimeout(() => event.target.textContent = 'Copy', 1500);
-        }
-
-        function updateHistory() {
-            if (history.length === 0) return;
-            document.getElementById('history').innerHTML = `
-                <h3>📜 Recent URLs</h3>
-                ${history.map(h => `
-                    <div class="history-item">
-                        <span class="original" title="${h.long}">${h.long}</span>
-                        <span>${h.short}</span>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        updateHistory();
+        regexInput.oninput = testRegex;
+        testString.oninput = testRegex;
+        testRegex();
     </script>
 </body>
 
