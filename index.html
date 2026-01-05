@@ -1,680 +1,1138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <script>(function(s){s.dataset.zone='10003093',s.src='https://forfrogadiertor.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-    <!-- Privacy-friendly analytics by Plausible -->
-<script async src="https://plausible.io/js/pa-meAaC8hGET7p81iXDwj4_.js"></script>
-<script>
-  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
-  plausible.init()
-</script>
-  
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIO Tools Hub</title>
+    <title>AIO Tools Hub - Free Online Tools for Everyone</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-    <meta name="description" content="Free online tools including BMI calculator, image resizer, URL shortener, password generator, time zone converter, and image format changer and many more.">
-    <meta name="keywords" content="online tools, free tools, BMI calculator, image resizer, URL shortener, password generator, time zone converter, image format changer, qr code generator, json, aiotools, aiotoolshub, unit converter">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AIO Tools Hub - Your ultimate destination for 30+ free online tools. Image editing, calculators, developer tools, converters, and more. Fast, secure, and completely free.">
+    <meta name="keywords" content="online tools, free tools, image resizer, calculator, password generator, QR code, JSON formatter, unit converter, developer tools">
+    <meta name="author" content="AIO Tools Hub">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="AIO Tools Hub - Free Online Tools">
+    <meta property="og:description" content="30+ free online tools for everyone. Fast, secure, and no signup required.">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Plausible Analytics -->
+    <script defer data-domain="aiotoolshub.com" src="https://plausible.io/js/script.js"></script>
+    
     <style>
-        /* Base Styles */
+        /* ========== CSS VARIABLES ========== */
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #9b59b6;
-            --success: #2ecc71;
-            --warning: #f39c12;
-            --danger: #e74c3c;
-            --light: #f7f9fc;
-            --dark: #2c3e50;
-            --gray: #95a5a6;
+            /* Light Theme */
+            --bg-primary: #f0f4ff;
+            --bg-secondary: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f0f4ff 0%, #e8e0ff 50%, #fce4ff 100%);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --text-muted: #7a7a9a;
+            --accent-1: #7c3aed;
+            --accent-2: #06b6d4;
+            --accent-3: #f43f5e;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --card-hover-glow: 0 0 30px rgba(124, 58, 237, 0.3);
+            --nav-bg: rgba(255, 255, 255, 0.8);
         }
-        
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a1a;
+            --bg-secondary: #12122a;
+            --bg-gradient: linear-gradient(135deg, #0a0a1a 0%, #1a1035 50%, #0d1520 100%);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #b4b4d4;
+            --text-muted: #7a7a9a;
+            --accent-1: #a78bfa;
+            --accent-2: #22d3ee;
+            --accent-3: #fb7185;
+            --accent-gradient: linear-gradient(135deg, #a78bfa, #22d3ee);
+            --card-hover-glow: 0 0 40px rgba(167, 139, 250, 0.4);
+            --nav-bg: rgba(10, 10, 26, 0.9);
+        }
+
+        /* ========== RESET & BASE ========== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
             line-height: 1.6;
-            color: #333;
-            background-color: #f7f9fc;
-            padding: 0;
-            margin: 0;
+            transition: background 0.5s ease, color 0.3s ease;
         }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
-        
-        /* Header Styles */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
+
+        /* ========== ANIMATED BACKGROUND ========== */
+        .bg-shapes {
+            position: fixed;
             top: 0;
-            z-index: 100;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
         }
-        
-        .header-content {
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .bg-shape:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-1);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-shape:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-2);
+            bottom: -150px;
+            left: -150px;
+            animation-delay: -7s;
+        }
+
+        .bg-shape:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-3);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(20px, 30px) scale(1.02); }
+        }
+
+        /* ========== NAVIGATION ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .logo-container {
+
+        .nav-logo {
             display: flex;
             align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-img {
-            height: 50px;
-            width: auto;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-        
-        .logo-text {
-            font-size: 1.8rem;
+            gap: 12px;
             font-weight: 700;
+            font-size: 1.5rem;
         }
-        
-        .logo-text span {
-            color: var(--accent);
+
+        .nav-logo img {
+            height: 40px;
+            width: 40px;
+            border-radius: 10px;
         }
-        
-        nav ul {
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
             display: flex;
+            align-items: center;
+            gap: 2rem;
             list-style: none;
         }
-        
-        nav ul li {
-            margin-left: 1.5rem;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
+
+        .nav-links a {
             font-weight: 500;
-            transition: color 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+            position: relative;
         }
-        
-        nav ul li a:hover {
-            color: var(--accent);
-            background-color: rgba(255, 255, 255, 0.1);
+
+        .nav-links a:hover {
+            color: var(--accent-1);
         }
-        
-        /* Hero Section */
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-1);
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
+        .toggle-thumb::before {
+            content: '🌙';
+        }
+
+        [data-theme="light"] .toggle-thumb::before {
+            content: '☀️';
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* ========== HERO SECTION ========== */
         .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(52, 152, 219, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c3e50"/><path d="M0 0L100 100M100 0L0 100" stroke="%233498db" stroke-width="1"/></svg>');
-            color: white;
-            padding: 4rem 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 2rem 80px;
+            position: relative;
+            z-index: 1;
             text-align: center;
         }
-        
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero-badge .count {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
         .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
         }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
+
+        .hero h1 .gradient-text {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
-            text-decoration: none;
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border-radius: 12px;
             font-weight: 600;
-            font-size: 1.1rem;
-            transition: background-color 0.3s, transform 0.3s;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .cta-button:hover {
-            background-color: #8e44ad;
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-primary:hover {
             transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(124, 58, 237, 0.5);
         }
-        
-        /* Tools Section */
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-1);
+            background: var(--glass-bg);
+        }
+
+        /* Floating Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            animation: floatIcon 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 30%; right: 15%; animation-delay: 1s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .floating-icon:nth-child(4) { bottom: 20%; right: 10%; animation-delay: 3s; }
+        .floating-icon:nth-child(5) { top: 50%; left: 5%; animation-delay: 4s; }
+        .floating-icon:nth-child(6) { top: 40%; right: 5%; animation-delay: 5s; }
+
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        /* ========== TOOLS SECTION ========== */
         .tools-section {
-            padding: 4rem 0;
+            padding: 80px 2rem;
+            position: relative;
+            z-index: 1;
         }
-        
-        .section-title {
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
             text-align: center;
             margin-bottom: 3rem;
-            color: var(--primary);
-            font-size: 2.2rem;
         }
-        
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Search & Filters */
+        .tools-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 24px 16px 56px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-1);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--text-muted);
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-1);
+            color: var(--accent-1);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Tools Grid */
         .tools-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 1.5rem;
         }
-        
+
         .tool-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.75rem;
             cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
         .tool-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            border-color: var(--accent-1);
+            box-shadow: var(--card-hover-glow);
         }
-        
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
         .tool-icon {
-            height: 120px;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            width: 56px;
+            height: 56px;
+            background: var(--accent-gradient);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            color: white;
+            font-size: 1.75rem;
+            margin-bottom: 1.25rem;
         }
-        
-        .tool-content {
-            padding: 1.5rem;
+
+        .tool-category-badge {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            padding: 4px 12px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-muted);
         }
-        
-        .tool-content h3 {
+
+        .tool-title {
+            font-size: 1.25rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            color: var(--primary);
+            color: var(--text-primary);
         }
-        
-        .tool-content p {
-            color: var(--gray);
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
             margin-bottom: 1rem;
         }
-        
-        .tool-button {
-            display: inline-block;
-            background-color: var(--primary);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-        
-        .tool-button:hover {
-            background-color: var(--secondary);
-        }
-        
-        /* More Tools Button */
-        .more-tools-container {
-            text-align: center;
-            margin-top: 3rem;
-        }
-        
-        .more-tools-button {
-            display: inline-block;
-            background-color: var(--warning);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: background-color 0.3s, transform 0.3s;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .more-tools-button:hover {
-            background-color: #e67e22;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-        }
-        
-        /* Features Section */
+
+        /* ========== FEATURES SECTION ========== */
         .features-section {
-            background-color: white;
-            padding: 4rem 0;
+            padding: 80px 2rem;
+            position: relative;
+            z-index: 1;
         }
-        
+
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
         }
-        
+
         .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
             text-align: center;
-            padding: 2rem 1rem;
+            transition: all 0.3s ease;
         }
-        
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-1);
+        }
+
         .feature-icon {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-        
-        /* Testimonials */
-        .testimonials-section {
-            padding: 4rem 0;
-            background: linear-gradient(135deg, #f7f9fc, #e8f4fc);
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-        
-        .testimonial-card:before {
-            content: """;
-            font-size: 4rem;
-            color: var(--secondary);
-            opacity: 0.2;
-            position: absolute;
-            top: 10px;
-            left: 20px;
-        }
-        
-        .testimonial-text {
+            font-size: 3rem;
             margin-bottom: 1.5rem;
-            font-style: italic;
         }
-        
-        .testimonial-author {
-            display: flex;
-            align-items: center;
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
-        
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--secondary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 1rem;
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
-        
-        /* Footer Styles */
-        footer {
-            background-color: var(--primary);
-            color: white;
-            padding: 3rem 0 1rem;
-        }
-        
-        .footer-content {
+
+        /* Stats */
+        .stats-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin-top: 4rem;
+            padding: 3rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
         }
-        
-        .footer-logo {
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* ========== FOOTER ========== */
+        .footer {
+            padding: 60px 2rem 30px;
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand h3 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 1rem;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: all 0.3s ease;
         }
-        
-        .footer-logo-img {
-            height: 40px;
-            width: auto;
-            border-radius: 6px;
+
+        .social-link:hover {
+            background: var(--accent-gradient);
+            border-color: transparent;
+            transform: translateY(-3px);
         }
-        
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: var(--accent);
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
         }
-        
-        .footer-section ul {
+
+        .footer-links {
             list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
         }
-        
-        .footer-section ul li {
-            margin-bottom: 0.5rem;
+
+        .footer-links a {
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
         }
-        
-        .footer-section ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s;
+
+        .footer-links a:hover {
+            color: var(--accent-1);
         }
-        
-        .footer-section ul li a:hover {
-            color: white;
-        }
-        
-        .copyright {
+
+        .footer-bottom {
             text-align: center;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
             font-size: 0.9rem;
-            color: #bbb;
         }
-        
-        /* Responsive Styles */
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tool-card {
+            animation: fadeInUp 0.6s ease both;
+        }
+
+        .tool-card:nth-child(1) { animation-delay: 0s; }
+        .tool-card:nth-child(2) { animation-delay: 0.05s; }
+        .tool-card:nth-child(3) { animation-delay: 0.1s; }
+        .tool-card:nth-child(4) { animation-delay: 0.15s; }
+        .tool-card:nth-child(5) { animation-delay: 0.2s; }
+        .tool-card:nth-child(6) { animation-delay: 0.25s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-content {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--nav-bg);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
+                padding: 1.5rem;
+                gap: 1rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.1rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
                 text-align: center;
             }
-            
-            .logo-container {
+
+            .social-links {
                 justify-content: center;
-                margin-bottom: 1rem;
             }
-            
-            nav ul {
-                margin-top: 1rem;
-                justify-content: center;
-                flex-wrap: wrap;
+
+            .category-filters {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 1rem;
+                -webkit-overflow-scrolling: touch;
             }
-            
-            nav ul li {
-                margin: 0 0.5rem 0.5rem;
+
+            .filter-btn {
+                flex-shrink: 0;
             }
-            
-            .hero h1 {
-                font-size: 2.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0.75rem 1rem;
             }
-            
-            .hero p {
-                font-size: 1rem;
+
+            .hero {
+                padding: 100px 1rem 60px;
             }
-            
-            .footer-logo {
-                justify-content: center;
+
+            .tools-section, .features-section {
+                padding: 60px 1rem;
+            }
+
+            .tool-card {
+                padding: 1.5rem;
+            }
+
+            .stats-container {
+                padding: 2rem 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo-container">
-                    <!-- Logo with link to homepage -->
-                    <a href="index.html">
-                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="logo-img">
-                    </a>
-                    <div class="logo-text">AIO <span>Tools Hub</span></div>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#tools">Tools</a></li>
-                        <li><a href="#features">Features</a></li>
-                        <li><a href="#testimonials">Testimonials</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="https://otieu.com/4/10003107">Latest</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </header>
+    <!-- Animated Background -->
+    <div class="bg-shapes">
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+        <div class="bg-shape"></div>
+    </div>
 
-    <section class="hero" id="home">
-        <div class="container">
-            <h1>All-in-One Free Online Tools</h1>
-            <p>Streamline your workflow with our comprehensive collection of free online tools. From image editing to health calculators, we've got everything you need to boost productivity.</p>
-            <a href="#tools" class="cta-button">Explore Tools</a>
-        </div>
-    </section>
-
-    <section class="tools-section" id="tools">
-        <div class="container">
-            <h2 class="section-title">Our Powerful Tools</h2>
-            <div class="tools-grid">
-                <!-- Existing Tools -->
-                <div class="tool-card" onclick="window.location.href='bmi-calculator.html'">
-                    <div class="tool-icon">⚖️</div>
-                    <div class="tool-content">
-                        <h3>BMI Calculator</h3>
-                        <p>Calculate your Body Mass Index and understand your weight category with our easy-to-use calculator.</p>
-                        <a href="bmi-calculator.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='image-resizer.html'">
-                    <div class="tool-icon">🖼️</div>
-                    <div class="tool-content">
-                        <h3>Image Resizer</h3>
-                        <p>Resize your images to any dimension while maintaining quality. Perfect for social media and websites.</p>
-                        <a href="image-resizer.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='image-format-changer.html'">
-                    <div class="tool-icon">🔄</div>
-                    <div class="tool-content">
-                        <h3>Image Format Changer</h3>
-                        <p>Convert images between different formats like JPG, PNG, WEBP, and more with just a few clicks.</p>
-                        <a href="image-format-changer.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='password-generator.html'">
-                    <div class="tool-icon">🔒</div>
-                    <div class="tool-content">
-                        <h3>Password Generator</h3>
-                        <p>Create strong, secure passwords with customizable length and character options for better security.</p>
-                        <a href="password-generator.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='url-shortener.html'">
-                    <div class="tool-icon">🔗</div>
-                    <div class="tool-content">
-                        <h3>URL Shortener</h3>
-                        <p>Shorten long URLs to make them more shareable. Track clicks and manage your shortened links.</p>
-                        <a href="url-shortener.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='time-zone-converter.html'">
-                    <div class="tool-icon">🌐</div>
-                    <div class="tool-content">
-                        <h3>Time Zone Converter</h3>
-                        <p>Convert time between different time zones worldwide. Perfect for scheduling international meetings.</p>
-                        <a href="time-zone-converter.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <!-- New Technical Tools -->
-                <div class="tool-card" onclick="window.location.href='scientific-calculator.html'">
-                    <div class="tool-icon">🧮</div>
-                    <div class="tool-content">
-                        <h3>Scientific Calculator</h3>
-                        <p>Advanced calculator with trigonometric, logarithmic, and engineering functions for complex calculations.</p>
-                        <a href="scientific-calculator.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='qr-generator.html'">
-                    <div class="tool-icon">📱</div>
-                    <div class="tool-content">
-                        <h3>QR Code Generator</h3>
-                        <p>Create custom QR codes for URLs, text, WiFi, contacts, and more with customizable colors and sizes.</p>
-                        <a href="qr-generator.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='json-formatter.html'">
-                    <div class="tool-icon">🔧</div>
-                    <div class="tool-content">
-                        <h3>JSON Formatter & Validator</h3>
-                        <p>Beautify, validate, and convert JSON data with syntax highlighting and error detection.</p>
-                        <a href="json-formatter.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-                
-                <div class="tool-card" onclick="window.location.href='unit-converter.html'">
-                    <div class="tool-icon">📐</div>
-                    <div class="tool-content">
-                        <h3>Advanced Unit Converter</h3>
-                        <p>Convert engineering units, data storage, scientific constants, and create custom conversions.</p>
-                        <a href="unit-converter.html" class="tool-button">Use Tool</a>
-                    </div>
-                </div>
-            </div>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <img src="images/logo.png" alt="AIO Tools Hub" onerror="this.style.display='none'">
+                <span>AIO Tools Hub</span>
+            </a>
             
-            <!-- More Tools Button -->
-            <div class="more-tools-container">
-                <a href="https://otieu.com/4/10006540" class="more-tools-button">More Tools</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#tools">Tools</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <div class="toggle-thumb"></div>
+                </button>
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <span class="floating-icon">🎨</span>
+            <span class="floating-icon">🔧</span>
+            <span class="floating-icon">📊</span>
+            <span class="floating-icon">🔐</span>
+            <span class="floating-icon">⚡</span>
+            <span class="floating-icon">💻</span>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span>✨</span>
+                <span><span class="count">30+</span> Free Tools Available</span>
+            </div>
+            <h1>All Your <span class="gradient-text">Online Tools</span> in One Place</h1>
+            <p class="hero-description">
+                Boost your productivity with our powerful collection of free tools. 
+                From image editing to developer utilities – fast, secure, and always free.
+            </p>
+            <div class="hero-cta">
+                <a href="#tools" class="btn btn-primary">
+                    <span>🚀</span> Explore Tools
+                </a>
+                <a href="#features" class="btn btn-secondary">
+                    Learn More
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- Tools Section -->
+    <section class="tools-section" id="tools">
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Discover Our Tools</h2>
+                <p class="section-subtitle">Find the perfect tool for your needs</p>
+            </div>
+
+            <div class="tools-controls">
+                <div class="search-container">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search tools...">
+                </div>
+                
+                <div class="category-filters" id="categoryFilters">
+                    <button class="filter-btn active" data-category="all">
+                        <span>🎯</span> All Tools
+                    </button>
+                    <button class="filter-btn" data-category="image">
+                        <span>🎨</span> Image
+                    </button>
+                    <button class="filter-btn" data-category="calculator">
+                        <span>🔢</span> Calculators
+                    </button>
+                    <button class="filter-btn" data-category="security">
+                        <span>🔐</span> Security
+                    </button>
+                    <button class="filter-btn" data-category="text">
+                        <span>📝</span> Text
+                    </button>
+                    <button class="filter-btn" data-category="developer">
+                        <span>💻</span> Developer
+                    </button>
+                    <button class="filter-btn" data-category="converter">
+                        <span>⚙️</span> Converters
+                    </button>
+                    <button class="filter-btn" data-category="data">
+                        <span>📊</span> Data
+                    </button>
+                    <button class="filter-btn" data-category="productivity">
+                        <span>🎯</span> Productivity
+                    </button>
+                </div>
+            </div>
+
+            <div class="tools-grid" id="toolsGrid">
+                <!-- Tools will be dynamically inserted here -->
+            </div>
+
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-icon">🔍</div>
+                <h3>No tools found</h3>
+                <p>Try adjusting your search or filter criteria</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
     <section class="features-section" id="features">
-        <div class="container">
-            <h2 class="section-title">Why Choose AIO Tools Hub?</h2>
+        <div class="section-container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose AIO Tools Hub?</h2>
+                <p class="section-subtitle">Built for speed, security, and simplicity</p>
+            </div>
+
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
-                    <h3>Fast & Efficient</h3>
-                    <p>Our tools are optimized for speed, delivering results in seconds without compromising quality.</p>
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>All tools run directly in your browser. No uploads, no waiting. Get instant results every time.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">🔒</div>
-                    <h3>Secure & Private</h3>
-                    <p>Your data never leaves your browser. We prioritize your privacy and security above all else.</p>
+                    <h3>100% Secure</h3>
+                    <p>Your data never leaves your device. Everything is processed locally for maximum privacy.</p>
                 </div>
-                
                 <div class="feature-card">
-                    <div class="feature-icon">💯</div>
-                    <h3>100% Free</h3>
-                    <p>All our tools are completely free to use with no hidden fees or subscription requirements.</p>
+                    <div class="feature-icon">💎</div>
+                    <h3>Completely Free</h3>
+                    <p>No hidden fees, no subscriptions, no sign-up required. All tools are free forever.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
-                    <h3>Mobile Friendly</h3>
-                    <p>Access our tools from any device - desktop, tablet, or mobile - with full functionality.</p>
+                    <h3>Works Everywhere</h3>
+                    <p>Fully responsive design. Use on desktop, tablet, or mobile with the same great experience.</p>
+                </div>
+            </div>
+
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="30">30+</div>
+                    <div class="stat-label">Free Tools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="8">8</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Free Forever</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Data Collected</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="testimonials-section" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">What Our Users Say</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "The BMI calculator helped me track my fitness journey accurately. The detailed explanations made it easy to understand my results."
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>AIO <span>Tools Hub</span></h3>
+                    <p>Your ultimate destination for free online tools. We're committed to providing fast, secure, and easy-to-use tools for everyone.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Twitter">𝕏</a>
+                        <a href="#" class="social-link" aria-label="GitHub">⌨</a>
+                        <a href="#" class="social-link" aria-label="Email">✉</a>
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">JS</div>
-                        <div>
-                            <strong>John Smith</strong>
-                            <div>Fitness Enthusiast</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "As a social media manager, the image tools save me hours every week. The quality is always perfect!"
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">SR</div>
-                        <div>
-                            <strong>Sarah Johnson</strong>
-                            <div>Social Media Manager</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-text">
-                        "The password generator is excellent for creating secure passwords for all my accounts. Simple and effective!"
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">MD</div>
-                        <div>
-                            <strong>Michael Davis</strong>
-                            <div>Freelance Designer</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="AIO Tools Hub Logo" class="footer-logo-img">
-                        <h3>AIO Tools Hub</h3>
-                    </div>
-                    <p>Your one-stop destination for all essential online tools. Free, fast, and reliable.</p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Quick Tools</h3>
-                    <ul>
-                        <li><a href="bmi-calculator.html">BMI Calculator</a></li>
+                    <h4>Image Tools</h4>
+                    <ul class="footer-links">
                         <li><a href="image-resizer.html">Image Resizer</a></li>
-                        <li><a href="image-format-changer.html">Image Format Changer</a></li>
-                        <li><a href="password-generator.html">Password Generator</a></li>
+                        <li><a href="image-format-changer.html">Format Converter</a></li>
+                        <li><a href="image-compressor.html">Image Compressor</a></li>
+                        <li><a href="background-remover.html">Background Remover</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>More Tools</h3>
-                    <ul>
-                        <li><a href="url-shortener.html">URL Shortener</a></li>
-                        <li><a href="time-zone-converter.html">Time Zone Converter</a></li>
-                        <li><a href="scientific-calculator.html">Scientific Calculator</a></li>
-                        <li><a href="qr-generator.html">QR Code Generator</a></li>
+                    <h4>Developer</h4>
+                    <ul class="footer-links">
+                        <li><a href="json-formatter.html">JSON Formatter</a></li>
+                        <li><a href="qr-generator.html">QR Generator</a></li>
+                        <li><a href="color-picker.html">Color Picker</a></li>
+                        <li><a href="base64.html">Base64 Tool</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h3>Connect</h3>
-                    <ul>
+                    <h4>Company</h4>
+                    <ul class="footer-links">
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="privacy.html">Privacy Policy</a></li>
@@ -682,74 +1140,203 @@
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 AIO Tools Hub. All rights reserved. | All tools are free to use for personal and commercial purposes.</p>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 AIO Tools Hub. All rights reserved. Made with ❤️ for the internet.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
+        // ========== TOOLS DATA ==========
+        const tools = [
+            // Image Tools
+            { id: 'image-resizer', name: 'Image Resizer', description: 'Resize images to any dimension while maintaining quality. Perfect for social media.', icon: '🖼️', category: 'image', url: 'image-resizer.html' },
+            { id: 'image-format-changer', name: 'Image Format Converter', description: 'Convert images between JPG, PNG, WEBP, GIF, and more formats instantly.', icon: '🔄', category: 'image', url: 'image-format-changer.html' },
+            { id: 'image-compressor', name: 'Image Compressor', description: 'Compress images without losing quality. Reduce file size for faster loading.', icon: '📦', category: 'image', url: 'image-compressor.html' },
+            { id: 'background-remover', name: 'Background Remover', description: 'Remove backgrounds from images automatically using AI-powered detection.', icon: '✂️', category: 'image', url: 'background-remover.html' },
+            { id: 'image-cropper', name: 'Image Cropper', description: 'Crop images with custom dimensions or preset aspect ratios easily.', icon: '📐', category: 'image', url: 'image-cropper.html' },
+            
+            // Calculators
+            { id: 'bmi-calculator', name: 'BMI Calculator', description: 'Calculate your Body Mass Index and understand your weight category.', icon: '⚖️', category: 'calculator', url: 'bmi-calculator.html' },
+            { id: 'scientific-calculator', name: 'Scientific Calculator', description: 'Advanced calculator with trigonometric, logarithmic, and engineering functions.', icon: '🧮', category: 'calculator', url: 'scientific-calculator.html' },
+            { id: 'loan-calculator', name: 'Loan Calculator', description: 'Calculate monthly payments, interest, and amortization for any loan.', icon: '💰', category: 'calculator', url: 'loan-calculator.html' },
+            { id: 'age-calculator', name: 'Age Calculator', description: 'Calculate exact age in years, months, days, hours, and minutes.', icon: '🎂', category: 'calculator', url: 'age-calculator.html' },
+            { id: 'percentage-calculator', name: 'Percentage Calculator', description: 'Calculate percentages, increases, decreases, and differences easily.', icon: '📊', category: 'calculator', url: 'percentage-calculator.html' },
+            { id: 'tip-calculator', name: 'Tip Calculator', description: 'Calculate tips and split bills among friends quickly.', icon: '💵', category: 'calculator', url: 'tip-calculator.html' },
+            
+            // Security Tools
+            { id: 'password-generator', name: 'Password Generator', description: 'Generate strong, secure passwords with customizable options.', icon: '🔑', category: 'security', url: 'password-generator.html' },
+            { id: 'hash-generator', name: 'Hash Generator', description: 'Generate MD5, SHA-1, SHA-256, and other hash values for text or files.', icon: '🔐', category: 'security', url: 'hash-generator.html' },
+            { id: 'password-strength', name: 'Password Strength Checker', description: 'Check how secure your password is and get improvement tips.', icon: '🛡️', category: 'security', url: 'password-strength.html' },
+            
+            // Text & Content
+            { id: 'word-counter', name: 'Word Counter', description: 'Count words, characters, sentences, and paragraphs in your text.', icon: '📝', category: 'text', url: 'word-counter.html' },
+            { id: 'lorem-ipsum', name: 'Lorem Ipsum Generator', description: 'Generate placeholder text for your designs and mockups.', icon: '📄', category: 'text', url: 'lorem-ipsum.html' },
+            { id: 'case-converter', name: 'Text Case Converter', description: 'Convert text to UPPER, lower, Title, Sentence, or aLtErNaTiNg case.', icon: '🔤', category: 'text', url: 'case-converter.html' },
+            { id: 'markdown-previewer', name: 'Markdown Previewer', description: 'Write markdown and see the formatted preview in real-time.', icon: '📋', category: 'text', url: 'markdown-previewer.html' },
+            
+            // Developer Tools
+            { id: 'json-formatter', name: 'JSON Formatter', description: 'Beautify, validate, and minify JSON data with syntax highlighting.', icon: '{ }', category: 'developer', url: 'json-formatter.html' },
+            { id: 'qr-generator', name: 'QR Code Generator', description: 'Create customizable QR codes for URLs, text, WiFi, and more.', icon: '📱', category: 'developer', url: 'qr-generator.html' },
+            { id: 'color-picker', name: 'Color Picker', description: 'Pick colors and get HEX, RGB, HSL values with a visual palette.', icon: '🎨', category: 'developer', url: 'color-picker.html' },
+            { id: 'base64', name: 'Base64 Encoder/Decoder', description: 'Encode or decode text and files to/from Base64 format.', icon: '🔣', category: 'developer', url: 'base64.html' },
+            { id: 'uuid-generator', name: 'UUID Generator', description: 'Generate unique UUIDs (v1, v4) for your applications.', icon: '🆔', category: 'developer', url: 'uuid-generator.html' },
+            { id: 'regex-tester', name: 'Regex Tester', description: 'Test and debug regular expressions with real-time matching.', icon: '🔍', category: 'developer', url: 'regex-tester.html' },
+            
+            // Converters
+            { id: 'time-zone-converter', name: 'Time Zone Converter', description: 'Convert time between different time zones worldwide.', icon: '🌍', category: 'converter', url: 'time-zone-converter.html' },
+            { id: 'unit-converter', name: 'Unit Converter', description: 'Convert length, weight, temperature, volume, and more units.', icon: '📏', category: 'converter', url: 'unit-converter.html' },
+            { id: 'url-shortener', name: 'URL Shortener', description: 'Shorten long URLs to make them easier to share.', icon: '🔗', category: 'converter', url: 'url-shortener.html' },
+            { id: 'currency-converter', name: 'Currency Converter', description: 'Convert between world currencies with live exchange rates.', icon: '💱', category: 'converter', url: 'currency-converter.html' },
+            { id: 'number-base', name: 'Number Base Converter', description: 'Convert numbers between binary, decimal, hexadecimal, and octal.', icon: '🔢', category: 'converter', url: 'number-base.html' },
+            
+            // Data Tools
+            { id: 'csv-json', name: 'CSV to JSON', description: 'Convert CSV data to JSON format instantly.', icon: '📊', category: 'data', url: 'csv-json.html' },
+            { id: 'json-csv', name: 'JSON to CSV', description: 'Convert JSON data to CSV format for spreadsheets.', icon: '📈', category: 'data', url: 'json-csv.html' },
+            
+            // Productivity
+            { id: 'pomodoro', name: 'Pomodoro Timer', description: 'Focus timer with customizable work and break intervals.', icon: '🍅', category: 'productivity', url: 'pomodoro.html' },
+            { id: 'notes', name: 'Quick Notes', description: 'Take quick notes that save locally in your browser.', icon: '📒', category: 'productivity', url: 'notes.html' },
+            { id: 'countdown', name: 'Countdown Timer', description: 'Create countdown timers to any date or event.', icon: '⏰', category: 'productivity', url: 'countdown.html' },
+        ];
+
+        // ========== DOM ELEMENTS ==========
+        const toolsGrid = document.getElementById('toolsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilters = document.getElementById('categoryFilters');
+        const noResults = document.getElementById('noResults');
+        const themeToggle = document.getElementById('themeToggle');
+        const navbar = document.getElementById('navbar');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        // ========== RENDER TOOLS ==========
+        function renderTools(toolsToRender) {
+            if (toolsToRender.length === 0) {
+                toolsGrid.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            toolsGrid.innerHTML = toolsToRender.map((tool, index) => `
+                <div class="tool-card" onclick="window.location.href='${tool.url}'" style="animation-delay: ${index * 0.05}s">
+                    <div class="tool-icon">${tool.icon}</div>
+                    <span class="tool-category-badge">${getCategoryLabel(tool.category)}</span>
+                    <h3 class="tool-title">${tool.name}</h3>
+                    <p class="tool-description">${tool.description}</p>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                image: 'Image',
+                calculator: 'Calculator',
+                security: 'Security',
+                text: 'Text',
+                developer: 'Developer',
+                converter: 'Converter',
+                data: 'Data',
+                productivity: 'Productivity'
+            };
+            return labels[category] || category;
+        }
+
+        // ========== FILTERING ==========
+        let currentCategory = 'all';
+        let searchQuery = '';
+
+        function filterTools() {
+            let filtered = tools;
+
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(tool => tool.category === currentCategory);
+            }
+
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                filtered = filtered.filter(tool => 
+                    tool.name.toLowerCase().includes(query) || 
+                    tool.description.toLowerCase().includes(query)
+                );
+            }
+
+            renderTools(filtered);
+        }
+
+        // Search input handler
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            filterTools();
+        });
+
+        // Category filter handler
+        categoryFilters.addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = btn.dataset.category;
+            filterTools();
+        });
+
+        // ========== THEME TOGGLE ==========
+        function setTheme(theme) {
+            document.documentElement.dataset.theme = theme;
+            localStorage.setItem('theme', theme);
+        }
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.dataset.theme;
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        setTheme(savedTheme);
+
+        // ========== NAVBAR SCROLL ==========
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ========== MOBILE MENU ==========
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ========== SMOOTH SCROLL ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const position = target.offsetTop - offset;
                     window.scrollTo({
-                        top: targetElement.offsetTop - 80,
+                        top: position,
                         behavior: 'smooth'
                     });
                 }
             });
         });
-        
-        // Tool card interaction
-        document.querySelectorAll('.tool-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-        
-        // Simple animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        document.querySelectorAll('.tool-card, .feature-card, .testimonial-card').forEach(el => {
-            el.style.opacity = 0;
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
+
+        // ========== INITIAL RENDER ==========
+        renderTools(tools);
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
