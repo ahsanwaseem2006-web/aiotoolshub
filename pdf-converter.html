@@ -656,6 +656,19 @@
                                 id="qualityValue">7</span></div>
                         <input type="range" id="qualitySlider" min="1" max="10" value="7">
                     </div>
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Resolution (DPI)</span><span class="setting-value"
+                                id="dpiValue">100 DPI</span></div>
+                        <input type="range" id="dpiSlider" min="50" max="300" value="100" step="25">
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Color Mode</span></div>
+                        <div class="color-options" id="imgColorOptions">
+                            <div class="color-option active" data-color="color">Colour</div>
+                            <div class="color-option" data-color="grayscale">Greyscale</div>
+                            <div class="color-option" data-color="bw">B&W</div>
+                        </div>
+                    </div>
                 </div>
                 <button class="btn" id="convertImageBtn" disabled>Convert to PDF</button>
             </div>
@@ -793,6 +806,10 @@
             };
         });
 
+        // Color Mode Selection for Images
+        let imgColorMode = 'color';
+        // We'll attach listeners dynamically or just in the script body below
+
         // ================= IMAGE TO PDF =================
         const imgInput = document.getElementById('imageInput');
         let imgFiles = [];
@@ -803,29 +820,77 @@
             document.getElementById('convertImageBtn').disabled = imgFiles.length === 0;
         };
 
+        // Attach listeners for img color options
+        document.querySelector('#imgColorOptions').querySelectorAll('.color-option').forEach(opt => {
+            opt.onclick = () => {
+                document.querySelector('#imgColorOptions').querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                opt.classList.add('active');
+                imgColorMode = opt.dataset.color;
+            };
+        });
+
+        const dpiSlider = document.getElementById('dpiSlider');
+        bindSlider('dpiSlider', 'dpiValue');
+
         document.getElementById('convertImageBtn').onclick = async () => {
+            if (imgFiles.length === 0) return;
             const { jsPDF } = window.jspdf;
             const pdf = new jsPDF();
+
             const quality = parseInt(document.getElementById('qualitySlider').value) / 10;
+            const dpi = parseInt(document.getElementById('dpiSlider').value);
 
             showProgress(10, 'Starting...');
 
             for (let i = 0; i < imgFiles.length; i++) {
                 showProgress(10 + (i / imgFiles.length) * 80, `Processing image ${i + 1}/${imgFiles.length}`);
+
                 const img = await loadImage(imgFiles[i]);
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
 
-                const pageWidth = pdf.internal.pageSize.getWidth();
-                const pageHeight = pdf.internal.pageSize.getHeight();
-                const ratio = img.width / img.height;
-                let w = pageWidth;
-                let h = w / ratio;
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
 
-                if (i > 0) pdf.addPage();
-                pdf.addImage(img, 'JPEG', 0, 0, w, h, undefined, 'FAST');
+                // Draw Color Mode
+                if (imgColorMode === 'grayscale' || imgColorMode === 'bw') {
+                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const data = imgData.data;
+                    for (let j = 0; j < data.length; j += 4) {
+                        const avg = (data[j] + data[j + 1] + data[j + 2]) / 3;
+                        const v = imgColorMode === 'bw' ? (avg > 128 ? 255 : 0) : avg;
+                        data[j] = data[j + 1] = data[j + 2] = v;
+                    }
+                    ctx.putImageData(imgData, 0, 0);
+                }
+
+                // Exports with quality compression
+                const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+                // Add to PDF
+                // PDF dimensions:
+                // We want to respect physical size if possible? 
+                // A4 is 210mm x 297mm.
+                // Let's just fit the image to a page of its own size based on DPI?
+                // Or allow it to fit A4? Given "Image to PDF" usually implies just wrapping image, let's use page size matching image.
+
+                const mmPerInch = 25.4;
+                const pdfWidth = (canvas.width / dpi) * mmPerInch;
+                const pdfHeight = (canvas.height / dpi) * mmPerInch;
+
+                if (i > 0) pdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'l' : 'p');
+                else {
+                    // Resize first page
+                    pdf.internal.pageSize.width = pdfWidth;
+                    pdf.internal.pageSize.height = pdfHeight;
+                }
+
+                pdf.addImage(compressedDataUrl, 'JPEG', 0, 0, pdfWidth, pdfHeight);
             }
 
             showProgress(100, 'Done!');
-            showResult(pdf.output('blob'), 'images.pdf');
+            showResult(pdf.output('blob'), 'images.pdf', `Created from ${imgFiles.length} images.`);
         };
 
         function loadImage(file) {
