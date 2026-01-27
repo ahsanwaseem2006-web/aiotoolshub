@@ -10,9 +10,7 @@
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 
     <script>
         // PDF.js worker setup
@@ -166,15 +164,17 @@
             padding: 0.5rem;
             border-radius: 16px;
             border: 1px solid var(--glass-border);
+            flex-wrap: wrap;
         }
 
         .mode-tab {
             flex: 1;
+            min-width: 140px;
             padding: 14px 20px;
             background: transparent;
             border: none;
             border-radius: 12px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             font-family: inherit;
@@ -550,68 +550,6 @@
             color: var(--text-primary);
         }
 
-        /* Format badges */
-        .format-badges {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-            justify-content: center;
-        }
-
-        .format-badge {
-            padding: 6px 12px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        /* Hidden containers for rendering */
-        #hidden-rendering-container {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            width: 800px;
-            padding: 40px;
-            background: white;
-            color: black;
-        }
-
-        /* Reset styles for office content */
-        #office-content * {
-            box-sizing: border-box;
-            color: black;
-            font-family: 'Arial', sans-serif;
-            text-align: left;
-        }
-
-        #office-content table {
-            border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #ccc;
-            margin: 1em 0;
-        }
-
-        #office-content th,
-        #office-content td {
-            border: 1px solid #ccc;
-            padding: 8px;
-        }
-
-        #office-content p {
-            margin-bottom: 1em;
-            line-height: 1.4;
-        }
-
-        #office-content h1,
-        #office-content h2,
-        #office-content h3 {
-            color: #000;
-            margin-top: 1em;
-            margin-bottom: 0.5em;
-        }
     </style>
 </head>
 
@@ -637,7 +575,7 @@
             <div class="mode-tabs">
                 <button class="mode-tab active" data-mode="image">🖼️ Images to PDF</button>
                 <button class="mode-tab" data-mode="compress">📦 Compress PDF</button>
-                <button class="mode-tab" data-mode="office">📎 Office to PDF</button>
+                <button class="mode-tab" data-mode="merge">🔗 Merge & Compress</button>
             </div>
 
             <!-- Image to PDF Mode -->
@@ -678,7 +616,7 @@
                 <div class="upload-zone" id="pdfUploadZone">
                     <div class="icon">📄</div>
                     <h3>Drop PDF to compress</h3>
-                    <p>Re-processes PDF pages as images to reduce size</p>
+                    <p>Re-processes PDF pages to reduce size</p>
                     <input type="file" id="pdfInput" accept=".pdf">
                 </div>
                 <div class="file-list" id="pdfFileList"></div>
@@ -708,23 +646,39 @@
                 <button class="btn" id="compressPdfBtn" disabled>Compress PDF</button>
             </div>
 
-            <!-- Office to PDF Mode -->
-            <div class="mode-panel" id="officePanel">
-                <div class="upload-zone" id="officeUploadZone">
-                    <div class="icon">📎</div>
-                    <h3>Drop Word or Excel file</h3>
-                    <p>Converts .docx and .xlsx directly in browser</p>
-                    <input type="file" id="officeInput" accept=".docx,.xlsx">
+            <!-- Merge & Compress PDFs Mode -->
+            <div class="mode-panel" id="mergePanel">
+                <div class="upload-zone" id="mergeUploadZone">
+                    <div class="icon">🔗</div>
+                    <h3>Drop multiple PDFs to merge</h3>
+                    <p>Combine and optionally compress multiple PDFs</p>
+                    <input type="file" id="mergeInput" multiple accept=".pdf">
                 </div>
-                <div class="file-list" id="officeFileList"></div>
-                <div class="notice">
-                    <span class="notice-icon">ℹ️</span>
-                    <div class="notice-text">
-                        <strong>Note:</strong> Used for simple document conversion. Complex formatting may not be
-                        preserved perfectly as this runs entirely in your browser.
+                <div class="file-list" id="mergeFileList"></div>
+
+                <div class="settings-section">
+                    <div class="settings-title">⚙️ Compression Settings (Optional)</div>
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Quality (1-10)</span><span class="setting-value"
+                                id="mergeQualityValue">7</span></div>
+                        <input type="range" id="mergeQualitySlider" min="1" max="10" value="7">
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Resolution (DPI)</span><span class="setting-value"
+                                id="mergeDpiValue">150 DPI</span></div>
+                        <input type="range" id="mergeDpiSlider" min="50" max="300" value="150" step="25">
+                    </div>
+                    <div class="setting-group">
+                        <div class="setting-label"><span>Color Mode</span></div>
+                        <div class="color-options" id="mergeColorOptions">
+                            <div class="color-option active" data-color="color">Colour</div>
+                            <div class="color-option" data-color="grayscale">Greyscale</div>
+                            <div class="color-option" data-color="bw">B&W</div>
+                        </div>
                     </div>
                 </div>
-                <button class="btn" id="convertOfficeBtn" disabled>Convert to PDF</button>
+
+                <button class="btn" id="mergePdfBtn" disabled>Merge & Compress PDFs</button>
             </div>
 
             <!-- Progress & Result -->
@@ -745,17 +699,14 @@
             </div>
         </div>
 
-        <!-- Hidden Render Container -->
-        <div id="hidden-rendering-container">
-            <div id="office-content"></div>
-        </div>
     </main>
 
     <script>
-        // Init Themes & Tabs
+        // ==================== INIT THEME & TABS ====================
         document.getElementById('themeToggle').onclick = () => {
             const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
+            document.documentElement.dataset.theme = t;
+            localStorage.setItem('theme', t);
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
@@ -767,10 +718,11 @@
                 tab.classList.add('active');
                 document.getElementById(tab.dataset.mode + 'Panel').classList.add('active');
                 document.getElementById('result').classList.remove('show');
+                document.getElementById('progressContainer').classList.remove('show');
             }
         });
 
-        // Utils
+        // ==================== UTILITIES ====================
         const showProgress = (pct, text) => {
             document.getElementById('progressContainer').classList.add('show');
             document.getElementById('result').classList.remove('show');
@@ -788,49 +740,109 @@
             document.getElementById('resultInfo').textContent = info || `Size: ${(blob.size / 1024).toFixed(1)} KB`;
         };
 
-        // Sliders
         const bindSlider = (id, outId, suffix = '') => {
             document.getElementById(id).oninput = e => document.getElementById(outId).textContent = e.target.value + suffix;
         };
+
         bindSlider('qualitySlider', 'qualityValue');
+        bindSlider('dpiSlider', 'dpiValue', ' DPI');
         bindSlider('pdfQualitySlider', 'pdfQualityValue');
-        bindSlider('pdfDpiSlider', 'pdfDpiValue');
+        bindSlider('pdfDpiSlider', 'pdfDpiValue', ' DPI');
+        bindSlider('mergeQualitySlider', 'mergeQualityValue');
+        bindSlider('mergeDpiSlider', 'mergeDpiValue', ' DPI');
 
         // Color Mode Selection
-        let pdfColorMode = 'color';
-        document.querySelectorAll('.color-option').forEach(opt => {
-            opt.onclick = () => {
-                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
-                pdfColorMode = opt.dataset.color;
-            };
-        });
+        const setupColorOptions = (containerId) => {
+            let selectedMode = 'color';
+            document.getElementById(containerId).querySelectorAll('.color-option').forEach(opt => {
+                opt.onclick = () => {
+                    document.getElementById(containerId).querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
+                    opt.classList.add('active');
+                    selectedMode = opt.dataset.color;
+                };
+            });
+            return () => selectedMode;
+        };
 
-        // Color Mode Selection for Images
-        let imgColorMode = 'color';
-        // We'll attach listeners dynamically or just in the script body below
+        const getImgColorMode = setupColorOptions('imgColorOptions');
+        const getPdfColorMode = setupColorOptions('pdfColorOptions');
+        const getMergeColorMode = setupColorOptions('mergeColorOptions');
 
-        // ================= IMAGE TO PDF =================
+        function loadImage(file) {
+            return new Promise(resolve => {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = new Image();
+                    img.onload = () => resolve(img);
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Apply color mode to canvas
+        function applyColorMode(canvas, mode) {
+            if (mode === 'color') return;
+            const ctx = canvas.getContext('2d');
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                const value = mode === 'bw' ? (avg > 128 ? 255 : 0) : avg;
+                data[i] = data[i + 1] = data[i + 2] = value;
+            }
+            ctx.putImageData(imgData, 0, 0);
+        }
+
+        // Calculate aspect-preserving dimensions
+        function calculateAspectFit(srcWidth, srcHeight, maxWidth, maxHeight) {
+            const srcAspect = srcWidth / srcHeight;
+            const maxAspect = maxWidth / maxHeight;
+
+            let finalWidth, finalHeight, x, y;
+
+            if (srcAspect > maxAspect) {
+                // Image is wider - fit to width
+                finalWidth = maxWidth;
+                finalHeight = maxWidth / srcAspect;
+                x = 0;
+                y = (maxHeight - finalHeight) / 2;
+            } else {
+                // Image is taller - fit to height
+                finalHeight = maxHeight;
+                finalWidth = maxHeight * srcAspect;
+                x = (maxWidth - finalWidth) / 2;
+                y = 0;
+            }
+
+            return { width: finalWidth, height: finalHeight, x, y };
+        }
+
+        // ==================== IMAGE TO PDF ====================
         const imgInput = document.getElementById('imageInput');
         let imgFiles = [];
+
         document.getElementById('imageUploadZone').onclick = () => imgInput.click();
         imgInput.onchange = e => {
             imgFiles = Array.from(e.target.files);
-            document.getElementById('imageFileList').innerHTML = imgFiles.map(f => `<div class="file-item">🖼️ ${f.name}</div>`).join('');
+            document.getElementById('imageFileList').innerHTML = imgFiles.map((f, i) =>
+                `<div class="file-item">
+                    <span class="file-icon">🖼️</span>
+                    <div class="file-info">
+                        <div class="file-name">${f.name}</div>
+                        <div class="file-size">${(f.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button class="file-remove" onclick="removeImgFile(${i})">×</button>
+                </div>`
+            ).join('');
             document.getElementById('convertImageBtn').disabled = imgFiles.length === 0;
         };
 
-        // Attach listeners for img color options
-        document.querySelector('#imgColorOptions').querySelectorAll('.color-option').forEach(opt => {
-            opt.onclick = () => {
-                document.querySelector('#imgColorOptions').querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                opt.classList.add('active');
-                imgColorMode = opt.dataset.color;
-            };
-        });
-
-        const dpiSlider = document.getElementById('dpiSlider');
-        bindSlider('dpiSlider', 'dpiValue');
+        window.removeImgFile = (index) => {
+            imgFiles.splice(index, 1);
+            imgInput.value = '';
+            imgInput.dispatchEvent(new Event('change'));
+        };
 
         document.getElementById('convertImageBtn').onclick = async () => {
             if (imgFiles.length === 0) return;
@@ -839,8 +851,11 @@
 
             const quality = parseInt(document.getElementById('qualitySlider').value) / 10;
             const dpi = parseInt(document.getElementById('dpiSlider').value);
+            const colorMode = getImgColorMode();
 
             showProgress(10, 'Starting...');
+
+            let isFirstPage = true;
 
             for (let i = 0; i < imgFiles.length; i++) {
                 showProgress(10 + (i / imgFiles.length) * 80, `Processing image ${i + 1}/${imgFiles.length}`);
@@ -853,67 +868,57 @@
                 canvas.height = img.height;
                 ctx.drawImage(img, 0, 0);
 
-                // Draw Color Mode
-                if (imgColorMode === 'grayscale' || imgColorMode === 'bw') {
-                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const data = imgData.data;
-                    for (let j = 0; j < data.length; j += 4) {
-                        const avg = (data[j] + data[j + 1] + data[j + 2]) / 3;
-                        const v = imgColorMode === 'bw' ? (avg > 128 ? 255 : 0) : avg;
-                        data[j] = data[j + 1] = data[j + 2] = v;
-                    }
-                    ctx.putImageData(imgData, 0, 0);
-                }
+                applyColorMode(canvas, colorMode);
 
-                // Exports with quality compression
                 const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
 
-                // Add to PDF
-                // PDF dimensions:
-                // We want to respect physical size if possible? 
-                // A4 is 210mm x 297mm.
-                // Let's just fit the image to a page of its own size based on DPI?
-                // Or allow it to fit A4? Given "Image to PDF" usually implies just wrapping image, let's use page size matching image.
-
+                // Calculate PDF page dimensions based on image and DPI
                 const mmPerInch = 25.4;
-                const pdfWidth = (canvas.width / dpi) * mmPerInch;
-                const pdfHeight = (canvas.height / dpi) * mmPerInch;
+                const pageWidth = (canvas.width / dpi) * mmPerInch;
+                const pageHeight = (canvas.height / dpi) * mmPerInch;
 
-                if (i > 0) pdf.addPage([pdfWidth, pdfHeight], pdfWidth > pdfHeight ? 'l' : 'p');
-                else {
-                    // Resize first page
-                    pdf.internal.pageSize.width = pdfWidth;
-                    pdf.internal.pageSize.height = pdfHeight;
+                if (!isFirstPage) {
+                    pdf.addPage([pageWidth, pageHeight], pageWidth > pageHeight ? 'l' : 'p');
+                } else {
+                    // Set first page size
+                    pdf.internal.pageSize.width = pageWidth;
+                    pdf.internal.pageSize.height = pageHeight;
+                    isFirstPage = false;
                 }
 
-                pdf.addImage(compressedDataUrl, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                // Add image preserving aspect ratio (centered on page)
+                const fit = calculateAspectFit(canvas.width, canvas.height, pageWidth, pageHeight);
+                pdf.addImage(compressedDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
             }
 
             showProgress(100, 'Done!');
-            showResult(pdf.output('blob'), 'images.pdf', `Created from ${imgFiles.length} images.`);
+            showResult(pdf.output('blob'), 'images.pdf', `Created from ${imgFiles.length} image(s)`);
         };
 
-        function loadImage(file) {
-            return new Promise(resolve => {
-                const reader = new FileReader();
-                reader.onload = e => {
-                    const i = new Image();
-                    i.onload = () => resolve(i);
-                    i.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-
-
-        // ================= COMPRESS PDF (Rasterize) =================
+        // ==================== COMPRESS PDF ====================
         const pdfInput = document.getElementById('pdfInput');
         let pdfFile = null;
+
         document.getElementById('pdfUploadZone').onclick = () => pdfInput.click();
         pdfInput.onchange = e => {
             pdfFile = e.target.files[0];
-            document.getElementById('pdfFileList').innerHTML = pdfFile ? `<div class="file-item">📄 ${pdfFile.name}</div>` : '';
+            document.getElementById('pdfFileList').innerHTML = pdfFile ?
+                `<div class="file-item">
+                    <span class="file-icon">📄</span>
+                    <div class="file-info">
+                        <div class="file-name">${pdfFile.name}</div>
+                        <div class="file-size">${(pdfFile.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button class="file-remove" onclick="removePdfFile()">×</button>
+                </div>` : '';
             document.getElementById('compressPdfBtn').disabled = !pdfFile;
+        };
+
+        window.removePdfFile = () => {
+            pdfFile = null;
+            pdfInput.value = '';
+            document.getElementById('pdfFileList').innerHTML = '';
+            document.getElementById('compressPdfBtn').disabled = true;
         };
 
         document.getElementById('compressPdfBtn').onclick = async () => {
@@ -922,12 +927,15 @@
 
             const quality = parseInt(document.getElementById('pdfQualitySlider').value) / 10;
             const dpi = parseInt(document.getElementById('pdfDpiSlider').value);
-            const scale = dpi / 72; // PDF standard is 72dpi
+            const colorMode = getPdfColorMode();
+            const scale = dpi / 72; // PDF standard is 72 DPI
 
             const arrayBuffer = await pdfFile.arrayBuffer();
             const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
             const { jsPDF } = window.jspdf;
             const newPdf = new jsPDF();
+
+            let isFirstPage = true;
 
             for (let i = 1; i <= pdfDoc.numPages; i++) {
                 showProgress(10 + (i / pdfDoc.numPages) * 80, `Compressing page ${i}/${pdfDoc.numPages}`);
@@ -936,88 +944,139 @@
                 const viewport = page.getViewport({ scale: scale });
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
+
                 canvas.width = viewport.width;
                 canvas.height = viewport.height;
 
                 await page.render({ canvasContext: ctx, viewport: viewport }).promise;
 
-                // Color Modes
-                if (pdfColorMode === 'grayscale' || pdfColorMode === 'bw') {
-                    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    const data = imgData.data;
-                    for (let j = 0; j < data.length; j += 4) {
-                        const avg = (data[j] + data[j + 1] + data[j + 2]) / 3;
-                        const v = pdfColorMode === 'bw' ? (avg > 128 ? 255 : 0) : avg;
-                        data[j] = data[j + 1] = data[j + 2] = v;
-                    }
-                    ctx.putImageData(imgData, 0, 0);
-                }
+                applyColorMode(canvas, colorMode);
 
                 const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
 
-                if (i > 1) newPdf.addPage();
-                const pdfW = newPdf.internal.pageSize.getWidth();
-                const pdfH = newPdf.internal.pageSize.getHeight();
-                newPdf.addImage(imgDataUrl, 'JPEG', 0, 0, pdfW, pdfH * (viewport.height / viewport.width) * (pdfW / viewport.width < 1 ? 1 : (viewport.width / pdfW))); // Aspect fit
-            }
+                // Calculate page dimensions maintaining aspect ratio
+                const mmPerInch = 25.4;
+                const pageWidth = (viewport.width / scale) * mmPerInch / 72;
+                const pageHeight = (viewport.height / scale) * mmPerInch / 72;
 
-            showResult(newPdf.output('blob'), 'compressed_' + pdfFile.name);
-        };
-
-        // ================= OFFICE TO PDF =================
-        const offInput = document.getElementById('officeInput');
-        let offFile = null;
-        document.getElementById('officeUploadZone').onclick = () => offInput.click();
-        offInput.onchange = e => {
-            offFile = e.target.files[0];
-            document.getElementById('officeFileList').innerHTML = offFile ? `<div class="file-item">📎 ${offFile.name}</div>` : '';
-            document.getElementById('convertOfficeBtn').disabled = !offFile;
-        };
-
-        document.getElementById('convertOfficeBtn').onclick = async () => {
-            if (!offFile) return;
-            const container = document.getElementById('office-content');
-            container.innerHTML = '';
-            showProgress(20, 'Parsing document...');
-
-            try {
-                if (offFile.name.endsWith('.docx')) {
-                    const arrayBuffer = await offFile.arrayBuffer();
-                    const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
-                    container.innerHTML = result.value;
-                }
-                else if (offFile.name.endsWith('.xlsx')) {
-                    const arrayBuffer = await offFile.arrayBuffer();
-                    const workbook = XLSX.read(arrayBuffer);
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const html = XLSX.utils.sheet_to_html(firstSheet);
-                    container.innerHTML = html;
+                if (!isFirstPage) {
+                    newPdf.addPage([pageWidth, pageHeight], pageWidth > pageHeight ? 'l' : 'p');
                 } else {
-                    alert('Format not supported. Please use .docx or .xlsx');
-                    hideProgress();
-                    return;
+                    newPdf.internal.pageSize.width = pageWidth;
+                    newPdf.internal.pageSize.height = pageHeight;
+                    isFirstPage = false;
                 }
 
-                showProgress(60, 'Generating PDF...');
-
-                const opt = {
-                    margin: 10,
-                    filename: offFile.name + '.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                // Use html2pdf to save
-                await html2pdf().set(opt).from(container).save();
-
-                showProgress(100, 'Done! Download starting...');
-                setTimeout(() => document.getElementById('progressContainer').classList.remove('show'), 2000);
-
-            } catch (e) {
-                alert('Conversion failed: ' + e.message);
-                document.getElementById('progressContainer').classList.remove('show');
+                // Add image maintaining aspect ratio
+                const fit = calculateAspectFit(viewport.width, viewport.height, pageWidth, pageHeight);
+                newPdf.addImage(imgDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
             }
+
+            showProgress(100, 'Done!');
+            const originalSize = (pdfFile.size / 1024).toFixed(1);
+            const newSize = (newPdf.output('blob').size / 1024).toFixed(1);
+            showResult(newPdf.output('blob'), 'compressed_' + pdfFile.name, 
+                `Original: ${originalSize} KB → Compressed: ${newSize} KB`);
+        };
+
+        // ==================== MERGE & COMPRESS PDFs ====================
+        const mergeInput = document.getElementById('mergeInput');
+        let mergeFiles = [];
+
+        document.getElementById('mergeUploadZone').onclick = () => mergeInput.click();
+        mergeInput.onchange = e => {
+            mergeFiles = Array.from(e.target.files);
+            document.getElementById('mergeFileList').innerHTML = mergeFiles.map((f, i) =>
+                `<div class="file-item">
+                    <span class="file-icon">📄</span>
+                    <div class="file-info">
+                        <div class="file-name">${f.name}</div>
+                        <div class="file-size">${(f.size / 1024).toFixed(1)} KB</div>
+                    </div>
+                    <button class="file-remove" onclick="removeMergeFile(${i})">×</button>
+                </div>`
+            ).join('');
+            document.getElementById('mergePdfBtn').disabled = mergeFiles.length < 2;
+        };
+
+        window.removeMergeFile = (index) => {
+            mergeFiles.splice(index, 1);
+            mergeInput.value = '';
+            mergeInput.dispatchEvent(new Event('change'));
+        };
+
+        document.getElementById('mergePdfBtn').onclick = async () => {
+            if (mergeFiles.length < 2) return;
+            showProgress(5, 'Starting merge...');
+
+            const quality = parseInt(document.getElementById('mergeQualitySlider').value) / 10;
+            const dpi = parseInt(document.getElementById('mergeDpiSlider').value);
+            const colorMode = getMergeColorMode();
+            const scale = dpi / 72;
+
+            const { jsPDF } = window.jspdf;
+            const mergedPdf = new jsPDF();
+            let isFirstPage = true;
+            let totalPages = 0;
+            let processedPages = 0;
+
+            // Count total pages first
+            for (const file of mergeFiles) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+                totalPages += pdfDoc.numPages;
+            }
+
+            // Process each PDF
+            for (let fileIdx = 0; fileIdx < mergeFiles.length; fileIdx++) {
+                const file = mergeFiles[fileIdx];
+                showProgress(5 + (fileIdx / mergeFiles.length) * 15, `Loading PDF ${fileIdx + 1}/${mergeFiles.length}`);
+
+                const arrayBuffer = await file.arrayBuffer();
+                const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
+
+                // Process each page
+                for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+                    processedPages++;
+                    showProgress(20 + (processedPages / totalPages) * 75, 
+                        `Processing page ${processedPages}/${totalPages}`);
+
+                    const page = await pdfDoc.getPage(pageNum);
+                    const viewport = page.getViewport({ scale: scale });
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+
+                    applyColorMode(canvas, colorMode);
+
+                    const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
+
+                    // Calculate page dimensions
+                    const mmPerInch = 25.4;
+                    const pageWidth = (viewport.width / scale) * mmPerInch / 72;
+                    const pageHeight = (viewport.height / scale) * mmPerInch / 72;
+
+                    if (!isFirstPage) {
+                        mergedPdf.addPage([pageWidth, pageHeight], pageWidth > pageHeight ? 'l' : 'p');
+                    } else {
+                        mergedPdf.internal.pageSize.width = pageWidth;
+                        mergedPdf.internal.pageSize.height = pageHeight;
+                        isFirstPage = false;
+                    }
+
+                    // Add image maintaining aspect ratio
+                    const fit = calculateAspectFit(viewport.width, viewport.height, pageWidth, pageHeight);
+                    mergedPdf.addImage(imgDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
+                }
+            }
+
+            showProgress(100, 'Done!');
+            showResult(mergedPdf.output('blob'), 'merged.pdf', 
+                `Merged ${mergeFiles.length} PDFs (${totalPages} total pages)`);
         };
 
     </script>
