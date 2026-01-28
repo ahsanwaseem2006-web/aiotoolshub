@@ -90,9 +90,7 @@
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-gradient);
-            background-size: 400% 400%;
-            background-attachment: fixed;
-            animation: gradientShift 30s ease infinite; /* Slower animation for smoother appearance */
+            background-attachment: scroll; /* Changed from fixed - HUGE performance boost */
             color: var(--text-primary);
             min-height: 100vh;
             line-height: 1.6;
@@ -100,92 +98,19 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
         
-        /* Force GPU acceleration for smooth scrolling */
-        * {
-            -webkit-transform: translateZ(0);
-            -moz-transform: translateZ(0);
-            -ms-transform: translateZ(0);
-            -o-transform: translateZ(0);
-            transform: translateZ(0);
-        }
+        /* Completely removed gradient animation */
+        
+        /* Optimized for smooth scrolling */
 
         a {
             text-decoration: none;
             color: inherit;
         }
 
-        /* ========== ANIMATED BACKGROUND ========== */
+        /* Background shapes completely disabled for performance */
         .bg-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .bg-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px); /* Reduced from 100px for better performance */
-            opacity: 0.4; /* Reduced from 0.6 */
-            will-change: transform; /* GPU optimization */
-            animation: float 30s ease-in-out infinite; /* Slower for smoother perception */
-        }
-
-        .bg-shape:nth-child(1) {
-            width: 700px;
-            height: 700px;
-            background: radial-gradient(circle, var(--accent-1), transparent);
-            top: -250px;
-            right: -250px;
-            animation-delay: 0s;
-        }
-
-        .bg-shape:nth-child(2) {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--accent-2), transparent);
-            bottom: -200px;
-            left: -200px;
-            animation-delay: -10s;
-        }
-
-        .bg-shape:nth-child(3) {
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, var(--accent-3), transparent);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: -20s;
-        }
-
-        .bg-shape:nth-child(4) {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--accent-4), transparent);
-            top: 20%;
-            left: 20%;
-            animation-delay: -15s;
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(30px, -30px) scale(1.05);
-            }
+            display: none; /* Disabled - backdrop-filter is a performance killer */
         }
 
         /* ========== NAVIGATION ========== */
@@ -197,11 +122,10 @@
             z-index: 1000;
             padding: 1.25rem 2rem;
             background: var(--nav-bg);
-            backdrop-filter: blur(10px); /* Reduced from 30px for better performance */
-            -webkit-backdrop-filter: blur(10px);
+            /* Removed backdrop-filter completely for performance */
             border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease; /* Faster transition */
-            will-change: padding, box-shadow; /* GPU optimization */
+            transition: padding 0.2s ease, box-shadow 0.2s ease; /* Only animate what's needed */
+            will-change: padding; /* GPU optimization */
         }
 
         .navbar.scrolled {
@@ -309,7 +233,7 @@
             border: 2px solid var(--glass-border);
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
             overflow: hidden;
         }
 
@@ -327,7 +251,7 @@
             height: 30px;
             background: var(--accent-gradient);
             border-radius: 50%;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -391,14 +315,14 @@
             gap: 10px;
             padding: 10px 24px;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-secondary);
             margin-bottom: 2.5rem;
-            animation: fadeInDown 0.8s ease, pulse 3s ease-in-out infinite;
+            animation: fadeInDown 0.8s ease;
             box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
             position: relative;
             overflow: hidden;
@@ -406,23 +330,12 @@
         }
 
         .hero-badge::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--shimmer);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            100% { left: 100%; }
+            /* Removed shimmer animation for performance */
+            display: none;
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            /* Removed pulse animation for performance */
         }
 
         .hero-badge .count {
@@ -451,16 +364,7 @@
             font-weight: 900;
             position: relative;
             display: inline-block;
-            animation: textGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes textGlow {
-            0%, 100% {
-                filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.5));
-            }
-            50% {
-                filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.8));
-            }
+            /* Removed glow animation for performance */
         }
 
         .hero-description {
@@ -667,16 +571,16 @@
             width: 100%;
             padding: 18px 28px 18px 64px;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 20px;
             font-size: 1.05rem;
             color: var(--text-primary);
             outline: none;
-            transition: all 0.3s ease; /* Faster transition */
+            transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
             font-family: inherit;
             font-weight: 500;
-            will-change: border-color, transform, box-shadow;
+            will-change: border-color, transform;
         }
 
         .search-input::placeholder {
@@ -715,19 +619,19 @@
         .filter-btn {
             padding: 12px 24px;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 50px;
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
-            transition: all 0.3s ease; /* Faster and simpler */
+            transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
             font-family: inherit;
             display: flex;
             align-items: center;
             gap: 8px;
-            will-change: transform, border-color, box-shadow;
+            will-change: transform;
         }
 
         .filter-btn:hover {
@@ -754,16 +658,15 @@
 
         .tool-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
-            -webkit-backdrop-filter: blur(10px);
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 24px;
             padding: 2rem;
             cursor: pointer;
-            transition: all 0.3s ease; /* Faster and simpler */
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             overflow: hidden;
-            will-change: transform, border-color, box-shadow; /* GPU optimization */
+            will-change: transform;
         }
 
         .tool-card::before {
@@ -879,15 +782,15 @@
 
         .feature-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 24px;
             padding: 3rem;
             text-align: center;
-            transition: all 0.3s ease; /* Faster transition */
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             position: relative;
             overflow: hidden;
-            will-change: transform, border-color, box-shadow;
+            will-change: transform;
         }
 
         .feature-card::before {
@@ -896,7 +799,7 @@
             inset: 0;
             background: var(--accent-gradient);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.2s ease;
             z-index: -1;
         }
 
@@ -914,7 +817,7 @@
             font-size: 4rem;
             margin-bottom: 2rem;
             display: inline-block;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
             filter: drop-shadow(0 4px 12px rgba(124, 58, 237, 0.3));
         }
 
@@ -942,7 +845,7 @@
             margin-top: 5rem;
             padding: 4rem 3rem;
             background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* Reduced from 20px */
+            /* Removed backdrop-filter for performance */
             border: 2px solid var(--glass-border);
             border-radius: 32px;
             box-shadow: var(--glass-shadow);
