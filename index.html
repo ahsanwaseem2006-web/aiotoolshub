@@ -34,22 +34,22 @@
             --bg-primary: #ffffff;
             --bg-secondary: #fafbff;
             --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
-            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-bg: rgba(255, 255, 255, 0.95); /* Increased from 0.85 for better contrast */
             --glass-border: rgba(255, 255, 255, 0.6);
             --glass-shadow: 0 20px 60px rgba(31, 38, 135, 0.2);
-            --text-primary: #1a1a2e;
-            --text-secondary: #4a4a6a;
-            --text-muted: #7a7a9a;
+            --text-primary: #0a0a1a; /* Darker for better contrast */
+            --text-secondary: #2a2a4a; /* Darker for better contrast */
+            --text-muted: #5a5a7a; /* Darker for better contrast */
             --accent-1: #7c3aed;
             --accent-2: #06b6d4;
             --accent-3: #f43f5e;
             --accent-4: #10b981;
             --accent-5: #f59e0b;
-            --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-gradient: linear-gradient(135deg, #5b21b6 0%, #1e40af 100%); /* Much darker gradient for light mode */
             --accent-gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --accent-gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             --card-hover-glow: 0 20px 60px rgba(124, 58, 237, 0.4);
-            --nav-bg: rgba(255, 255, 255, 0.95);
+            --nav-bg: rgba(255, 255, 255, 0.98); /* More opaque */
             --shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
         }
 
@@ -68,7 +68,7 @@
             --accent-3: #fb7185;
             --accent-4: #34d399;
             --accent-5: #fbbf24;
-            --accent-gradient: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+            --accent-gradient: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); /* Lighter gradient for dark mode */
             --accent-gradient-2: linear-gradient(135deg, #fb7185 0%, #f43f5e 100%);
             --accent-gradient-3: linear-gradient(135deg, #22d3ee 0%, #06b6d4 100%);
             --card-hover-glow: 0 20px 80px rgba(167, 139, 250, 0.5);
@@ -354,6 +354,7 @@
             margin-bottom: 2rem;
             animation: fadeInUp 0.8s ease 0.2s both;
             letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.1); /* Added subtle shadow for readability */
         }
 
         .hero h1 .gradient-text {
@@ -365,6 +366,11 @@
             position: relative;
             display: inline-block;
             /* Removed glow animation for performance */
+        }
+        
+        /* Add shadow for light mode gradient text readability */
+        [data-theme="light"] .hero h1 .gradient-text {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         .hero-description {
