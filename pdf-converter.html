@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Converter & Compressor - AIO Tools Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Base Styles (theme + navbar) -->
-    <link rel="stylesheet" href="base-styles.css">
 
     <!-- Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -21,7 +18,96 @@
     </script>
 
     <style>
-        /* PDF Converter Specific Styles */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #f0f4ff, #e8e0ff, #fce4ff);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --text-primary: #1a1a2e;
+            --text-secondary: #4a4a6a;
+            --accent-gradient: linear-gradient(135deg, #7c3aed, #06b6d4);
+            --nav-bg: rgba(255, 255, 255, 0.8);
+            --bg-secondary: #fff;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient: linear-gradient(135deg, #0a0a1a, #1a1035, #0d1520);
+            --glass-bg: rgba(20, 20, 40, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #fff;
+            --text-secondary: #b4b4d4;
+            --nav-bg: rgba(10, 10, 26, 0.9);
+            --bg-secondary: #12122a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .theme-toggle {
+            width: 60px;
+            height: 32px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        [data-theme="light"] .toggle-thumb {
+            transform: translateX(28px);
+        }
+
         .main-content {
             padding: 100px 2rem 40px;
             max-width: 900px;
@@ -109,6 +195,7 @@
         /* Tool Card */
         .tool-card {
             background: var(--glass-bg);
+            backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 2rem;
@@ -422,6 +509,7 @@
         }
     </style>
 </head>
+
 <body>
     <nav class="navbar">
         <a href="index.html" class="nav-logo"><span>AIO Tools Hub</span></a>
@@ -567,15 +655,13 @@
                 </div>
             </div>
         </div>
-
     </main>
 
     <script>
-        // ==================== INIT THEME & TABS ====================
+        // Init Themes & Tabs
         document.getElementById('themeToggle').onclick = () => {
             const t = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-            document.documentElement.dataset.theme = t;
-            localStorage.setItem('theme', t);
+            document.documentElement.dataset.theme = t; localStorage.setItem('theme', t);
         };
         document.documentElement.dataset.theme = localStorage.getItem('theme') || 'dark';
 
@@ -587,11 +673,10 @@
                 tab.classList.add('active');
                 document.getElementById(tab.dataset.mode + 'Panel').classList.add('active');
                 document.getElementById('result').classList.remove('show');
-                document.getElementById('progressContainer').classList.remove('show');
             }
         });
 
-        // ==================== UTILITIES ====================
+        // Utils
         const showProgress = (pct, text) => {
             document.getElementById('progressContainer').classList.add('show');
             document.getElementById('result').classList.remove('show');
@@ -609,10 +694,10 @@
             document.getElementById('resultInfo').textContent = info || `Size: ${(blob.size / 1024).toFixed(1)} KB`;
         };
 
+        // Sliders
         const bindSlider = (id, outId, suffix = '') => {
             document.getElementById(id).oninput = e => document.getElementById(outId).textContent = e.target.value + suffix;
         };
-
         bindSlider('qualitySlider', 'qualityValue');
         bindSlider('dpiSlider', 'dpiValue', ' DPI');
         bindSlider('pdfQualitySlider', 'pdfQualityValue');
@@ -671,13 +756,11 @@
             let finalWidth, finalHeight, x, y;
 
             if (srcAspect > maxAspect) {
-                // Image is wider - fit to width
                 finalWidth = maxWidth;
                 finalHeight = maxWidth / srcAspect;
                 x = 0;
                 y = (maxHeight - finalHeight) / 2;
             } else {
-                // Image is taller - fit to height
                 finalHeight = maxHeight;
                 finalWidth = maxHeight * srcAspect;
                 x = (maxWidth - finalWidth) / 2;
@@ -741,7 +824,6 @@
 
                 const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
 
-                // Calculate PDF page dimensions based on image and DPI
                 const mmPerInch = 25.4;
                 const pageWidth = (canvas.width / dpi) * mmPerInch;
                 const pageHeight = (canvas.height / dpi) * mmPerInch;
@@ -749,13 +831,11 @@
                 if (!isFirstPage) {
                     pdf.addPage([pageWidth, pageHeight], pageWidth > pageHeight ? 'l' : 'p');
                 } else {
-                    // Set first page size
                     pdf.internal.pageSize.width = pageWidth;
                     pdf.internal.pageSize.height = pageHeight;
                     isFirstPage = false;
                 }
 
-                // Add image preserving aspect ratio (centered on page)
                 const fit = calculateAspectFit(canvas.width, canvas.height, pageWidth, pageHeight);
                 pdf.addImage(compressedDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
             }
@@ -797,7 +877,7 @@
             const quality = parseInt(document.getElementById('pdfQualitySlider').value) / 10;
             const dpi = parseInt(document.getElementById('pdfDpiSlider').value);
             const colorMode = getPdfColorMode();
-            const scale = dpi / 72; // PDF standard is 72 DPI
+            const scale = dpi / 72;
 
             const arrayBuffer = await pdfFile.arrayBuffer();
             const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
@@ -823,7 +903,6 @@
 
                 const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
 
-                // Calculate page dimensions maintaining aspect ratio
                 const mmPerInch = 25.4;
                 const pageWidth = (viewport.width / scale) * mmPerInch / 72;
                 const pageHeight = (viewport.height / scale) * mmPerInch / 72;
@@ -836,7 +915,6 @@
                     isFirstPage = false;
                 }
 
-                // Add image maintaining aspect ratio
                 const fit = calculateAspectFit(viewport.width, viewport.height, pageWidth, pageHeight);
                 newPdf.addImage(imgDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
             }
@@ -889,14 +967,12 @@
             let totalPages = 0;
             let processedPages = 0;
 
-            // Count total pages first
             for (const file of mergeFiles) {
                 const arrayBuffer = await file.arrayBuffer();
                 const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
                 totalPages += pdfDoc.numPages;
             }
 
-            // Process each PDF
             for (let fileIdx = 0; fileIdx < mergeFiles.length; fileIdx++) {
                 const file = mergeFiles[fileIdx];
                 showProgress(5 + (fileIdx / mergeFiles.length) * 15, `Loading PDF ${fileIdx + 1}/${mergeFiles.length}`);
@@ -904,7 +980,6 @@
                 const arrayBuffer = await file.arrayBuffer();
                 const pdfDoc = await pdfjsLib.getDocument(arrayBuffer).promise;
 
-                // Process each page
                 for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
                     processedPages++;
                     showProgress(20 + (processedPages / totalPages) * 75, 
@@ -924,7 +999,6 @@
 
                     const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
 
-                    // Calculate page dimensions
                     const mmPerInch = 25.4;
                     const pageWidth = (viewport.width / scale) * mmPerInch / 72;
                     const pageHeight = (viewport.height / scale) * mmPerInch / 72;
@@ -937,7 +1011,6 @@
                         isFirstPage = false;
                     }
 
-                    // Add image maintaining aspect ratio
                     const fit = calculateAspectFit(viewport.width, viewport.height, pageWidth, pageHeight);
                     mergedPdf.addImage(imgDataUrl, 'JPEG', fit.x, fit.y, fit.width, fit.height);
                 }
